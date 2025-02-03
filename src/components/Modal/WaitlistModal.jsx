@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { event } from '../../utils/analytics';
+import { triggerHotjarEvent } from '../../utils/hotjar';
+import { useKeyboard } from '../../hooks/useKeyboard';
 
 const WaitlistModal = ({ isOpen, onClose }) => {
-  // Add useEffect for body scroll lock
+  useKeyboard(onClose);
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -19,17 +23,37 @@ const WaitlistModal = ({ isOpen, onClose }) => {
   });
   const [status, setStatus] = useState('idle'); // idle, submitting, success, error
 
+  const GOOGLE_SCRIPT_URL = process.env.REACT_APP_GOOGLE_SCRIPT_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('submitting');
-    
+
+    event({
+      action: 'waitlist_submit',
+      category: 'Engagement',
+      label: formData.company,
+    });
+
+    triggerHotjarEvent('waitlist_submit');
+
     try {
-      // For now, simulate API call with timeout
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Here you would add actual API call to save waitlist data
-      console.log('Form submitted:', formData);
-      
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          company: formData.company,
+          challenge: formData.challenge
+        }),
+        mode: "no-cors"
+      });
+
+      // With no-cors, we won't get response details
+      // Assume success if we get here without error
       setStatus('success');
       setTimeout(() => {
         onClose();
@@ -37,6 +61,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
         setFormData({ email: '', company: '', challenge: 'compliance' });
       }, 2000);
     } catch (error) {
+      console.error('Submission error:', error);
       setStatus('error');
       setTimeout(() => setStatus('idle'), 3000);
     }
@@ -80,6 +105,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                   <button
                     onClick={onClose}
                     className="absolute top-4 right-4 text-gray-400 hover:text-white"
+                    aria-label="Close waitlist form"
                   >
                     ✕
                   </button>

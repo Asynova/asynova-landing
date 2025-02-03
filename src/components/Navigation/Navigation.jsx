@@ -46,7 +46,8 @@ const Navigation = () => {
           {/* CTA Button */}
           <button 
             onClick={openWaitlist}
-            className="hidden md:block px-6 py-2 bg-teal text-navy font-semibold rounded-lg hover:opacity-90">
+            className="hidden md:block px-6 py-2 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
+            aria-label="Join Early Access Waitlist">
             Join Early Access
           </button>
 
