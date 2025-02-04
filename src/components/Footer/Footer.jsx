@@ -1,14 +1,26 @@
 import { motion } from 'framer-motion';
 import { useModal } from '../../context/ModalContext';
+import { useState } from 'react';
+import PrivacyPolicyModal from '../PrivacyPolicy/PrivacyPolicyModal';
+import TermsOfServiceModal from '../Legal/TermsOfServiceModal';
 
 const Footer = () => {
   const { openWaitlist } = useModal();
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
+
+  const scrollToAbout = () => {
+    const aboutSection = document.getElementById('social-proof');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <footer className="py-20 border-t border-teal/10">
       <div className="container mx-auto px-4">
         {/* Final CTA Section */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -47,18 +59,29 @@ const Footer = () => {
           <div>
             <h4 className="text-sm font-semibold mb-4 text-gray-400">COMPANY</h4>
             <ul className="space-y-2">
-              <li><a href="#about" className="text-gray-300 hover:text-teal">About</a></li>
               <li>
-                <a href="#careers" className="text-gray-300 hover:text-teal">
-                  Careers
-                  <span className="ml-2 text-xs bg-teal/20 text-teal px-2 py-0.5 rounded-full">Coming Soon</span>
-                </a>
+                <button 
+                  onClick={scrollToAbout}
+                  className="text-gray-300 hover:text-teal"
+                >
+                  About
+                </button>
               </li>
               <li>
-                <a href="#blog" className="text-gray-300 hover:text-teal">
+                <span className="text-gray-300 opacity-75 cursor-not-allowed">
+                  Careers
+                  <span className="ml-2 text-xs bg-teal/20 text-teal px-2 py-0.5 rounded-full">
+                    Coming Soon
+                  </span>
+                </span>
+              </li>
+              <li>
+                <span className="text-gray-300 opacity-75 cursor-not-allowed">
                   Blog
-                  <span className="ml-2 text-xs bg-teal/20 text-teal px-2 py-0.5 rounded-full">Coming Soon</span>
-                </a>
+                  <span className="ml-2 text-xs bg-teal/20 text-teal px-2 py-0.5 rounded-full">
+                    Coming Soon
+                  </span>
+                </span>
               </li>
             </ul>
           </div>
@@ -67,8 +90,22 @@ const Footer = () => {
           <div>
             <h4 className="text-sm font-semibold mb-4 text-gray-400">LEGAL</h4>
             <ul className="space-y-2">
-              <li><a href="#privacy" className="text-gray-300 hover:text-teal">Privacy Policy</a></li>
-              <li><a href="#terms" className="text-gray-300 hover:text-teal">Terms of Service</a></li>
+              <li>
+                <button
+                  onClick={() => setIsPrivacyModalOpen(true)}
+                  className="text-gray-300 hover:text-teal"
+                >
+                  Privacy Policy
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => setIsTermsModalOpen(true)}
+                  className="text-gray-300 hover:text-teal"
+                >
+                  Terms of Service
+                </button>
+              </li>
             </ul>
           </div>
         </div>
@@ -78,6 +115,16 @@ const Footer = () => {
           © 2025 Asynova. All rights reserved. • In Development
         </div>
       </div>
+
+      {/* Modals */}
+      <PrivacyPolicyModal 
+        isOpen={isPrivacyModalOpen}
+        onClose={() => setIsPrivacyModalOpen(false)}
+      />
+      <TermsOfServiceModal 
+        isOpen={isTermsModalOpen}
+        onClose={() => setIsTermsModalOpen(false)}
+      />
     </footer>
   );
 };

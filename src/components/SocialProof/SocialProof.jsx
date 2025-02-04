@@ -15,29 +15,29 @@ const BackgroundCard = ({ title, items }) => (
 );
 
 const SocialProof = () => {
-  const experience = {
+  const vision = {
     technical: {
-      title: "Technical Experience",
+      title: "Our Technical Vision",
       items: [
-        "10+ years in AI/ML engineering",
-        "Built enterprise-scale ML platforms",
-        "Led AI implementations at major banks",
-        "Deep expertise in model optimization"
+        "Building intuitive AI orchestration tools",
+        "Developing robust security frameworks",
+        "Creating seamless model integration",
+        "Focusing on developer experience"
       ]
     },
-    industry: {
-      title: "Industry Background",
+    approach: {
+      title: "Our Approach",
       items: [
-        "Fintech compliance expertise",
-        "Enterprise security implementation",
-        "Financial services integration",
-        "Cloud infrastructure optimization"
+        "Learning from industry experts",
+        "Building with user feedback",
+        "Prioritizing security and compliance",
+        "Growing with our users"
       ]
     }
   };
 
   return (
-    <section className="py-20 border-t border-teal/10">
+    <section id="social-proof" className="py-20 border-t border-teal/10">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -46,13 +46,13 @@ const SocialProof = () => {
           className="text-center mb-12"
         >
           <span className="text-teal text-sm font-semibold tracking-wider">
-            WHY TRUST US
+            OUR COMMITMENT
           </span>
           <h2 className="text-3xl font-bold mt-4 mb-4">
-            Built by Engineers, for Engineers
+            Building the Future of AI Orchestration
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            We've experienced the challenges of AI implementation firsthand. Now we're building the solution we wish we had.
+            We're on a mission to simplify AI implementation. Join us in shaping the future of enterprise AI deployment.
           </p>
         </motion.div>
 
@@ -62,7 +62,7 @@ const SocialProof = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <BackgroundCard {...experience.technical} />
+            <BackgroundCard {...vision.technical} />
           </motion.div>
           
           <motion.div
@@ -70,7 +70,7 @@ const SocialProof = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <BackgroundCard {...experience.industry} />
+            <BackgroundCard {...vision.approach} />
           </motion.div>
         </div>
 
@@ -83,7 +83,7 @@ const SocialProof = () => {
           <div className="inline-flex items-center px-4 py-2 bg-navy/50 rounded-full border border-teal/20">
             <span className="text-teal mr-2">🚧</span>
             <span className="text-sm">
-              Currently working with select beta partners in financial services
+              Building our platform with early feedback from the community
             </span>
           </div>
         </motion.div>
@@ -95,8 +95,8 @@ const SocialProof = () => {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <div className="text-2xl font-bold text-teal">10+</div>
-            <div className="text-sm text-gray-300 mt-1">Years Experience</div>
+            <div className="text-2xl font-bold text-teal">24/7</div>
+            <div className="text-sm text-gray-300 mt-1">Development</div>
           </motion.div>
 
           <motion.div
@@ -105,8 +105,8 @@ const SocialProof = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-center"
           >
-            <div className="text-2xl font-bold text-teal">50+</div>
-            <div className="text-sm text-gray-300 mt-1">AI Models Deployed</div>
+            <div className="text-2xl font-bold text-teal">100%</div>
+            <div className="text-sm text-gray-300 mt-1">Open to Feedback</div>
           </motion.div>
 
           <motion.div
@@ -115,8 +115,8 @@ const SocialProof = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-center"
           >
-            <div className="text-2xl font-bold text-teal">5+</div>
-            <div className="text-sm text-gray-300 mt-1">Financial Institutions</div>
+            <div className="text-2xl font-bold text-teal">1</div>
+            <div className="text-sm text-gray-300 mt-1">Clear Vision</div>
           </motion.div>
         </div>
 

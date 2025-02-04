@@ -39,7 +39,7 @@ const Solution = () => {
   ];
 
   return (
-    <section className="py-20 bg-navy/50">
+    <section id="solution" className="py-20 bg-navy/50">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

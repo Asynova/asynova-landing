@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import PrivacyPolicyModal from '../PrivacyPolicy/PrivacyPolicyModal';
 
 const AssuranceItem = ({ title, description, icon }) => (
   <motion.div
@@ -16,6 +18,8 @@ const AssuranceItem = ({ title, description, icon }) => (
 );
 
 const PrivacyAssurance = () => {
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+  
   const assurances = [
     {
       title: "Data Privacy",
@@ -89,15 +93,20 @@ const PrivacyAssurance = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-8 text-center"
           >
-            <a
-              href="/privacy-policy"
-              className="text-sm text-teal hover:underline"
+            <button
+              onClick={() => setIsPrivacyModalOpen(true)}
+              className="text-sm text-teal hover:underline cursor-pointer"
             >
               Read our full Privacy Policy →
-            </a>
+            </button>
           </motion.div>
         </div>
       </div>
+
+      <PrivacyPolicyModal 
+        isOpen={isPrivacyModalOpen}
+        onClose={() => setIsPrivacyModalOpen(false)}
+      />
     </section>
   );
 };

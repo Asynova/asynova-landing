@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import SecurityVisualization from './SecurityVisualization';
 
 const SecurityFeature = ({ title, description, icon, delay }) => (
   <motion.div
@@ -78,11 +79,7 @@ const Security = () => {
             transition={{ duration: 0.5 }}
             className="relative h-[400px] bg-navy/30 rounded-lg overflow-hidden"
           >
-            {/* Preview badge */}
-            <div className="absolute top-4 right-4 bg-teal/20 text-teal px-3 py-1 rounded-full text-sm">
-              Security Architecture Preview
-            </div>
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,209,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,209,0.1)_1px,transparent_1px)] bg-[size:20px_20px]" />
+            <SecurityVisualization />
           </motion.div>
         </div>
       </div>

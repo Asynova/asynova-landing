@@ -5,6 +5,17 @@ import { useModal } from '../../context/ModalContext';
 const Hero = () => {
   const { openWaitlist } = useModal();
 
+  const scrollToVision = () => {
+    // Find the solution section element
+    const solutionSection = document.getElementById('solution');
+    if (solutionSection) {
+      solutionSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center">
       <div className="container mx-auto px-4">
@@ -52,7 +63,10 @@ const Hero = () => {
               >
                 Join Beta Program →
               </button>
-              <button className="px-6 py-3 border border-teal text-teal font-semibold rounded-lg hover:bg-teal/10">
+              <button 
+                onClick={scrollToVision}
+                className="px-6 py-3 border border-teal text-teal font-semibold rounded-lg hover:bg-teal/10"
+              >
                 View Product Vision
               </button>
             </div>

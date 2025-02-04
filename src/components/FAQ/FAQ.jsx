@@ -89,7 +89,7 @@ const FAQ = () => {
             Have more questions? We'd love to hear from you.
           </p>
           <a
-            href="mailto:beta@asynova.com"
+            href="mailto:hello@asynova.com"
             className="text-teal hover:underline"
           >
             Contact us about the beta program →
