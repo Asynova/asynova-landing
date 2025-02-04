@@ -11,6 +11,10 @@ import Problem from './components/Problem/Problem';
 import Solution from './components/Solution/Solution';
 import Trust from './components/Trust/Trust';
 import LoadingIndicator from './components/LoadingState/LoadingIndicator';
+import FAQ from './components/FAQ/FAQ';
+import EarlyAdopterBenefits from './components/EarlyAdopterBenefits/EarlyAdopterBenefits';
+import SocialProof from './components/SocialProof/SocialProof';
+import PrivacyAssurance from './components/PrivacyAssurance/PrivacyAssurance';
 
 function App() {
   return (
@@ -22,9 +26,13 @@ function App() {
           <Problem />
           <Solution />
           <Features />
-          <Integration />
           <Security />
+          <Integration />
+          <SocialProof />
+          <EarlyAdopterBenefits />
+          <PrivacyAssurance />
           <Trust />
+          <FAQ />
           <Footer />
         </Suspense>
         <ScrollToTop />
