@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { event } from '../../utils/analytics';
 import { triggerHotjarEvent } from '../../utils/hotjar';
 import { useKeyboard } from '../../hooks/useKeyboard';
+import PrivacyPolicyModal from '../PrivacyPolicy/PrivacyPolicyModal';
+import TermsOfServiceModal from '../Legal/TermsOfServiceModal';
 
 const FormStep = ({ title, children }) => (
   <motion.div
@@ -32,6 +34,8 @@ const WaitlistModal = ({ isOpen, onClose }) => {
   useKeyboard(onClose);
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 3;
+  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
+  const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
 
   const [formData, setFormData] = useState({
     // Step 1: Basic Info
@@ -50,7 +54,11 @@ const WaitlistModal = ({ isOpen, onClose }) => {
     useCase: '',
     betaInterest: '',
     contactPreference: '',
-    additionalNotes: ''
+    additionalNotes: '',
+    
+    // Consent checkboxes
+    acceptTerms: false,
+    acceptPrivacy: false
   });
 
   const [status, setStatus] = useState('idle'); // idle, submitting, success, error
@@ -73,6 +81,12 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.acceptTerms || !formData.acceptPrivacy) {
+      setStatus('error');
+      return;
+    }
+
     setStatus('submitting');
 
     event({
@@ -343,9 +357,10 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                   required
                 >
                   <option value="">Select preferred contact method</option>
-                  <option value="email">Email</option>
-                  <option value="call">Phone Call</option>
-                  <option value="demo">Product Demo</option>
+                  <option value="email">Email Updates & Communication</option>
+                  <option value="video">Virtual Meeting (Zoom/Google Meet)</option>
+                  <option value="interactive">Interactive Product Demo Session</option>
+                  <option value="slack">Private Slack Channel Access</option>
                 </select>
               </div>
 
@@ -362,6 +377,68 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                   rows="2"
                 />
               </div>
+
+              <div className="space-y-3 mt-6 border-t border-teal/10 pt-6">
+                <div className="flex items-start">
+                  <div className="flex items-center h-5">
+                    <input
+                      type="checkbox"
+                      name="acceptTerms"
+                      checked={formData.acceptTerms}
+                      onChange={(e) => handleChange({
+                        target: {
+                          name: 'acceptTerms',
+                          value: e.target.checked
+                        }
+                      })}
+                      className="h-4 w-4 rounded border-teal/20 bg-navy/50 text-teal focus:ring-teal"
+                      required
+                    />
+                  </div>
+                  <div className="ml-3">
+                    <label className="text-sm text-gray-300">
+                      I agree to the{' '}
+                      <button
+                        type="button"
+                        onClick={() => setIsTermsModalOpen(true)}
+                        className="text-teal hover:underline"
+                      >
+                        Terms of Service
+                      </button>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="flex items-center h-5">
+                    <input
+                      type="checkbox"
+                      name="acceptPrivacy"
+                      checked={formData.acceptPrivacy}
+                      onChange={(e) => handleChange({
+                        target: {
+                          name: 'acceptPrivacy',
+                          value: e.target.checked
+                        }
+                      })}
+                      className="h-4 w-4 rounded border-teal/20 bg-navy/50 text-teal focus:ring-teal"
+                      required
+                    />
+                  </div>
+                  <div className="ml-3">
+                    <label className="text-sm text-gray-300">
+                      I acknowledge the{' '}
+                      <button
+                        type="button"
+                        onClick={() => setIsPrivacyModalOpen(true)}
+                        className="text-teal hover:underline"
+                      >
+                        Privacy Policy
+                      </button>
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
           </FormStep>
         );
@@ -372,90 +449,101 @@ const WaitlistModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Dialog
-      open={isOpen}
-      onClose={onClose}
-      className="relative z-50"
-    >
-      <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" />
-      
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel className="w-full max-w-3xl rounded-xl bg-navy border border-teal/20">
-          <div className="modal-content max-h-[90vh] overflow-y-auto p-8">
-            {status === 'success' ? (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center py-8"
-              >
-                <div className="text-teal text-4xl mb-4">✓</div>
-                <h3 className="text-xl font-bold mb-2">Thanks for joining!</h3>
-                <p className="text-gray-300 mb-4">
-                  We're excited to have you help shape the future of AI orchestration.
-                </p>
-                <p className="text-sm text-gray-400">
-                  {formData.betaInterest === 'yes' 
-                    ? "We'll keep you updated and share more details about our beta program."
-                    : "We'll keep you updated on our progress."}
-                </p>
-              </motion.div>
-            ) : (
-              <div className="space-y-6">
-                <button
-                  onClick={onClose}
-                  className="absolute top-4 right-4 text-gray-400 hover:text-white"
-                  aria-label="Close waitlist form"
+    <>
+      <Dialog
+        open={isOpen}
+        onClose={onClose}
+        className="relative z-50"
+      >
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" aria-hidden="true" />
+        
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          <Dialog.Panel className="w-full max-w-3xl rounded-xl bg-navy border border-teal/20">
+            <div className="modal-content max-h-[90vh] overflow-y-auto p-8">
+              {status === 'success' ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center py-8"
                 >
-                  ✕
-                </button>
+                  <div className="text-teal text-4xl mb-4">✓</div>
+                  <h3 className="text-xl font-bold mb-2">Thanks for joining!</h3>
+                  <p className="text-gray-300 mb-4">
+                    We're excited to have you help shape the future of AI orchestration.
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    {formData.betaInterest === 'yes' 
+                      ? "We'll keep you updated and share more details about our beta program."
+                      : "We'll keep you updated on our progress."}
+                  </p>
+                </motion.div>
+              ) : (
+                <div className="space-y-6">
+                  <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 text-gray-400 hover:text-white"
+                    aria-label="Close waitlist form"
+                  >
+                    ✕
+                  </button>
 
-                <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+                  <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {renderStepContent()}
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    {renderStepContent()}
 
-                  <div className="flex justify-between mt-8">
-                    {currentStep > 1 && (
-                      <button
-                        type="button"
-                        onClick={prevStep}
-                        className="px-6 py-2 border border-teal text-teal font-semibold rounded-lg hover:bg-teal/10"
-                      >
-                        Back
-                      </button>
-                    )}
-                    {currentStep < totalSteps ? (
-                      <button
-                        type="button"
-                        onClick={nextStep}
-                        className="ml-auto px-6 py-2 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
-                      >
-                        Next
-                      </button>
-                    ) : (
-                      <button
-                        type="submit"
-                        disabled={status === 'submitting'}
-                        className={`ml-auto px-6 py-2 bg-teal text-navy font-semibold rounded-lg 
-                          ${status === 'submitting' ? 'opacity-70 cursor-not-allowed' : 'hover:opacity-90'}`}
-                      >
-                        {status === 'submitting' ? 'Submitting...' : 'Submit →'}
-                      </button>
-                    )}
-                  </div>
-
-                  {status === 'error' && (
-                    <div className="text-red-400 text-sm text-center">
-                      Something went wrong. Please try again.
+                    <div className="flex justify-between mt-8">
+                      {currentStep > 1 && (
+                        <button
+                          type="button"
+                          onClick={prevStep}
+                          className="px-6 py-2 border border-teal text-teal font-semibold rounded-lg hover:bg-teal/10"
+                        >
+                          Back
+                        </button>
+                      )}
+                      {currentStep < totalSteps ? (
+                        <button
+                          type="button"
+                          onClick={nextStep}
+                          className="ml-auto px-6 py-2 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
+                        >
+                          Next
+                        </button>
+                      ) : (
+                        <button
+                          type="submit"
+                          disabled={status === 'submitting'}
+                          className={`ml-auto px-6 py-2 bg-teal text-navy font-semibold rounded-lg 
+                            ${status === 'submitting' ? 'opacity-70 cursor-not-allowed' : 'hover:opacity-90'}`}
+                        >
+                          {status === 'submitting' ? 'Submitting...' : 'Submit →'}
+                        </button>
+                      )}
                     </div>
-                  )}
-                </form>
-              </div>
-            )}
-          </div>
-        </Dialog.Panel>
-      </div>
-    </Dialog>
+
+                    {status === 'error' && (
+                      <div className="text-red-400 text-sm text-center">
+                        Something went wrong. Please try again.
+                      </div>
+                    )}
+                  </form>
+                </div>
+              )}
+            </div>
+          </Dialog.Panel>
+        </div>
+      </Dialog>
+
+      <PrivacyPolicyModal 
+        isOpen={isPrivacyModalOpen}
+        onClose={() => setIsPrivacyModalOpen(false)}
+      />
+      <TermsOfServiceModal 
+        isOpen={isTermsModalOpen}
+        onClose={() => setIsTermsModalOpen(false)}
+      />
+    </>
   );
 };
 
