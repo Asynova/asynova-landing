@@ -9,7 +9,12 @@ const SecurityFeature = ({ title, description, icon, delay }) => (
   >
     <div className="text-teal text-xl">{icon}</div>
     <div>
-      <h3 className="font-semibold mb-2">{title}</h3>
+      <div className="flex items-center gap-2 mb-2">
+        <h3 className="font-semibold">{title}</h3>
+        <span className="text-xs bg-teal/20 text-teal px-2 py-1 rounded-full">
+          In Development
+        </span>
+      </div>
       <p className="text-gray-300 text-sm">{description}</p>
     </div>
   </motion.div>
@@ -19,25 +24,25 @@ const Security = () => {
   const features = [
     {
       title: "SOC 2 Compliance",
-      description: "Built-in security controls and audit trails for SOC 2 compliance",
+      description: "Security controls and audit trails being built to SOC 2 standards",
       icon: "🛡️",
       delay: 0.2
     },
     {
       title: "End-to-End Encryption",
-      description: "All data encrypted in transit and at rest with bank-grade security",
+      description: "Implementing bank-grade encryption for data in transit and at rest",
       icon: "🔒",
       delay: 0.3
     },
     {
-      title: "GDPR Ready",
-      description: "Privacy-first design with built-in GDPR compliance features",
+      title: "GDPR Readiness",
+      description: "Privacy-first architecture designed to meet GDPR requirements",
       icon: "✓",
       delay: 0.4
     },
     {
       title: "Audit Logging",
-      description: "Comprehensive audit trails for all AI model operations",
+      description: "Building comprehensive audit trail system for AI model operations",
       icon: "📋",
       delay: 0.5
     }
@@ -52,11 +57,13 @@ const Security = () => {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl font-bold mb-6">
-              Enterprise-Grade Security
-            </h2>
+            <div className="flex items-center gap-4 mb-6">
+              <h2 className="text-3xl font-bold">
+                Security & Compliance Roadmap
+              </h2>
+            </div>
             <p className="text-gray-300 mb-8">
-              Built with financial services compliance and security requirements in mind.
+              We're building our platform with enterprise-grade security and financial services compliance requirements as core principles. Join early to influence our security roadmap.
             </p>
             <div className="grid gap-8">
               {features.map((feature, index) => (
@@ -71,7 +78,10 @@ const Security = () => {
             transition={{ duration: 0.5 }}
             className="relative h-[400px] bg-navy/30 rounded-lg overflow-hidden"
           >
-            {/* Add security visualization or illustration here */}
+            {/* Preview badge */}
+            <div className="absolute top-4 right-4 bg-teal/20 text-teal px-3 py-1 rounded-full text-sm">
+              Security Architecture Preview
+            </div>
             <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,209,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,209,0.1)_1px,transparent_1px)] bg-[size:20px_20px]" />
           </motion.div>
         </div>

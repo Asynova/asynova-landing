@@ -3,7 +3,7 @@ import HeroVisualization from './HeroVisualization';
 import { useModal } from '../../context/ModalContext';
 
 const Hero = () => {
-    const { openWaitlist } = useModal();
+  const { openWaitlist } = useModal();
 
   return (
     <section className="relative min-h-screen flex items-center">
@@ -17,38 +17,43 @@ const Hero = () => {
           >
             {/* Tag */}
             <span className="text-teal text-sm font-semibold tracking-wider">
-              AI ORCHESTRATION FOR FINANCIAL SERVICES
+              LAUNCHING SOON: AI ORCHESTRATION FOR FINANCIAL SERVICES
             </span>
             
             {/* Headline */}
             <h1 className="mt-6 text-4xl lg:text-5xl font-bold">
-              Automate AI Model Selection for 
+              Simplify AI Implementation for 
               <span className="text-teal"> Financial Apps</span>
             </h1>
             
             {/* Subheadline */}
             <p className="mt-4 text-lg text-gray-300">
-              Deploy compliant AI workflows in minutes. Optimize costs, security, and performance automatically.
+              We're building a platform to automate AI model selection and compliance. Join our early access program to shape the future of AI orchestration.
             </p>
 
-            {/* Trust Indicators */}
+            {/* Security Roadmap */}
             <div className="mt-6 flex space-x-4 text-sm text-gray-300">
-              <span>SOC 2 Ready</span>
+              <span className="flex items-center gap-2">
+                <span>Security First</span>
+                <span className="bg-teal/20 text-teal px-2 py-0.5 rounded-full text-xs">In Progress</span>
+              </span>
               <span>•</span>
-              <span>GDPR Compliant</span>
-              <span>•</span>
-              <span>Bank-Grade Security</span>
+              <span className="flex items-center gap-2">
+                <span>Compliance Ready</span>
+                <span className="bg-teal/20 text-teal px-2 py-0.5 rounded-full text-xs">Roadmap</span>
+              </span>
             </div>
 
             {/* CTA Buttons */}
             <div className="mt-8 flex space-x-4">
               <button 
                 onClick={openWaitlist}
-                className="px-6 py-3 bg-teal text-navy font-semibold rounded-lg hover:opacity-90">
-                Join Early Access →
+                className="px-6 py-3 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
+              >
+                Join Beta Program →
               </button>
               <button className="px-6 py-3 border border-teal text-teal font-semibold rounded-lg hover:bg-teal/10">
-                See How It Works
+                View Product Vision
               </button>
             </div>
           </motion.div>

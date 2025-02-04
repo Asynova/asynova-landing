@@ -18,28 +18,33 @@ const Navigation = () => {
     <nav className="fixed w-full z-50 bg-navy/80 backdrop-blur-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <div className="text-xl font-bold">Asynova</div>
+          {/* Logo and Status */}
+          <div className="flex items-center gap-3">
+            <div className="text-xl font-bold">Asynova</div>
+            <span className="hidden sm:block text-xs bg-teal/20 text-teal px-2 py-1 rounded-full">
+              In Development
+            </span>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
             <button 
-              onClick={() => scrollToSection('features')} 
+              onClick={() => scrollToSection('features')}
               className="text-gray-300 hover:text-teal"
             >
-              Features
+              Planned Features
             </button>
             <button 
-              onClick={() => scrollToSection('security')} 
+              onClick={() => scrollToSection('security')}
               className="text-gray-300 hover:text-teal"
             >
-              Security
+              Security Roadmap
             </button>
             <button 
-              onClick={() => scrollToSection('integrations')} 
+              onClick={() => scrollToSection('integrations')}
               className="text-gray-300 hover:text-teal"
             >
-              Integrations
+              Future Integrations
             </button>
           </div>
 
@@ -47,8 +52,9 @@ const Navigation = () => {
           <button 
             onClick={openWaitlist}
             className="hidden md:block px-6 py-2 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
-            aria-label="Join Early Access Waitlist">
-            Join Early Access
+            aria-label="Join Beta Program"
+          >
+            Join Beta
           </button>
 
           {/* Mobile Menu Button */}
@@ -72,27 +78,28 @@ const Navigation = () => {
           >
             <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
               <button 
-                onClick={() => scrollToSection('features')} 
+                onClick={() => scrollToSection('features')}
                 className="text-gray-300 hover:text-teal py-2"
               >
-                Features
+                Planned Features
               </button>
               <button 
-                onClick={() => scrollToSection('security')} 
+                onClick={() => scrollToSection('security')}
                 className="text-gray-300 hover:text-teal py-2"
               >
-                Security
+                Security Roadmap
               </button>
               <button 
-                onClick={() => scrollToSection('integrations')} 
+                onClick={() => scrollToSection('integrations')}
                 className="text-gray-300 hover:text-teal py-2"
               >
-                Integrations
+                Future Integrations
               </button>
               <button 
                 onClick={openWaitlist}
-                className="px-6 py-2 bg-teal text-navy font-semibold rounded-lg hover:opacity-90">
-                Join Early Access
+                className="px-6 py-2 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
+              >
+                Join Beta
               </button>
             </div>
           </motion.div>

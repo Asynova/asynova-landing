@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useModal } from '../../context/ModalContext';
 
 const Footer = () => {
-    const { openWaitlist } = useModal();
+  const { openWaitlist } = useModal();
 
   return (
     <footer className="py-20 border-t border-teal/10">
@@ -15,15 +15,17 @@ const Footer = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl font-bold mb-4">
-            Ready to Transform Your AI Implementation?
+            Help Shape the Future of AI Implementation
           </h2>
           <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join the waitlist for early access and be among the first to automate your AI workflows.
+            Join our early access program to influence the development of our AI orchestration platform. 
+            Be part of the journey from the beginning.
           </p>
           <button 
             onClick={openWaitlist}
-            className="px-8 py-3 bg-teal text-navy font-semibold rounded-lg hover:opacity-90">
-            Join Early Access →
+            className="px-8 py-3 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
+          >
+            Join Beta Program →
           </button>
         </motion.div>
 
@@ -33,8 +35,12 @@ const Footer = () => {
           <div className="md:col-span-2">
             <h3 className="text-xl font-bold mb-4">Asynova</h3>
             <p className="text-gray-300 mb-4">
-              Automating AI orchestration for financial services with security and compliance built-in.
+              Building the future of AI orchestration for financial services. 
+              Designed with security and compliance in mind.
             </p>
+            <div className="text-sm text-teal mt-4">
+              Currently in development • Launching 2025
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -42,8 +48,18 @@ const Footer = () => {
             <h4 className="text-sm font-semibold mb-4 text-gray-400">COMPANY</h4>
             <ul className="space-y-2">
               <li><a href="#about" className="text-gray-300 hover:text-teal">About</a></li>
-              <li><a href="#careers" className="text-gray-300 hover:text-teal">Careers</a></li>
-              <li><a href="#blog" className="text-gray-300 hover:text-teal">Blog</a></li>
+              <li>
+                <a href="#careers" className="text-gray-300 hover:text-teal">
+                  Careers
+                  <span className="ml-2 text-xs bg-teal/20 text-teal px-2 py-0.5 rounded-full">Coming Soon</span>
+                </a>
+              </li>
+              <li>
+                <a href="#blog" className="text-gray-300 hover:text-teal">
+                  Blog
+                  <span className="ml-2 text-xs bg-teal/20 text-teal px-2 py-0.5 rounded-full">Coming Soon</span>
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -59,7 +75,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-teal/10 text-center text-gray-400 text-sm">
-          © 2025 Asynova. All rights reserved.
+          © 2025 Asynova. All rights reserved. • In Development
         </div>
       </div>
     </footer>

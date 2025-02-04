@@ -5,8 +5,12 @@ const IntegrationLogo = ({ name, delay }) => (
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay }}
-    className="bg-navy/50 border border-teal/20 rounded-lg p-6 flex items-center justify-center"
+    className="bg-navy/50 border border-teal/20 rounded-lg p-6 flex flex-col items-center justify-center relative"
   >
+    {/* Add "Planned" badge */}
+    <div className="absolute top-2 right-2 bg-teal/20 text-teal text-xs px-2 py-1 rounded-full">
+      Planned
+    </div>
     {/* Replace with actual logos later */}
     <span className="text-gray-300 font-medium">{name}</span>
   </motion.div>
@@ -26,10 +30,11 @@ const Integration = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">
-            Enterprise-Ready Integrations
+            Planned Integration Partners
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Connect with leading financial data providers and AI models seamlessly.
+            We're building integrations with leading financial data providers and AI models.
+            Join the waitlist to influence our integration roadmap.
           </p>
         </div>
 
@@ -37,6 +42,11 @@ const Integration = () => {
           {integrations.map((integration, index) => (
             <IntegrationLogo key={index} {...integration} />
           ))}
+        </div>
+
+        <div className="text-center mt-8 text-sm text-gray-400">
+          More integration partners coming soon. Have a specific integration request?
+          Let us know when you join the waitlist.
         </div>
       </div>
     </section>

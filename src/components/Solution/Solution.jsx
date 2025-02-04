@@ -1,7 +1,43 @@
 import { motion } from 'framer-motion';
 import DashboardDemo from '../Visualizations/DashboardDemo';
 
+const StepItem = ({ number, title, description, status }) => (
+  <div className="flex gap-4">
+    <div className="text-teal text-xl">{number}</div>
+    <div>
+      <div className="flex items-center gap-3">
+        <h3 className="font-semibold mb-2">{title}</h3>
+        <span className="text-xs bg-teal/20 text-teal px-2 py-1 rounded-full">
+          {status}
+        </span>
+      </div>
+      <p className="text-gray-300">{description}</p>
+    </div>
+  </div>
+);
+
 const Solution = () => {
+  const steps = [
+    {
+      number: "1",
+      title: "Upload Your Data",
+      description: "Secure API connections and direct upload options for financial data",
+      status: "In Development"
+    },
+    {
+      number: "2",
+      title: "Auto-Select Models",
+      description: "Intelligent model selection and chaining based on your specific needs",
+      status: "Coming Soon"
+    },
+    {
+      number: "3",
+      title: "Monitor & Optimize",
+      description: "Real-time monitoring and automatic optimization of performance and costs",
+      status: "Planned"
+    }
+  ];
+
   return (
     <section className="py-20 bg-navy/50">
       <div className="container mx-auto px-4">
@@ -12,10 +48,11 @@ const Solution = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl font-bold mb-4">
-            How It Works in 60 Seconds
+            Our Vision: Simplified AI Implementation
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            No code. No DevOps. Just AI that works.
+            We're building a platform where AI implementation will be as simple as three steps.
+            Join our beta to help shape this vision.
           </p>
         </motion.div>
 
@@ -27,29 +64,9 @@ const Solution = () => {
             transition={{ duration: 0.5 }}
             className="space-y-8"
           >
-            <div className="flex gap-4">
-              <div className="text-teal text-xl">1</div>
-              <div>
-                <h3 className="font-semibold mb-2">Upload Your Data</h3>
-                <p className="text-gray-300">Connect your financial data through secure APIs or upload directly</p>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <div className="text-teal text-xl">2</div>
-              <div>
-                <h3 className="font-semibold mb-2">Auto-Select Models</h3>
-                <p className="text-gray-300">Platform automatically selects and chains optimal AI models</p>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <div className="text-teal text-xl">3</div>
-              <div>
-                <h3 className="font-semibold mb-2">Monitor & Optimize</h3>
-                <p className="text-gray-300">Real-time cost and performance metrics with automatic optimization</p>
-              </div>
-            </div>
+            {steps.map((step, index) => (
+              <StepItem key={index} {...step} />
+            ))}
           </motion.div>
 
           {/* Right: Interactive Demo */}
@@ -59,14 +76,12 @@ const Solution = () => {
             transition={{ duration: 0.5 }}
             className="relative h-[400px] bg-navy/30 rounded-lg overflow-hidden"
           >
-            {/* Grid background */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,209,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,209,0.1)_1px,transparent_1px)] bg-[size:20px_20px]" />
-            
-            {/* We can add an animated workflow visualization here */}
-            <div className="relative h-[400px] bg-navy/30 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,209,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,209,0.1)_1px,transparent_1px)] bg-[size:20px_20px]" />
-                <DashboardDemo />
+            {/* Preview Badge */}
+            <div className="absolute top-4 left-4 bg-teal/20 text-teal px-3 py-1 rounded-full text-sm">
+              Platform Preview
             </div>
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,209,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,209,0.1)_1px,transparent_1px)] bg-[size:20px_20px]" />
+            <DashboardDemo />
           </motion.div>
         </div>
       </div>
