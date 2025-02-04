@@ -1,0 +1,46 @@
+@media print {
+    /* Hide interactive elements */
+    button,
+    .scroll-top,
+    .modal-trigger {
+      display: none !important;
+    }
+  
+    /* Ensure dark backgrounds print well */
+    body {
+      background: white !important;
+      color: black !important;
+    }
+  
+    /* Optimize sections for printing */
+    section {
+      page-break-inside: avoid;
+      margin: 20px 0;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+  
+    /* Ensure text is readable */
+    h1, h2, h3, p {
+      color: black !important;
+    }
+  
+    /* Make links visible */
+    a {
+      text-decoration: underline;
+      color: blue !important;
+    }
+  
+    /* Add URLs after links */
+    a[href]:after {
+      content: " (" attr(href) ")";
+      font-size: 0.8em;
+    }
+  
+    /* Format contact information */
+    .contact-info {
+      margin-top: 20px;
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+    }
+  }
