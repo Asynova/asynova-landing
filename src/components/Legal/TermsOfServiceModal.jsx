@@ -1,5 +1,4 @@
 import { Dialog } from '@headlessui/react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const TermsOfServiceModal = ({ isOpen, onClose }) => {
   return (
