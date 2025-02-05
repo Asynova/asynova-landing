@@ -7,11 +7,21 @@ const Navigation = () => {
   const { openWaitlist } = useModal();
 
   const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
-    }
+    // Close menu first
+    setIsMenuOpen(false);
+
+    // Slight delay to allow menu to close
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 300); // Match this with your menu animation duration
+  };
+
+  const handleWaitlist = () => {
+    setIsMenuOpen(false);
+    openWaitlist();
   };
 
   return (
@@ -96,7 +106,7 @@ const Navigation = () => {
                 Future Integrations
               </button>
               <button 
-                onClick={openWaitlist}
+                onClick={handleWaitlist}
                 className="px-6 py-2 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
               >
                 Join Beta
