@@ -5,7 +5,7 @@ const SecurityVisualization = () => {
     <div className="relative w-full h-full p-6">
       {/* Preview Badge */}
       <div className="absolute top-4 right-4 bg-teal/20 text-teal px-3 py-1 rounded-full text-sm">
-        Security Architecture Preview
+        Planned Security Architecture
       </div>
 
       {/* Layers Visualization */}
@@ -20,7 +20,7 @@ const SecurityVisualization = () => {
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium">API Gateway</span>
             <span className="text-xs bg-teal/10 text-teal px-2 py-1 rounded-full">
-              Encrypted
+              Planned Implementation
             </span>
           </div>
           <div className="mt-2 text-xs text-gray-400">
@@ -38,11 +38,11 @@ const SecurityVisualization = () => {
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium">Authentication</span>
             <span className="text-xs bg-teal/10 text-teal px-2 py-1 rounded-full">
-              OAuth 2.0
+              Planned OAuth 2.0
             </span>
           </div>
           <div className="mt-2 text-xs text-gray-400">
-            Token Management • Role-Based Access • MFA
+            Token Management • Access Controls • MFA
           </div>
         </motion.div>
 
@@ -56,11 +56,11 @@ const SecurityVisualization = () => {
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium">Data Security</span>
             <span className="text-xs bg-teal/10 text-teal px-2 py-1 rounded-full">
-              End-to-End
+              Planned Protection
             </span>
           </div>
           <div className="mt-2 text-xs text-gray-400">
-            Encryption at Rest • Secure Transit • Key Management
+            Industry-Standard Encryption • Secure Data Transit • Key Management
           </div>
         </motion.div>
 
@@ -74,7 +74,7 @@ const SecurityVisualization = () => {
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium">Compliance & Audit</span>
             <span className="text-xs bg-teal/10 text-teal px-2 py-1 rounded-full">
-              Real-time
+              In Development
             </span>
           </div>
           <div className="mt-2 text-xs text-gray-400">

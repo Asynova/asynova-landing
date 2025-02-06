@@ -17,17 +17,17 @@ const ModelCard = ({ model, accuracy, cost, delay = 0 }) => (
       />
     </div>
     <div className="mt-2 text-sm text-gray-300">
-      <div>Accuracy: {accuracy}%</div>
-      <div>Cost: ${cost}/1k calls</div>
+      <div>Expected Accuracy: {accuracy}%+</div>
+      <div>Example Cost: From ${cost}/1k calls</div>
     </div>
   </motion.div>
 );
 
 const HeroVisualization = () => {
   const models = [
-    { model: "GPT-4", accuracy: 98, cost: 0.03, delay: 0.2 },
-    { model: "BERT Financial", accuracy: 95, cost: 0.01, delay: 0.4 },
-    { model: "FinBERT", accuracy: 92, cost: 0.008, delay: 0.6 }
+    { model: "GPT-4", accuracy: 95, cost: 0.03, delay: 0.2 },
+    { model: "BERT Financial", accuracy: 90, cost: 0.01, delay: 0.4 },
+    { model: "FinBERT", accuracy: 85, cost: 0.008, delay: 0.6 }
   ];
 
   return (
@@ -37,7 +37,7 @@ const HeroVisualization = () => {
 
       {/* Model selection visualization */}
       <div className="relative p-6">
-        <div className="text-sm text-gray-400 mb-4">Available Models</div>
+        <div className="text-sm text-gray-400 mb-4">Planned Model Integration</div>
         {models.map((model, index) => (
           <ModelCard key={model.model} {...model} />
         ))}

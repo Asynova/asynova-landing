@@ -23,11 +23,11 @@ const DashboardDemo = () => {
           {/* Model cards */}
           <div className="flex justify-between items-center bg-navy/50 p-2 rounded">
             <span>GPT-4</span>
-            <span className="text-teal/70">Target: 98% accuracy</span>
+            <span className="text-teal/70">Expected accuracy: 95%+ accuracy</span>
           </div>
           <div className="flex justify-between items-center bg-navy/50 p-2 rounded">
             <span>BERT Financial</span>
-            <span className="text-teal/70">Target: 95% accuracy</span>
+            <span className="text-teal/70">Expected accuracy: 90%+ accuracy</span>
           </div>
         </div>
       </motion.div>
@@ -41,16 +41,16 @@ const DashboardDemo = () => {
       >
         <div className="flex justify-between items-center mb-3">
           <span className="text-teal font-medium">Target Performance</span>
-          <span className="text-sm text-gray-400">Expected Metrics</span>
+          <span className="text-sm text-gray-400">Example Metrics</span>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-navy/50 p-3 rounded">
-            <div className="text-sm text-gray-400">Estimated Cost</div>
-            <div className="text-lg opacity-75">~$0.03/call</div>
+            <div className="text-sm text-gray-400">Estimated Costs</div>
+            <div className="text-lg opacity-75">Starting from $0.03/call</div>
           </div>
           <div className="bg-navy/50 p-3 rounded">
-            <div className="text-sm text-gray-400">Target Latency</div>
-            <div className="text-lg opacity-75">~124ms</div>
+            <div className="text-sm text-gray-400">Target Response Time</div>
+            <div className="text-lg opacity-75">Sub-second responses</div>
           </div>
         </div>
       </motion.div>

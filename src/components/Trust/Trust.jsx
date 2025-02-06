@@ -35,7 +35,7 @@ const Features = () => {
       status: "Coming Soon"
     },
     {
-      title: "Bank-Grade Security",
+      title: "Planned Bank-Grade Security",
       description: "Designing architecture with SOC 2 standards and end-to-end encryption in mind",
       icon: "🔒",
       delay: 0.4,
