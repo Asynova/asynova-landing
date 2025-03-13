@@ -16,6 +16,7 @@ const CostVisualization = () => {
   const maxValue = Math.max(...costData.map(d => Math.max(d.optimized, d.unoptimized)));
   
   // Calculate height percentage based on value
+  // eslint-disable-next-line no-unused-vars
   const getHeight = value => `${(value / maxValue) * 100}%`;
 
   return (
@@ -64,40 +65,37 @@ const CostVisualization = () => {
             ))}
           </div>
           
-          {/* Bars */}
-          <div className="absolute left-12 right-0 inset-y-0 flex items-end justify-between">
+          {/* Bars - Fixed implementation with manual height */}
+          <div className="absolute left-12 right-0 bottom-0 h-full flex items-end justify-between px-2">
             {costData.map((data, i) => (
-              <div key={data.day} className="relative flex flex-col items-center w-8">
-                {/* Unoptimized cost bar */}
-                <motion.div
-                  initial={{ height: 0 }}
-                  animate={{ height: getHeight(data.unoptimized) }}
-                  transition={{ duration: 1, delay: 0.2 + (i * 0.1) }}
-                  className="w-4 bg-red-400/70 rounded-t"
-                ></motion.div>
+              <div key={data.day} className="relative flex flex-col items-center w-12 h-full">
+                {/* Unoptimized cost bar - static implementation */}
+                <div 
+                  className="absolute bottom-0 w-5 bg-red-400/70 rounded-t"
+                  style={{ 
+                    height: `${(data.unoptimized / maxValue) * 100}%`,
+                    left: '0px'
+                  }}
+                ></div>
                 
-                {/* Optimized cost bar - positioned absolutely on top to show comparison */}
-                <motion.div
-                  initial={{ height: 0 }}
-                  animate={{ height: getHeight(data.optimized) }}
-                  transition={{ duration: 1, delay: 1 + (i * 0.1) }}
-                  className="absolute bottom-0 w-4 bg-teal/70 rounded-t"
-                ></motion.div>
+                {/* Optimized cost bar */}
+                <div 
+                  className="absolute bottom-0 w-5 bg-teal/70 rounded-t"
+                  style={{ 
+                    height: `${(data.optimized / maxValue) * 100}%`,
+                    right: '0px'
+                  }}
+                ></div>
                 
                 {/* X-axis label */}
-                <div className="absolute -bottom-6 text-xs text-gray-400">{data.day}</div>
+                <div className="absolute -bottom-6 text-xs text-gray-400 w-full text-center">{data.day}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
       
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 2 }}
-        className="grid grid-cols-2 gap-4"
-      >
+      <div className="grid grid-cols-2 gap-4">
         <div className="bg-navy/50 p-3 rounded-lg">
           <div className="text-sm mb-2">Weekly Spending</div>
           <div className="flex justify-between">
@@ -133,7 +131,7 @@ const CostVisualization = () => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
