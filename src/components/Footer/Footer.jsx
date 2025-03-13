@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { useModal } from '../../context/ModalContext';
 import { useState } from 'react';
 import PrivacyPolicyModal from '../PrivacyPolicy/PrivacyPolicyModal';
@@ -9,40 +8,11 @@ const Footer = () => {
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
 
-  const scrollToAbout = () => {
-    const aboutSection = document.getElementById('social-proof');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <footer className="py-20 border-t border-teal/10">
+    <footer className="py-16 border-t border-teal/10">
       <div className="container mx-auto px-4">
-        {/* Final CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl font-bold mb-4">
-            Help Shape the Future of AI Implementation
-          </h2>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join our early access program to influence the development of our AI orchestration platform. 
-            Be part of the journey from the beginning.
-          </p>
-          <button 
-            onClick={openWaitlist}
-            className="px-8 py-3 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
-          >
-            Join Beta Program →
-          </button>
-        </motion.div>
-
         {/* Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pt-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
           {/* Logo & Description */}
           <div className="md:col-span-2">
             <h3 className="text-xl font-bold mb-4">Asynova</h3>
@@ -51,7 +21,7 @@ const Footer = () => {
               Designed with security and compliance in mind.
             </p>
             <div className="text-sm text-teal mt-4">
-              Currently in development • Launching 2025
+              Currently in development • Launching April 2025
             </div>
           </div>
 
@@ -60,12 +30,14 @@ const Footer = () => {
             <h4 className="text-sm font-semibold mb-4 text-gray-400">COMPANY</h4>
             <ul className="space-y-2">
               <li>
-                <button 
-                  onClick={scrollToAbout}
+                <a 
+                  href="https://www.linkedin.com/company/asynova"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-300 hover:text-teal"
                 >
-                  About
-                </button>
+                  LinkedIn
+                </a>
               </li>
               <li>
                 <span className="text-gray-300 opacity-75 cursor-not-allowed">
@@ -76,12 +48,12 @@ const Footer = () => {
                 </span>
               </li>
               <li>
-                <span className="text-gray-300 opacity-75 cursor-not-allowed">
-                  Blog
-                  <span className="ml-2 text-xs bg-teal/20 text-teal px-2 py-0.5 rounded-full">
-                    Coming Soon
-                  </span>
-                </span>
+                <button
+                  onClick={openWaitlist}
+                  className="text-gray-300 hover:text-teal"
+                >
+                  Join Beta
+                </button>
               </li>
             </ul>
           </div>
@@ -111,7 +83,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-teal/10 text-center text-gray-400 text-sm">
+        <div className="mt-16 pt-8 border-t border-teal/10 text-center text-gray-400 text-sm max-w-5xl mx-auto">
           © 2025 Asynova. All rights reserved. • In Development
         </div>
       </div>

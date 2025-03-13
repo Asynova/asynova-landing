@@ -18,60 +18,81 @@ const PrivacyPolicyModal = ({ isOpen, onClose }) => {
             >
               ✕
             </button>
-
+            
             <div className="space-y-6">
               <h2 className="text-2xl font-bold">Privacy Policy</h2>
               
-              <div className="space-y-4 text-gray-300">
+              <div className="space-y-6 text-gray-300">
                 <section>
-                  <h3 className="text-lg font-semibold mb-2">1. Data Collection</h3>
+                  <h3 className="text-lg font-semibold mb-2">1. Data Collection During Beta</h3>
                   <p>During the beta phase, we collect:</p>
                   <ul className="list-disc pl-6 space-y-2 mt-2">
-                    <li>Contact information provided through the waitlist form</li>
+                    <li>Contact information provided through the beta application form</li>
+                    <li>Information about your AI implementation challenges and needs</li>
                     <li>Usage metrics and feedback to improve our platform</li>
-                    <li>Technical information for platform optimization</li>
+                    <li>Technical information for performance optimization</li>
                   </ul>
+                  <p className="mt-2">We apply strict data minimization principles and only collect what's necessary to provide the beta service and improve the platform.</p>
                 </section>
-
+                
                 <section>
-                  <h3 className="text-lg font-semibold mb-2">2. Data Usage</h3>
+                  <h3 className="text-lg font-semibold mb-2">2. How We Use Your Data</h3>
                   <p>We use collected data to:</p>
                   <ul className="list-disc pl-6 space-y-2 mt-2">
-                    <li>Keep you updated about our beta program</li>
-                    <li>Improve our platform based on feedback</li>
-                    <li>Ensure platform security and performance</li>
+                    <li>Evaluate your application for the beta program</li>
+                    <li>Provide you with access to the Asynova platform</li>
+                    <li>Communicate with you about the beta program</li>
+                    <li>Improve our platform based on your feedback and usage</li>
+                    <li>Ensure the security and performance of our services</li>
                   </ul>
+                  <p className="mt-2">We will never sell your data to third parties or use it for purposes beyond what's described here.</p>
                 </section>
-
+                
                 <section>
-                  <h3 className="text-lg font-semibold mb-2">3. Data Protection</h3>
+                  <h3 className="text-lg font-semibold mb-2">3. Data Security During Beta</h3>
                   <p>We protect your data through:</p>
                   <ul className="list-disc pl-6 space-y-2 mt-2">
                     <li>End-to-end encryption for all data in transit and at rest</li>
-                    <li>Strict access controls and security monitoring</li>
+                    <li>Strict access controls and comprehensive security monitoring</li>
                     <li>Regular security audits and updates</li>
+                    <li>Adherence to industry security standards</li>
                   </ul>
+                  <p className="mt-2">As a financial services-focused company, we understand the importance of security and treat all data with the highest level of protection.</p>
                 </section>
-
+                
                 <section>
-                  <h3 className="text-lg font-semibold mb-2">4. Your Rights</h3>
-                  <p>As a beta user, you have the right to:</p>
+                  <h3 className="text-lg font-semibold mb-2">4. Your Rights as a Beta Participant</h3>
+                  <p>As a beta program participant, you have the right to:</p>
                   <ul className="list-disc pl-6 space-y-2 mt-2">
-                    <li>Request access to your data at any time</li>
-                    <li>Opt out of data collection</li>
-                    <li>Request data deletion</li>
-                    <li>Update your communication preferences</li>
+                    <li>Request access to your personal data</li>
+                    <li>Request correction of inaccurate data</li>
+                    <li>Opt out of non-essential data collection</li>
+                    <li>Request deletion of your data</li>
+                    <li>Withdraw from the beta program at any time</li>
+                    <li>Control your communication preferences</li>
                   </ul>
                 </section>
-
+                
                 <section>
-                  <h3 className="text-lg font-semibold mb-2">5. Contact Us</h3>
-                  <p>For privacy-related questions, contact us at privacy@asynova.com</p>
+                  <h3 className="text-lg font-semibold mb-2">5. Beta-Specific Data Handling</h3>
+                  <p>During the beta phase:</p>
+                  <ul className="list-disc pl-6 space-y-2 mt-2">
+                    <li>We may collect additional feedback and usage data to improve the platform</li>
+                    <li>All data is anonymized when used for product improvement purposes</li>
+                    <li>You'll be notified of any significant changes to our data handling practices</li>
+                    <li>You can opt out of beta-specific data collection while continuing to use the service</li>
+                  </ul>
+                </section>
+                
+                <section>
+                  <h3 className="text-lg font-semibold mb-2">6. Contact Us</h3>
+                  <p>For privacy-related questions or to exercise your rights, contact us at:</p>
+                  <p className="mt-2">privacy@asynova.com</p>
                 </section>
               </div>
-
+              
               <div className="mt-8 pt-4 border-t border-teal/20 text-sm text-gray-400">
-                Last updated: February 2025
+                Last updated: March 2025
               </div>
             </div>
           </div>

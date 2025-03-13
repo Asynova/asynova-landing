@@ -1,86 +1,78 @@
 import { motion } from 'framer-motion';
-import HeroVisualization from './HeroVisualization';
 import { useModal } from '../../context/ModalContext';
+import BeforeAfterVisualization from '../Visualizations/BeforeAfterVisualization';
 
 const Hero = () => {
   const { openWaitlist } = useModal();
 
-  const scrollToVision = () => {
-    // Find the solution section element
-    const solutionSection = document.getElementById('solution');
-    if (solutionSection) {
-      solutionSection.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
-  };
-
   return (
-    <section className="relative min-h-screen flex items-center pt-20 md:pt-24">
+    <section className="min-h-screen flex flex-col items-center pt-20 md:pt-24">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column */}
-          <motion.div 
+        {/* Text content - keep this the same */}
+        <div className="max-w-4xl mx-auto text-center mb-12">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Tag */}
-            <span className="text-teal text-sm font-semibold tracking-wider">
-              LAUNCHING SOON: AI ORCHESTRATION FOR FINANCIAL SERVICES
-            </span>
-            
+            {/* Tag line */}
+            <div className="inline-block bg-teal/10 text-teal px-4 py-2 rounded-full text-sm font-medium mb-6">
+              Currently Selecting 5 Beta Partners
+            </div>
+
             {/* Headline */}
-            <h1 className="mt-6 text-4xl lg:text-5xl font-bold">
-              Simplify AI Implementation for 
-              <span className="text-teal"> Financial Apps</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              Cut AI Implementation from 
+              <span className="text-teal"> 9+ Months to Weeks</span>
             </h1>
-            
-            {/* Subheadline */}
-            <p className="mt-4 text-lg text-gray-300">
-              We're building a platform to automate AI model selection and compliance. Join our early access program to shape the future of AI orchestration.
+
+            {/* Value proposition */}
+            <div className="flex flex-col md:flex-row justify-center gap-4 mb-8">
+              <div className="bg-navy/50 border border-teal/20 rounded-lg px-4 py-3">
+                <div className="text-2xl font-bold text-teal">200+ hrs</div>
+                <div className="text-sm text-gray-300">Compliance documentation reduced to under 20</div>
+              </div>
+              
+              <div className="bg-navy/50 border border-teal/20 rounded-lg px-4 py-3">
+                <div className="text-2xl font-bold text-teal">40-60%</div>
+                <div className="text-sm text-gray-300">Infrastructure cost savings</div>
+              </div>
+              
+              <div className="bg-navy/50 border border-teal/20 rounded-lg px-4 py-3">
+                <div className="text-2xl font-bold text-teal">Weeks</div>
+                <div className="text-sm text-gray-300">Not months to implementation</div>
+              </div>
+            </div>
+
+            {/* Description */}
+            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+              Asynova automates compliance documentation and streamlines 
+              Gemini 2.0 Flash integration for financial institutions.
             </p>
 
-            {/* Security Roadmap */}
-            <div className="mt-6 flex space-x-4 text-sm text-gray-300">
-              <span className="flex items-center gap-2">
-                <span>Security First</span>
-                <span className="bg-teal/20 text-teal px-2 py-0.5 rounded-full text-xs">In Progress</span>
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-2">
-                <span>Compliance Ready</span>
-                <span className="bg-teal/20 text-teal px-2 py-0.5 rounded-full text-xs">Roadmap</span>
-              </span>
+            {/* CTA */}
+            <button
+              onClick={openWaitlist}
+              className="px-8 py-4 bg-teal text-navy font-semibold rounded-lg text-lg hover:opacity-90 shadow-lg"
+            >
+              Apply for Beta Access →
+            </button>
+            
+            <div className="text-sm text-gray-400 mt-3">
+              Currently in development. Beta launch: April 2025
             </div>
-
-            {/* CTA Buttons */}
-            <div className="mt-8 flex space-x-4">
-              <button 
-                onClick={openWaitlist}
-                className="px-6 py-3 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
-              >
-                Join Beta Program →
-              </button>
-              <button 
-                onClick={scrollToVision}
-                className="px-6 py-3 border border-teal text-teal font-semibold rounded-lg hover:bg-teal/10"
-              >
-                View Product Vision
-              </button>
-            </div>
-          </motion.div>
-
-          {/* Right Column - Placeholder for now */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <HeroVisualization />
           </motion.div>
         </div>
+        
+        {/* Add visualization below */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="max-w-4xl mx-auto mt-8 bg-navy/30 border border-teal/10 rounded-lg p-6"
+        >
+          <BeforeAfterVisualization />
+        </motion.div>
       </div>
     </section>
   );

@@ -5,26 +5,28 @@ const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-teal/10">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="border-b border-teal/10 py-6"
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-4 flex justify-between items-center text-left"
+        className="flex justify-between items-center w-full text-left"
       >
-        <span className="text-lg font-semibold">{question}</span>
+        <h3 className="text-lg font-semibold">{question}</h3>
         <span className="text-teal ml-4">
           {isOpen ? '−' : '+'}
         </span>
       </button>
-      <motion.div
-        initial={false}
-        animate={{ height: isOpen ? 'auto' : 0 }}
-        className="overflow-hidden"
-      >
-        <div className="pb-4 text-gray-300">
+      
+      {isOpen && (
+        <div className="mt-3 text-gray-300">
           {answer}
         </div>
-      </motion.div>
-    </div>
+      )}
+    </motion.div>
   );
 };
 
@@ -32,32 +34,32 @@ const FAQ = () => {
   const faqs = [
     {
       question: "When will Asynova launch?",
-      answer: "We're targeting a beta launch in early 2025. Join our waitlist to be among the first to get access and help shape the product."
+      answer: "We're targeting a beta launch in April 2025. Currently, we're in week 5 of our 8-week development sprint and selecting our initial 5 beta partners. Join our waitlist to be considered for early access."
     },
     {
-      question: "How does the beta program work?",
-      answer: "Beta users will get early access to our platform, direct support from our team, and the opportunity to influence our feature roadmap. We'll work closely with you to ensure the platform meets your specific needs."
+      question: "Is this ready for production use?",
+      answer: "The platform is currently in development. Our beta partners will have early access to test and provide feedback, helping us refine the platform before it's used for production workloads. We expect beta testing to last 2-3 months before moving to production readiness."
     },
     {
-      question: "What kind of support will early users get?",
-      answer: "Beta users receive priority support, including direct access to our technical team, implementation assistance, and regular check-ins to gather feedback and address any issues."
+      question: "What if we use different AI models than Gemini 2.0?",
+      answer: "While our initial MVP focuses on Gemini 2.0 Flash integration, our architecture is designed to support multiple models. Our beta partners will help us prioritize which additional integrations to build next. We plan to add support for other leading models based on partner feedback."
     },
     {
-      question: "Will there be special pricing for early adopters?",
-      answer: "Yes! Beta users will receive preferential pricing that will be grandfathered in after our official launch. Specific terms will be shared during the beta onboarding process."
+      question: "How secure is the platform?",
+      answer: "Security is our foundation. We're building with SOC 2 compliance standards and end-to-end encryption from day one. Our security architecture documentation is available for review by beta partners, and we welcome your security team's input during the evaluation process."
     },
     {
-      question: "How are you handling security and compliance?",
-      answer: "Security and compliance are core priorities. We're building our platform with SOC 2 and GDPR requirements in mind, and we'll work closely with beta users to ensure we meet their specific compliance needs."
+      question: "What are the requirements to join the beta program?",
+      answer: "We're looking for financial institutions actively planning AI implementation in the next 3-6 months, who can commit to providing regular feedback. While we don't require a specific size, ideal partners have technical teams ready to engage with our platform and share their implementation challenges."
     },
     {
-      question: "Can we request specific features or integrations?",
-      answer: "Absolutely! Beta users have direct input into our product roadmap. We're actively seeking feedback on feature priorities and integration needs."
+      question: "How much will Asynova cost after launch?",
+      answer: "Final pricing will be determined based on beta feedback, but we're planning a tiered subscription model starting at approximately $3,000/month for smaller fintechs and scaling based on usage. As a founding partner, you'll receive preferential pricing that remains locked in after our official launch."
     }
   ];
 
   return (
-    <section className="py-20 border-t border-teal/10">
+    <section id="faq" className="py-20 bg-navy/50">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -78,23 +80,6 @@ const FAQ = () => {
             <FAQItem key={index} {...faq} />
           ))}
         </div>
-        
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-center mt-12"
-        >
-          <p className="text-gray-300 mb-6">
-            Have more questions? We'd love to hear from you.
-          </p>
-          <a
-            href="mailto:hello@asynova.com"
-            className="text-teal hover:underline"
-          >
-            Contact us about the beta program →
-          </a>
-        </motion.div>
       </div>
     </section>
   );

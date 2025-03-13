@@ -24,6 +24,15 @@ const Navigation = () => {
     openWaitlist();
   };
 
+  // Updated menu items to match our new structure
+  const menuItems = [
+    { label: 'Problem', section: 'problem' },
+    { label: 'Solution', section: 'solution' },
+    { label: 'Beta Program', section: 'beta-program' },
+    { label: 'Security', section: 'security' },
+    { label: 'FAQ', section: 'faq' },
+  ];
+
   return (
     <nav className="fixed w-full z-50 bg-navy/80 backdrop-blur-sm">
       <div className="container mx-auto px-4">
@@ -38,24 +47,15 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
-            <button 
-              onClick={() => scrollToSection('features')}
-              className="text-gray-300 hover:text-teal"
-            >
-              Planned Features
-            </button>
-            <button 
-              onClick={() => scrollToSection('security')}
-              className="text-gray-300 hover:text-teal"
-            >
-              Security Roadmap
-            </button>
-            <button 
-              onClick={() => scrollToSection('integrations')}
-              className="text-gray-300 hover:text-teal"
-            >
-              Future Integrations
-            </button>
+            {menuItems.map((item, index) => (
+              <button 
+                key={index}
+                onClick={() => scrollToSection(item.section)}
+                className="text-gray-300 hover:text-teal"
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
 
           {/* CTA Button */}
@@ -64,7 +64,7 @@ const Navigation = () => {
             className="hidden md:block px-6 py-2 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
             aria-label="Join Beta Program"
           >
-            Join Beta
+            Apply for Beta
           </button>
 
           {/* Mobile Menu Button */}
@@ -87,29 +87,20 @@ const Navigation = () => {
             className="md:hidden bg-navy/95 border-t border-teal/10"
           >
             <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-              <button 
-                onClick={() => scrollToSection('features')}
-                className="text-gray-300 hover:text-teal py-2"
-              >
-                Planned Features
-              </button>
-              <button 
-                onClick={() => scrollToSection('security')}
-                className="text-gray-300 hover:text-teal py-2"
-              >
-                Security Roadmap
-              </button>
-              <button 
-                onClick={() => scrollToSection('integrations')}
-                className="text-gray-300 hover:text-teal py-2"
-              >
-                Future Integrations
-              </button>
+              {menuItems.map((item, index) => (
+                <button 
+                  key={index}
+                  onClick={() => scrollToSection(item.section)}
+                  className="text-gray-300 hover:text-teal py-2"
+                >
+                  {item.label}
+                </button>
+              ))}
               <button 
                 onClick={handleWaitlist}
                 className="px-6 py-2 bg-teal text-navy font-semibold rounded-lg hover:opacity-90"
               >
-                Join Beta
+                Apply for Beta
               </button>
             </div>
           </motion.div>
