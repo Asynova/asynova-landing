@@ -34,7 +34,7 @@ const FAQ = () => {
   const faqs = [
     {
       question: "When will Asynova launch?",
-      answer: "We're targeting a beta launch in April 2025. Currently, we're in week 5 of our 8-week development sprint and selecting our initial 5 beta partners. Join our waitlist to be considered for early access."
+      answer: "Beta launching April 2025. Final beta partner selection happening now — only 5 spots available. Join our waitlist to be considered before selection closes."
     },
     {
       question: "Is this ready for production use?",

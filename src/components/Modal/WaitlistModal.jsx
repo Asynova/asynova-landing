@@ -45,6 +45,9 @@ const WaitlistModal = ({ isOpen, onClose }) => {
     };
   }, [isOpen]);
 
+  // Google Sheets configuration
+  const GOOGLE_SCRIPT_URL = process.env.REACT_APP_GOOGLE_SCRIPT_URL;
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     
@@ -65,31 +68,51 @@ const WaitlistModal = ({ isOpen, onClose }) => {
     setStatus('submitting');
 
     try {
-      // Here you would submit to your backend or form handling service
-      // For now, we'll simulate success after a delay
+      // Send data to Google Sheets
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body: JSON.stringify(formData),
+        mode: "no-cors"
+      });
+
+      // Analytics tracking
+      if (typeof window.gtag !== 'undefined') {
+        window.gtag('event', 'waitlist_submit', {
+          'event_category': 'Engagement',
+          'event_label': formData.company,
+        });
+      }
+      
+      // Trigger Hotjar event if available
+      if (typeof window.hj === 'function') {
+        window.hj('event', 'waitlist_submit');
+      }
+
+      setStatus('success');
+      
+      // Reset form after submission
       setTimeout(() => {
-        setStatus('success');
-        
-        // Reset form after submission
-        setTimeout(() => {
-          onClose();
-          setStatus('idle');
-          setFormData({
-            name: '',
-            email: '',
-            company: '',
-            role: '',
-            aiImplementationStage: '',
-            complianceChallenges: '',
-            currentTools: '',
-            implementationTimeline: '',
-            additionalInfo: '',
-            howHeard: '',
-            acceptTerms: false,
-            acceptPrivacy: false
-          });
-        }, 3000);
-      }, 1500);
+        onClose();
+        setStatus('idle');
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          role: '',
+          aiImplementationStage: '',
+          complianceChallenges: '',
+          currentTools: '',
+          implementationTimeline: '',
+          additionalInfo: '',
+          howHeard: '',
+          acceptTerms: false,
+          acceptPrivacy: false
+        });
+      }, 3000);
       
     } catch (error) {
       console.error('Submission error:', error);
