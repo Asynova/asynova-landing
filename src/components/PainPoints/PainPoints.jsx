@@ -75,9 +75,9 @@ const PainPoints = () => {
         >
           <div className="inline-block bg-navy/50 border border-teal/20 rounded-lg px-6 py-3">
             <span className="text-gray-300">
-              A major bank abandoned their fraud detection AI after costs exceeded
-              <span className="text-teal font-semibold"> $540,000</span> — 
-              <span className="text-red-400 font-semibold"> 170% over budget</span>
+              Financial institutions are 
+              <span className="text-red-400 font-semibold">sacrificing innovation velocity</span> to meet 
+              <span className="text-teal font-semibold">mounting compliance requirements</span>
             </span>
           </div>
         </motion.div>
