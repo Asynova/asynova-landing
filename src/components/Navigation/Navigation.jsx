@@ -19,6 +19,19 @@ const Navigation = () => {
     }, 300); // Match this with your menu animation duration
   };
 
+  const handleNavigation = (item) => {
+    // If it's an external link, navigate to it
+    if (item.externalLink) {
+      window.location.href = item.externalLink;
+      return;
+    }
+    
+    // Otherwise, scroll to the section
+    if (item.section) {
+      scrollToSection(item.section);
+    }
+  };
+
   const handleWaitlist = () => {
     setIsMenuOpen(false);
     openWaitlist();
@@ -31,6 +44,7 @@ const Navigation = () => {
     { label: 'Beta Program', section: 'beta-program' },
     { label: 'Security', section: 'security' },
     { label: 'FAQ', section: 'faq' },
+    { label: 'Login', externalLink: 'https://app.asynova.com' },
   ];
 
   return (
@@ -50,10 +64,11 @@ const Navigation = () => {
             {menuItems.map((item, index) => (
               <button 
                 key={index}
-                onClick={() => scrollToSection(item.section)}
-                className="text-gray-300 hover:text-teal"
+                onClick={() => handleNavigation(item)}
+                className={`${item.externalLink ? 'text-teal border border-teal/30 px-3 py-1 rounded' : 'text-gray-300'} hover:text-teal hover:opacity-90`}
               >
                 {item.label}
+                {item.externalLink && <span className="ml-1 text-xs">↗</span>}
               </button>
             ))}
           </div>
@@ -90,10 +105,11 @@ const Navigation = () => {
               {menuItems.map((item, index) => (
                 <button 
                   key={index}
-                  onClick={() => scrollToSection(item.section)}
-                  className="text-gray-300 hover:text-teal py-2"
+                  onClick={() => handleNavigation(item)}
+                  className={`hover:text-teal py-2 ${item.externalLink ? 'text-teal' : 'text-gray-300'}`}
                 >
                   {item.label}
+                  {item.externalLink && <span className="ml-1 text-xs">↗</span>}
                 </button>
               ))}
               <button 
