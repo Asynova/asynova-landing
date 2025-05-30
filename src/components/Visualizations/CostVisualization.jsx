@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CostVisualization = () => {
-  // Sample cost data
+  // Real API cost data example
   const costData = [
     { day: 'Mon', optimized: 342, unoptimized: 680 },
     { day: 'Tue', optimized: 378, unoptimized: 750 },
@@ -12,22 +12,21 @@ const CostVisualization = () => {
     { day: 'Sun', optimized: 198, unoptimized: 395 },
   ];
 
-  // Find the highest value for scaling
   const maxValue = Math.max(...costData.map(d => Math.max(d.optimized, d.unoptimized)));
 
   return (
     <div className="relative bg-navy/70 border border-teal/20 rounded-lg p-4 md:p-6">
       <div className="flex justify-between items-center mb-4 md:mb-6 flex-wrap">
-        <h3 className="text-base md:text-lg font-medium">Real-Time Cost Optimization</h3>
+        <h3 className="text-base md:text-lg font-medium">Real-Time API Cost Tracking</h3>
         <div className="bg-teal/20 text-teal text-xs px-3 py-1 rounded-full">
-          Reduces Costs by 40-60%
+          Live Dashboard Preview
         </div>
       </div>
       
       {/* Mobile view - simplified */}
       <div className="md:hidden">
         <div className="bg-navy/50 p-3 rounded-lg mb-4">
-          <div className="text-sm mb-2">Weekly Spending Comparison</div>
+          <div className="text-sm mb-2">This Week's AI Spend</div>
           <div className="flex items-center mb-3">
             <div className="w-full bg-navy/70 h-6 rounded-full overflow-hidden relative">
               <div 
@@ -45,56 +44,56 @@ const CostVisualization = () => {
             <div>
               <div className="flex items-center">
                 <div className="h-2 w-2 bg-red-400/70 mr-1 rounded"></div>
-                <span className="text-xs text-gray-400">Without Optimization</span>
+                <span className="text-xs text-gray-400">Direct API Calls</span>
               </div>
               <div className="text-red-400 font-semibold">$4,640</div>
             </div>
             <div className="text-right">
               <div className="flex items-center justify-end">
                 <div className="h-2 w-2 bg-teal/70 mr-1 rounded"></div>
-                <span className="text-xs text-gray-400">With Asynova</span>
+                <span className="text-xs text-gray-400">Through Asynova</span>
               </div>
               <div className="text-teal font-semibold">$2,331</div>
             </div>
           </div>
-          <div className="mt-2 text-right text-xs text-teal">49.8% Savings</div>
+          <div className="mt-2 text-right text-xs text-teal">You saved $2,309</div>
         </div>
         
         <div className="bg-navy/50 p-3 rounded-lg">
-          <div className="text-sm mb-2">Top Savings Opportunities</div>
+          <div className="text-sm mb-2">Where Your Savings Come From</div>
           <div className="space-y-2">
             <div className="flex items-center text-xs">
               <div className="h-2 w-2 rounded-full bg-teal mr-2"></div>
-              <span className="text-gray-300">Right-sizing model selection</span>
-              <span className="ml-auto text-teal">22%</span>
+              <span className="text-gray-300">Cached API responses</span>
+              <span className="ml-auto text-teal">35%</span>
             </div>
             <div className="flex items-center text-xs">
               <div className="h-2 w-2 rounded-full bg-teal mr-2"></div>
-              <span className="text-gray-300">Batch processing</span>
-              <span className="ml-auto text-teal">18%</span>
+              <span className="text-gray-300">Token optimization</span>
+              <span className="ml-auto text-teal">15%</span>
             </div>
             <div className="flex items-center text-xs">
               <div className="h-2 w-2 rounded-full bg-teal mr-2"></div>
-              <span className="text-gray-300">Resource allocation</span>
-              <span className="ml-auto text-teal">14%</span>
+              <span className="text-gray-300">Request batching</span>
+              <span className="ml-auto text-teal">10%</span>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Desktop view - hide on mobile */}
+      {/* Desktop view */}
       <div className="hidden md:block">
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
-            <div className="text-sm font-medium">AI Implementation Costs This Week</div>
+            <div className="text-sm font-medium">Daily Gemini API Costs</div>
             <div className="flex items-center gap-4 text-xs">
               <div className="flex items-center">
                 <div className="h-3 w-3 bg-red-400/70 mr-1 rounded"></div>
-                <span>Without Optimization</span>
+                <span>Direct API</span>
               </div>
               <div className="flex items-center">
                 <div className="h-3 w-3 bg-teal/70 mr-1 rounded"></div>
-                <span>With Asynova</span>
+                <span>Via Asynova</span>
               </div>
             </div>
           </div>
@@ -121,13 +120,13 @@ const CostVisualization = () => {
               ))}
             </div>
             
-            {/* Bars - Fixed implementation with manual height */}
+            {/* Bars */}
             <div className="absolute left-12 right-0 bottom-0 h-full flex items-end justify-between px-2">
               {costData.map((data, i) => (
                 <div key={data.day} className="relative flex flex-col items-center w-12 h-full">
-                  {/* Unoptimized cost bar - static implementation */}
+                  {/* Unoptimized cost bar */}
                   <div 
-                    className="absolute bottom-0 w-5 bg-red-400/70 rounded-t"
+                    className="absolute bottom-0 w-5 bg-red-400/70 rounded-t transition-all hover:bg-red-400"
                     style={{ 
                       height: `${(data.unoptimized / maxValue) * 100}%`,
                       left: '0px'
@@ -136,7 +135,7 @@ const CostVisualization = () => {
                   
                   {/* Optimized cost bar */}
                   <div 
-                    className="absolute bottom-0 w-5 bg-teal/70 rounded-t"
+                    className="absolute bottom-0 w-5 bg-teal/70 rounded-t transition-all hover:bg-teal"
                     style={{ 
                       height: `${(data.optimized / maxValue) * 100}%`,
                       right: '0px'
@@ -153,10 +152,10 @@ const CostVisualization = () => {
         
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-navy/50 p-3 rounded-lg">
-            <div className="text-sm mb-2">Weekly Spending</div>
+            <div className="text-sm mb-2">Weekly Summary</div>
             <div className="flex justify-between">
               <div>
-                <div className="text-xs text-gray-400">Without Optimization</div>
+                <div className="text-xs text-gray-400">Without Asynova</div>
                 <div className="text-red-400 font-semibold">$4,640</div>
               </div>
               <div className="text-right">
@@ -164,26 +163,29 @@ const CostVisualization = () => {
                 <div className="text-teal font-semibold">$2,331</div>
               </div>
             </div>
-            <div className="mt-2 text-right text-xs text-teal">49.8% Savings</div>
+            <div className="mt-2 text-right">
+              <span className="text-xs text-gray-400">Total saved: </span>
+              <span className="text-teal font-semibold">$2,309</span>
+            </div>
           </div>
           
           <div className="bg-navy/50 p-3 rounded-lg">
-            <div className="text-sm mb-2">Optimization Opportunities</div>
+            <div className="text-sm mb-2">Optimization Breakdown</div>
             <div className="space-y-2">
               <div className="flex items-center text-xs">
                 <div className="h-2 w-2 rounded-full bg-teal mr-2"></div>
-                <span className="text-gray-300">Right-sizing model selection</span>
-                <span className="ml-auto text-teal">22%</span>
+                <span className="text-gray-300">Smart caching</span>
+                <span className="ml-auto text-teal">$810</span>
               </div>
               <div className="flex items-center text-xs">
                 <div className="h-2 w-2 rounded-full bg-teal mr-2"></div>
-                <span className="text-gray-300">Batch processing implementation</span>
-                <span className="ml-auto text-teal">18%</span>
+                <span className="text-gray-300">Token reduction</span>
+                <span className="ml-auto text-teal">$695</span>
               </div>
               <div className="flex items-center text-xs">
                 <div className="h-2 w-2 rounded-full bg-teal mr-2"></div>
-                <span className="text-gray-300">Efficient resource allocation</span>
-                <span className="ml-auto text-teal">14%</span>
+                <span className="text-gray-300">Request batching</span>
+                <span className="ml-auto text-teal">$804</span>
               </div>
             </div>
           </div>

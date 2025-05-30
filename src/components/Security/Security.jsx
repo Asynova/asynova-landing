@@ -24,28 +24,28 @@ const SecurityFeature = ({ icon, title, description, status }) => (
 const Security = () => {
   const features = [
     {
-      icon: "🛡️",
-      title: "SOC 2 Compliance",
-      description: "Security controls and audit trails built to SOC 2 standards from day one",
-      status: "In Development"
-    },
-    {
       icon: "🔒",
-      title: "End-to-End Encryption",
-      description: "Bank-grade encryption for all data in transit and at rest",
-      status: "In Development"
+      title: "Zero Data Storage",
+      description: "We never store your prompts or responses. Only metadata for caching. Your AI data stays yours.",
+      status: "Live"
     },
     {
-      icon: "✓",
-      title: "GDPR Readiness",
-      description: "Privacy-first architecture designed to meet global data protection requirements",
-      status: "In Development"
+      icon: "🛡️",
+      title: "End-to-End Encryption",
+      description: "Bank-grade TLS 1.3 encryption. Your API keys are encrypted at rest with AES-256.",
+      status: "Live"
+    },
+    {
+      icon: "🏛️",
+      title: "SOC 2 Type II",
+      description: "Currently pursuing certification. Built to enterprise security standards from day one.",
+      status: "In Progress"
     },
     {
       icon: "📋",
-      title: "Audit Logging",
-      description: "Comprehensive audit trail system for all AI model operations",
-      status: "In Development"
+      title: "Complete Audit Trail",
+      description: "Every API call logged for compliance. Export reports anytime for your auditors.",
+      status: "Live"
     }
   ];
 
@@ -60,17 +60,24 @@ const Security = () => {
               transition={{ duration: 0.5 }}
             >
               <h2 className="text-3xl font-bold mb-6">
-                Enterprise-Grade Security from Day One
+                Your AI Data is Sacred
               </h2>
               <p className="text-gray-300 mb-8">
-                We're building Asynova with financial-grade security and compliance as core principles. 
-                Every aspect of our platform is designed to meet the stringent requirements of financial institutions.
+                We're a proxy, not a storage system. Your sensitive financial data never touches our servers. 
+                We only cache metadata to save you money, never the actual content.
               </p>
               
               <div className="space-y-6">
                 {features.map((feature, index) => (
                   <SecurityFeature key={index} {...feature} />
                 ))}
+              </div>
+
+              <div className="mt-8 p-4 bg-navy/50 border border-teal/20 rounded-lg">
+                <p className="text-sm text-gray-300">
+                  <span className="text-teal font-semibold">Pro tip:</span> You can switch back to 
+                  direct API calls anytime by changing one line of code. No vendor lock-in.
+                </p>
               </div>
             </motion.div>
 

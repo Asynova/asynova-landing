@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import DocGenerationVisualization from '../Visualizations/DocGenerationVisualization';
 import CostVisualization from '../Visualizations/CostVisualization';
 
-const SolutionFeature = ({ icon, title, description, status }) => (
+const SolutionFeature = ({ icon, title, description, status, savings }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -16,29 +16,37 @@ const SolutionFeature = ({ icon, title, description, status }) => (
       </span>
     </div>
     <h3 className="text-xl font-semibold mb-2">{title}</h3>
-    <p className="text-gray-300">{description}</p>
+    <p className="text-gray-300 mb-3">{description}</p>
+    {savings && (
+      <div className="text-teal font-semibold">
+        {savings}
+      </div>
+    )}
   </motion.div>
 );
 
 const Solution = () => {
   const features = [
     {
-      icon: "📄",
-      title: "Automated Compliance Documentation",
-      description: "Generate regulator-ready documentation while you implement. Cuts documentation time from 200+ hours to under 20.",
-      status: "In Development"
+      icon: "💰",
+      title: "Intelligent Request Caching",
+      description: "Cache repeated API calls automatically. Reduce redundant requests by up to 70% without changing your code.",
+      status: "Ready Now",
+      savings: "Save 30-40% instantly"
     },
     {
-      icon: "🔌",
-      title: "Gemini 2.0 Flash Integration",
-      description: "Streamlined connection with optimized settings for financial use cases. Our first supported model with more planned.",
-      status: "In Development"
+      icon: "🤖",
+      title: "ML-Powered Cost Prediction",
+      description: "Our models predict your AI costs with 85% accuracy, helping you budget and optimize before bills arrive.",
+      status: "Ready Now",
+      savings: "Prevent budget overruns"
     },
     {
-      icon: "📊",
-      title: "Cost Tracking & Optimization",
-      description: "Real-time visibility into AI implementation costs with alerts and optimization recommendations.",
-      status: "Coming Soon"
+      icon: "🔀",
+      title: "Multi-Provider Routing",
+      description: "Automatically route requests to the cheapest provider (Gemini, OpenAI, Claude) based on your requirements.",
+      status: "Coming Q3",
+      savings: "Additional 20% savings"
     }
   ];
 
@@ -52,10 +60,10 @@ const Solution = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl font-bold mb-4">
-            Our Solution: AI Orchestration Built for Financial Services
+            Enterprise-Grade AI Cost Optimization
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            We're building a platform that solves these challenges, starting with Gemini 2.0 Flash integration
+            Purpose-built for African fintech infrastructure and challenges
           </p>
         </motion.div>
 
@@ -73,19 +81,10 @@ const Solution = () => {
             transition={{ duration: 0.5 }}
             className="text-center mb-8"
           >
-            <h3 className="text-2xl font-semibold">See Our Solution in Action</h3>
+            <h3 className="text-2xl font-semibold">Real Platform, Real Savings</h3>
           </motion.div>
           
           <div className="space-y-12">
-            {/* Documentation Automation Visualization */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <DocGenerationVisualization />
-            </motion.div>
-            
             {/* Cost Optimization Visualization */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -97,7 +96,7 @@ const Solution = () => {
           </div>
         </div>
 
-        {/* Three-Step Implementation Process */}
+        {/* How It Works */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -105,7 +104,7 @@ const Solution = () => {
           className="mt-12 flex justify-center"
         >
           <div className="bg-navy/50 border border-teal/20 rounded-lg p-6 max-w-2xl">
-            <h3 className="text-xl font-semibold mb-3 text-center">Our Three-Step Implementation Process</h3>
+            <h3 className="text-xl font-semibold mb-3 text-center">Get Started in 5 Minutes</h3>
             
             <div className="space-y-6 mt-6">
               <div className="flex items-start">
@@ -113,14 +112,9 @@ const Solution = () => {
                   1
                 </div>
                 <div>
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-semibold">Upload Your Data</h4>
-                    <span className="text-xs bg-teal/20 text-teal px-2 py-0.5 rounded-full">
-                      In Development
-                    </span>
-                  </div>
+                  <h4 className="font-semibold">Replace Your API Endpoint</h4>
                   <p className="text-sm text-gray-300 mt-1">
-                    Secure API connections and direct upload options for financial data
+                    Change api.openai.com to api.asynova.com - that's it!
                   </p>
                 </div>
               </div>
@@ -130,14 +124,9 @@ const Solution = () => {
                   2
                 </div>
                 <div>
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-semibold">Configure Compliance Settings</h4>
-                    <span className="text-xs bg-teal/20 text-teal px-2 py-0.5 rounded-full">
-                      In Development
-                    </span>
-                  </div>
+                  <h4 className="font-semibold">Keep Your Existing Code</h4>
                   <p className="text-sm text-gray-300 mt-1">
-                    Select relevant regulatory frameworks and let Asynova handle documentation
+                    No SDK changes, no refactoring. We're 100% compatible.
                   </p>
                 </div>
               </div>
@@ -147,17 +136,18 @@ const Solution = () => {
                   3
                 </div>
                 <div>
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-semibold">Deploy & Monitor</h4>
-                    <span className="text-xs bg-teal/20 text-teal px-2 py-0.5 rounded-full">
-                      Coming Soon
-                    </span>
-                  </div>
+                  <h4 className="font-semibold">Save 40% Immediately</h4>
                   <p className="text-sm text-gray-300 mt-1">
-                    Track performance, costs, and compliance in real-time with optimization recommendations
+                    Watch your costs drop in real-time. No optimization needed.
                   </p>
                 </div>
               </div>
+            </div>
+
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-400">
+                Beta partners get 3 months free + direct founder support
+              </p>
             </div>
           </div>
         </motion.div>

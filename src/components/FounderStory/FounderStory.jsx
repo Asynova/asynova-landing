@@ -20,24 +20,26 @@ const FounderStory = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="bg-navy/30 border border-teal/20 rounded-xl p-8 mb-10"
           >
-            <div className="text-xl text-gray-300 mb-6 italic">
-              "While developing a privacy-preserving AI system, I watched a major bank abandon 
-              their fraud detection project after costs ballooned by 170%.
+            <div className="text-xl text-gray-300 mb-6">
+              "I was building an AI system when I saw my AWS bill: $200 for testing alone. 
+              I realized if I'm struggling with costs, what about Kenyan fintechs running millions of requests?
               <br/><br/>
-              I discovered financial institutions waste 40-60% of their AI budgets on manual 
-              compliance documentation and inefficient implementation. What should take weeks 
-              stretches into 9+ month ordeals.
+              I discovered they're wasting 40-60% on duplicate requests, inefficient prompts, 
+              and zero cost visibility. No one was solving this.
               <br/><br/>
-              That's when I knew there had to be a better way."
+              So I built the solution myself. Enterprise-grade caching, ML cost prediction, 
+              real-time monitoring. Everything a fintech needs to control AI costs.
+              <br/><br/>
+              Today, it saves money. Tomorrow, it will predict banking failures before they happen."
             </div>
 
             <div className="flex items-center">
-              <div className="h-12 w-12 bg-teal/20 rounded-full flex items-center justify-center text-teal">
+              <div className="h-12 w-12 bg-teal/20 rounded-full flex items-center justify-center text-teal font-bold">
                 DB
               </div>
               <div className="ml-4">
                 <div className="font-semibold">Daniel Bitengo</div>
-                <div className="text-sm text-gray-400">Founder, Asynova</div>
+                <div className="text-sm text-gray-400">Founder & Builder, Asynova</div>
               </div>
             </div>
           </motion.div>
@@ -46,10 +48,14 @@ const FounderStory = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-center text-gray-300"
+            className="text-center"
           >
-            Currently balancing engineering studies at University of Nairobi while 
-            developing Asynova to solve this critical market need.
+            <p className="text-gray-300 mb-4">
+              Built in Kenya. For Kenya. By someone who gets it.
+            </p>
+            <p className="text-sm text-gray-400">
+              100% focused on making AI affordable for African finance.
+            </p>
           </motion.div>
         </div>
       </div>

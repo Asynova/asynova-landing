@@ -33,28 +33,36 @@ const FAQItem = ({ question, answer }) => {
 const FAQ = () => {
   const faqs = [
     {
-      question: "When will Asynova launch?",
-      answer: "Beta launching April 2025. Final beta partner selection happening now — only 5 spots available. Join our waitlist to be considered before selection closes."
+      question: "How much can we actually save?",
+      answer: "Most fintechs see 40-60% reduction in AI costs. For example, if you're spending $5,000/month on Gemini APIs, you'll likely save $2,000-3,000/month. The savings come from intelligent caching (30-40%), request optimization (10-15%), and future multi-provider routing (additional 10-20%)."
     },
     {
-      question: "Is this ready for production use?",
-      answer: "The platform is currently in development. Our beta partners will have early access to test and provide feedback, helping us refine the platform before it's used for production workloads. We expect beta testing to last 2-3 months before moving to production readiness."
+      question: "How does it work technically?",
+      answer: "Simply change your API endpoint from api.openai.com to api.asynova.com. Our platform sits between you and AI providers, automatically caching repeated requests, optimizing token usage, and using ML to predict and prevent cost overruns. Your code stays exactly the same."
     },
     {
-      question: "What if we use different AI models than Gemini 2.0?",
-      answer: "While our initial MVP focuses on Gemini 2.0 Flash integration, our architecture is designed to support multiple models. Our beta partners will help us prioritize which additional integrations to build next. We plan to add support for other leading models based on partner feedback."
+      question: "Is this ready for production?",
+      answer: "Yes, the core platform is built and deployed on AWS. We're offering 3 months free for beta partners to prove the value before you pay. You can start saving money immediately while we add more features based on your feedback."
     },
     {
-      question: "How secure is the platform?",
-      answer: "Security is our foundation. We're building with SOC 2 compliance standards and end-to-end encryption from day one. Our security architecture documentation is available for review by beta partners, and we welcome your security team's input during the evaluation process."
+      question: "What AI providers do you support?",
+      answer: "Currently supporting Gemini (all models). OpenAI and Anthropic Claude coming in Q3 2025. Our architecture supports any REST-based AI API, so we can add new providers based on demand."
     },
     {
-      question: "What are the requirements to join the beta program?",
-      answer: "We're looking for financial institutions actively planning AI implementation in the next 3-6 months, who can commit to providing regular feedback. While we don't require a specific size, ideal partners have technical teams ready to engage with our platform and share their implementation challenges."
+      question: "How is this different from just using the APIs directly?",
+      answer: "Direct API usage means you pay for every request, even duplicates. You have no cost visibility until the bill arrives. We provide intelligent caching, real-time cost tracking, predictive budgeting, and future features like automatic provider switching for optimal pricing."
     },
     {
-      question: "How much will Asynova cost after launch?",
-      answer: "Final pricing will be determined based on beta feedback, but we're planning a tiered subscription model starting at approximately $3,000/month for smaller fintechs and scaling based on usage. As a founding partner, you'll receive preferential pricing that remains locked in after our official launch."
+      question: "What's the catch? Why is beta free?",
+      answer: "No catch. We need real usage data to optimize our algorithms. You get 3 months free, we get valuable feedback. After beta, pricing starts at $500/month for small fintechs, scaling based on your savings (we typically charge 20-30% of what we save you)."
+    },
+    {
+      question: "How secure is this?",
+      answer: "Enterprise-grade security with end-to-end encryption. We never store your prompts or responses - only metadata for caching. SOC 2 compliance in progress. Your data never leaves your preferred region (we support AWS Kenya region)."
+    },
+    {
+      question: "Can we trust a platform built by one person?",
+      answer: "Fair question. The platform is built on proven AWS infrastructure with 99.9% uptime SLA. The code is production-grade with automated testing and monitoring. Plus, you're not locked in - you can switch back to direct APIs anytime by changing one line of code."
     }
   ];
 
@@ -68,10 +76,10 @@ const FAQ = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl font-bold mb-4">
-            Frequently Asked Questions
+            Common Questions
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Everything you need to know about joining our beta program
+            Straight answers about how we save you money
           </p>
         </motion.div>
 

@@ -1,66 +1,113 @@
 import { motion } from 'framer-motion';
 
-const FeatureCard = ({ title, description, icon, delay, status }) => (
+const FeatureCard = ({ title, description, icon, delay, metric, highlight }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay }}
-    className="bg-navy/50 border border-teal/20 rounded-lg p-6"
+    className="bg-navy/50 border border-teal/20 rounded-lg p-6 hover:border-teal/40 transition-all"
   >
-    <div className="flex justify-between items-start mb-4">
-      <div className="text-teal">{icon}</div>
-      <span className="text-xs bg-teal/20 text-teal px-2 py-1 rounded-full">
-        {status}
-      </span>
-    </div>
+    <div className="text-teal text-3xl mb-4">{icon}</div>
     <h3 className="text-xl font-semibold mb-2">{title}</h3>
-    <p className="text-gray-300">{description}</p>
+    <p className="text-gray-300 mb-4">{description}</p>
+    {metric && (
+      <div className="text-teal font-semibold text-lg">
+        {metric}
+      </div>
+    )}
+    {highlight && (
+      <div className="mt-2 text-sm text-gray-400">
+        {highlight}
+      </div>
+    )}
   </motion.div>
 );
 
 const Features = () => {
   const features = [
     {
-      title: "Auto-Model Selection",
-      description: "Building ML system to evaluate accuracy and cost in real-time for optimal model selection",
-      icon: "🤖",
+      title: "Smart Caching Engine",
+      description: "Automatically detects and caches repeated API calls. No code changes needed.",
+      icon: "⚡",
       delay: 0.2,
-      status: "In Development"
+      metric: "Ready to deploy",
+      highlight: "Works with your existing code"
     },
     {
-      title: "Cost Control",
-      description: "Implementing budget controls and alerts to optimize costs across AI providers",
-      icon: "💰",
+      title: "Real-Time Cost Dashboard",
+      description: "See exactly what you're spending on AI, broken down by model, endpoint, and team.",
+      icon: "📊",
       delay: 0.3,
-      status: "Coming Soon"
+      metric: "Built and tested",
+      highlight: "Track every request"
     },
     {
-      title: "Bank-Grade Security",
-      description: "Designing architecture with SOC 2 standards and end-to-end encryption in mind",
-      icon: "🔒",
+      title: "ML Cost Prediction",
+      description: "Our multivariate linear regression model helps predict your monthly AI costs.",
+      icon: "🔮",
       delay: 0.4,
-      status: "Planned"
+      metric: "R² score: 0.85",
+      highlight: "Based on real ML model"
+    },
+    {
+      title: "Request Optimization",
+      description: "Planned feature to compress prompts and optimize token usage without losing quality.",
+      icon: "🎯",
+      delay: 0.5,
+      metric: "Coming soon",
+      highlight: "In development"
+    },
+    {
+      title: "Usage Alerts",
+      description: "Get notified before you hit budget limits. Set alerts by cost, tokens, or requests.",
+      icon: "🚨",
+      delay: 0.6,
+      metric: "Configurable limits",
+      highlight: "Prevent overages"
+    },
+    {
+      title: "Team Analytics",
+      description: "Track AI usage by team, project, or API key. Find optimization opportunities.",
+      icon: "👥",
+      delay: 0.7,
+      metric: "User-based tracking",
+      highlight: "Built into platform"
     }
   ];
 
   return (
     <section id="features" className="py-20">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
           <h2 className="text-3xl font-bold mb-4">
-            Features We're Building
+            Platform Features: What's Built vs. Planned
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Our platform is being developed with enterprise-grade security and compliance as core principles. 
-            Join the beta to influence our feature roadmap.
+            Honest overview of our current capabilities and roadmap
           </p>
-        </div>
+        </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <FeatureCard key={index} {...feature} />
           ))}
         </div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+          className="text-center mt-12"
+        >
+          <p className="text-gray-400">
+            Core platform ready. Advanced features coming with customer feedback.
+          </p>
+        </motion.div>
       </div>
     </section>
   );

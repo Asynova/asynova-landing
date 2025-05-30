@@ -1,69 +1,113 @@
 import { motion } from 'framer-motion';
 
-const FeatureCard = ({ title, description, icon, delay, status }) => (
+const TrustCard = ({ title, description, icon, delay }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay }}
     className="bg-navy/50 border border-teal/20 rounded-lg p-6"
   >
-    <div className="flex justify-between items-start mb-4">
-      <div className="text-teal">{icon}</div>
-      <span className="text-xs bg-teal/20 text-teal px-2 py-1 rounded-full">
-        {status}
-      </span>
-    </div>
+    <div className="text-teal text-2xl mb-4">{icon}</div>
     <h3 className="text-xl font-semibold mb-2">{title}</h3>
     <p className="text-gray-300">{description}</p>
   </motion.div>
 );
 
-const Features = () => {
-  const features = [
+const Trust = () => {
+  const trustPoints = [
     {
-      title: "Auto-Model Selection",
-      description: "Building ML system to evaluate accuracy and cost in real-time for optimal model selection",
-      icon: "🤖",
-      delay: 0.2,
-      status: "In Development"
-    },
-    {
-      title: "Cost Control",
-      description: "Implementing budget controls and alerts to optimize costs across AI providers",
-      icon: "💰",
-      delay: 0.3,
-      status: "Coming Soon"
-    },
-    {
-      title: "Planned Bank-Grade Security",
-      description: "Designing architecture with SOC 2 standards and end-to-end encryption in mind",
+      title: "Security-First Design",
+      description: "Built with encryption and security best practices. Your API keys stay secure. Your data never logged.",
       icon: "🔒",
-      delay: 0.4,
-      status: "Planned"
+      delay: 0.2
+    },
+    {
+      title: "No Vendor Lock-in",
+      description: "Simple API endpoint change. Switch back anytime. Your code stays the same.",
+      icon: "🔓",
+      delay: 0.3
+    },
+    {
+      title: "AWS Infrastructure",
+      description: "Deployed on reliable AWS services. Built for scale from day one.",
+      icon: "☁️",
+      delay: 0.4
+    },
+    {
+      title: "Transparent Approach",
+      description: "We're honest about our pre-launch status. Real platform, real savings potential, real founder.",
+      icon: "💎",
+      delay: 0.5
     }
   ];
 
   return (
-    <section id="features" className="py-20">
+    <section id="trust" className="py-20 bg-navy/30">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
           <h2 className="text-3xl font-bold mb-4">
-            Features We're Building
+            Why Trust a 20-Year-Old Founder?
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Our platform is being developed with enterprise-grade security and compliance as core principles. 
-            Join the beta to influence our feature roadmap.
+            Because I built something real, I'm transparent about everything, 
+            and I have nothing to lose by being honest.
           </p>
-        </div>
+        </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <FeatureCard key={index} {...feature} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          {trustPoints.map((point, index) => (
+            <TrustCard key={index} {...point} />
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="bg-navy/50 border border-teal/20 rounded-lg p-8 max-w-4xl mx-auto text-center"
+        >
+          <h3 className="text-2xl font-semibold mb-4">Our Beta Promise</h3>
+          <p className="text-lg text-gray-300 mb-6">
+            Join our beta program and help shape the future of AI cost optimization in Kenya.
+            Here's what we promise:
+          </p>
+          <div className="grid grid-cols-3 gap-6">
+            <div>
+              <div className="text-3xl font-bold text-teal">3</div>
+              <div className="text-sm text-gray-400">Months free access</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-teal">24/7</div>
+              <div className="text-sm text-gray-400">Direct founder support</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-teal">100%</div>
+              <div className="text-sm text-gray-400">Transparency</div>
+            </div>
+          </div>
+          <p className="text-sm text-gray-400 mt-6">
+            No hidden fees. No false promises. Just a working platform and a founder who cares.
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.7 }}
+          className="text-center mt-12"
+        >
+          <p className="text-sm text-gray-400">
+            Built in Kenya | For Kenyan fintechs | By someone who gets it
+          </p>
+        </motion.div>
       </div>
     </section>
   );
 };
 
-export default Features;
+export default Trust;

@@ -17,11 +17,11 @@ const Footer = () => {
           <div className="md:col-span-2">
             <h3 className="text-xl font-bold mb-4">Asynova</h3>
             <p className="text-gray-300 mb-4">
-              Building the future of AI orchestration for financial services. 
-              Designed with security and compliance in mind.
+              AI cost optimization platform for African fintechs. 
+              Enterprise-grade infrastructure with simple integration.
             </p>
             <div className="text-sm text-teal mt-4">
-              Currently in development • Launching April 2025
+              Beta Program • Limited Spots Available
             </div>
           </div>
 
@@ -41,9 +41,9 @@ const Footer = () => {
               </li>
               <li>
                 <span className="text-gray-300 opacity-75 cursor-not-allowed">
-                  Careers
+                  About
                   <span className="ml-2 text-xs bg-teal/20 text-teal px-2 py-0.5 rounded-full">
-                    Coming Soon
+                    Coming soon
                   </span>
                 </span>
               </li>
@@ -52,7 +52,7 @@ const Footer = () => {
                   onClick={openWaitlist}
                   className="text-gray-300 hover:text-teal"
                 >
-                  Join Beta
+                  Join Beta Program
                 </button>
               </li>
             </ul>
@@ -84,7 +84,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-teal/10 text-center text-gray-400 text-sm max-w-5xl mx-auto">
-          © 2025 Asynova. All rights reserved. • In Development
+          <p>© 2025 Asynova. All rights reserved.</p>
         </div>
       </div>
 
