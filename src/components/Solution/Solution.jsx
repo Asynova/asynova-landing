@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import DocGenerationVisualization from '../Visualizations/DocGenerationVisualization';
+//import DocGenerationVisualization from '../Visualizations/DocGenerationVisualization';
 import CostVisualization from '../Visualizations/CostVisualization';
 
 const SolutionFeature = ({ icon, title, description, status, savings }) => (
