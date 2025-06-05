@@ -1,11 +1,277 @@
+/**
+ * Asynova Landing Page - Base Styles
+ * Global reset and foundation
+ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+/* Root variables and base setup */
+:root {
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --font-outfit: 'Outfit', 'Inter', sans-serif;
+  --font-jetbrains: 'JetBrains Mono', 'Consolas', monospace;
+  --font-orbitron: 'Orbitron', 'Outfit', sans-serif;
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 body {
-  background-color: #0A1E3D;
+  font-family: var(--font-inter);
+  line-height: 1.6;
   color: #ffffff;
-  font-family: 'Inter', sans-serif;
+  background: #0a0c0e;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Prevent FOUC (Flash of Unstyled Content) */
+.no-js {
+  display: none;
+}
+
+/* Custom scrollbar for Webkit browsers */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00d4ff, #b829ff);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #b829ff, #00ffc8);
+  background-clip: content-box;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #00d4ff #0a0c0e;
+}
+
+/* Selection styles */
+::selection {
+  background: #b829ff;
+  color: white;
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background: #b829ff;
+  color: white;
+  text-shadow: none;
+}
+
+/* Focus styles for accessibility */
+:focus {
+  outline: 2px solid #00d4ff;
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid #00d4ff;
+  outline-offset: 2px;
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  body {
+    background: #000000;
+  }
+  
+  * {
+    border-color: currentColor !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+}
+
+/* Utility classes */
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
+
+/* Loading state */
+.loading {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Accessibility skip link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Prevent layout shift from scrollbar */
+html {
+  overflow-y: scroll;
+}
+
+/* Ensure full height layouts work properly */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Performance optimizations */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Lazy loading placeholder */
+.lazy-load-placeholder {
+  background: linear-gradient(90deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* WebGL canvas optimization */
+canvas {
+  display: block;
+  touch-action: none;
+}
+
+/* Quantum glow effect */
+.quantum-glow {
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
+}
+
+/* Debug mode styles (remove in production) */
+.debug * {
+  outline: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+/* Performance monitor (development only) */
+.perf-monitor {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #00ff00;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 12px;
+  z-index: 9999;
+  border: 1px solid #00ff00;
+  border-radius: 4px;
 }

@@ -1,38 +1,405 @@
-.App {
-  text-align: center;
+/**
+ * Asynova Landing Page - Revolutionary Styles
+ * Global styles for the most advanced fintech landing page
+ */
+
+/* Import design system */
+@import './design-system/glass-components.css';
+@import './design-system/animations.css';
+
+/* Custom fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+/* CSS Variables */
+:root {
+  /* Quantum Colors */
+  --quantum-blue: #00d4ff;
+  --quantum-purple: #b829ff;
+  --quantum-teal: #00ffc8;
+  --quantum-pink: #ff0080;
+  --quantum-green: #00ff88;
+  
+  /* Gradients */
+  --gradient-quantum: linear-gradient(135deg, var(--quantum-blue) 0%, var(--quantum-purple) 50%, var(--quantum-teal) 100%);
+  --gradient-holographic: linear-gradient(45deg, #ff0080 0%, #00d4ff 25%, #00ffc8 50%, #b829ff 75%, #ff0080 100%);
+  --gradient-dark: linear-gradient(180deg, #0a0c0e 0%, #1a002e 50%, #000b20 100%);
+  
+  /* Spacing */
+  --space-unit: 8px;
+  
+  /* Animations */
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #0a0c0e;
+  color: #ffffff;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-dark);
+  z-index: -2;
+}
+
+/* Custom Cursor Hidden on Touch Devices */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Selection */
+::selection {
+  background: var(--quantum-purple);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--quantum-blue), var(--quantum-purple));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--quantum-purple), var(--quantum-teal));
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #0056e0 0%, #7a00e6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-quantum {
+  background: var(--gradient-quantum);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: quantumShift 5s ease-in-out infinite;
+}
+
+@keyframes quantumShift {
+  0%, 100% {
+    filter: hue-rotate(0deg);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    filter: hue-rotate(30deg);
+  }
+}
+
+/* Links */
+a {
+  color: var(--quantum-blue);
+  text-decoration: none;
+  transition: var(--transition-base);
+}
+
+a:hover {
+  color: var(--quantum-purple);
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 48px;
+  }
+}
+
+/* Section Spacing */
+section {
+  position: relative;
+  padding: 80px 0;
+}
+
+@media (min-width: 768px) {
+  section {
+    padding: 120px 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  section {
+    padding: 160px 0;
+  }
+}
+
+/* Hero Section Specific */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Features Section */
+.features-section {
+  position: relative;
+}
+
+.features-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, var(--quantum-purple) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
+  filter: blur(100px);
+  z-index: -1;
+}
+
+/* Demo Section */
+.demo-section {
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 212, 255, 0.05) 50%, transparent 100%);
+}
+
+/* CTA Section */
+.cta-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  bottom: -200px;
+  left: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--quantum-teal) 0%, transparent 60%);
+  opacity: 0.1;
+  filter: blur(100px);
+  animation: float 20s ease-in-out infinite;
+}
+
+.cta-section::after {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--quantum-pink) 0%, transparent 60%);
+  opacity: 0.1;
+  filter: blur(100px);
+  animation: float 25s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+/* 3D Scene Container */
+.three-d-scene {
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Utility Classes */
+.text-quantum-blue { color: var(--quantum-blue); }
+.text-quantum-purple { color: var(--quantum-purple); }
+.text-quantum-teal { color: var(--quantum-teal); }
+.text-quantum-pink { color: var(--quantum-pink); }
+.text-quantum-green { color: var(--quantum-green); }
+
+.bg-quantum-blue { background-color: var(--quantum-blue); }
+.bg-quantum-purple { background-color: var(--quantum-purple); }
+.bg-quantum-teal { background-color: var(--quantum-teal); }
+.bg-quantum-pink { background-color: var(--quantum-pink); }
+.bg-quantum-green { background-color: var(--quantum-green); }
+
+.bg-gradient-quantum { background: var(--gradient-quantum); }
+.bg-gradient-holographic { background: var(--gradient-holographic); }
+
+/* Animation Utilities */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Responsive Utilities */
+.hidden { display: none; }
+.block { display: block; }
+.flex { display: flex; }
+.grid { display: grid; }
+
+@media (min-width: 768px) {
+  .md\:hidden { display: none; }
+  .md\:block { display: block; }
+  .md\:flex { display: flex; }
+  .md\:grid { display: grid; }
+}
+
+@media (min-width: 1024px) {
+  .lg\:hidden { display: none; }
+  .lg\:block { display: block; }
+  .lg\:flex { display: flex; }
+  .lg\:grid { display: grid; }
+}
+
+/* Loading State */
+.app-loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0c0e;
+  z-index: 9999;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --quantum-blue: #00ffff;
+    --quantum-purple: #ff00ff;
+    --quantum-teal: #00ff00;
+    --quantum-pink: #ff0088;
+  }
+  
+  body {
+    background: black;
+    color: white;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Dark Mode (always on for this design) */
+@media (prefers-color-scheme: light) {
+  /* Keep dark theme even in light mode for consistency */
+  body {
+    background: #0a0c0e;
+    color: #ffffff;
   }
 }
