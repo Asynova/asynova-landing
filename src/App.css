@@ -54,7 +54,6 @@ body {
   background: #0a0c0e;
   color: #ffffff;
   overflow-x: hidden;
-  cursor: none;
 }
 
 body::before {
@@ -68,12 +67,14 @@ body::before {
   z-index: -2;
 }
 
-/* Custom Cursor Hidden on Touch Devices */
+/* Custom Cursor - Removed to restore default cursor */
+/* To implement custom cursor in future:
 @media (hover: hover) and (pointer: fine) {
-  * {
-    cursor: none !important;
+  .custom-cursor {
+    // Custom cursor styles here
   }
 }
+*/
 
 /* Selection */
 ::selection {
@@ -137,10 +138,26 @@ a {
   color: var(--quantum-blue);
   text-decoration: none;
   transition: var(--transition-base);
+  cursor: pointer;
 }
 
 a:hover {
   color: var(--quantum-purple);
+}
+
+/* Interactive Elements */
+button {
+  cursor: pointer;
+}
+
+input[type="submit"],
+input[type="button"] {
+  cursor: pointer;
+}
+
+.clickable,
+[role="button"] {
+  cursor: pointer;
 }
 
 /* Container */
