@@ -7,22 +7,19 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   PlayIcon, PauseIcon, RefreshCwIcon, ExpandIcon,
-  DollarSignIcon, CheckCircleIcon, ZapIcon,
-  ActivityIcon, BrainIcon, CodeIcon,
+  CheckCircleIcon, ZapIcon,
+  BrainIcon, CodeIcon,
   GitBranchIcon, SparklesIcon, LayersIcon
 } from 'lucide-react';
 import { 
   GlassCard, GlassPanel, GlassButton, GlassBadge,
-  GlassProgress, GlassInput
+  GlassProgress
 } from '../../design-system/GlassComponents';
 import { 
   StaggerContainer, RevealAnimation, HoverCard,
   QuantumNumber
 } from '../../design-system/AnimationComponents';
-import { 
-  ThreeDScene, NeuralNetworkVisualization
-} from '../../design-system/ThreeDVisualization';
-import { theme } from '../../design-system/theme';
+// Theme imports removed - not used
 
 interface DemoStep {
   id: string;

@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { RocketIcon, MenuIcon, XIcon } from 'lucide-react';
 
 // Design System Imports
-import { GlassLoader, GlassButton, GlassPanel } from './design-system/GlassComponents';
+import { GlassLoader, GlassButton } from './design-system/GlassComponents';
 import { PageTransition } from './design-system/AnimationComponents';
 import './App.css';
 

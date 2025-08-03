@@ -16,7 +16,7 @@ import {
 } from '../../design-system/GlassComponents';
 import { 
   StaggerContainer, RevealAnimation, HoverCard,
-  FloatingElement, ParallaxContainer
+  ParallaxContainer
 } from '../../design-system/AnimationComponents';
 import { 
   ThreeDScene, QuantumSphere

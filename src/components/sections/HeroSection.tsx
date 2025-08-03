@@ -7,7 +7,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   ZapIcon, TrendingUpIcon, ArrowRightIcon, 
-  SparklesIcon, ActivityIcon, GitBranchIcon, DollarSignIcon,
+  GitBranchIcon, DollarSignIcon,
   CodeIcon, CpuIcon
 } from 'lucide-react';
 import { 
