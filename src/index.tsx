@@ -55,7 +55,7 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
 
 // Quantum easter egg
 console.log(
-  '%c🚀 Welcome to the Future of African Finance 🚀',
+  '%c🚀 Welcome to the Future of Multi-Agent AI 🚀',
   'background: linear-gradient(135deg, #00d4ff, #b829ff); color: white; font-size: 24px; font-weight: bold; padding: 20px;'
 );
 console.log(

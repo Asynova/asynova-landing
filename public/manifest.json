@@ -1,6 +1,7 @@
 {
   "short_name": "Asynova",
-  "name": "Asynova AI Platform",
+  "name": "Asynova - Multi-Agent AI Orchestration",
+  "description": "Production-grade infrastructure for multi-agent AI systems with 60% cost optimization",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,5 +22,6 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#0A1E3D",
-  "background_color": "#0A1E3D"
+  "background_color": "#0A1E3D",
+  "categories": ["developer", "productivity", "utilities"]
 }

@@ -1,15 +1,14 @@
 /**
- * Revolutionary Features Section
- * Showcasing capabilities that defy expectations
+ * Features Section - Multi-Agent AI Platform
+ * Showcasing developer-focused capabilities
  */
 
 import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { 
-  BrainIcon, ShieldIcon, GlobeIcon, 
-  ServerIcon, AlertTriangleIcon,
-  BanknoteIcon,
-  CpuIcon, NetworkIcon
+  GitBranchIcon, ShieldIcon, DollarSignIcon, 
+  ZapIcon, NetworkIcon, CodeIcon,
+  CpuIcon, LayersIcon
 } from 'lucide-react';
 import { 
   GlassCard, GlassButton, GlassBadge 
@@ -19,8 +18,7 @@ import {
   FloatingElement, QuantumNumber 
 } from '../../design-system/AnimationComponents';
 import { 
-  ThreeDScene, DataCubeGrid, FourDVisualization,
-  QuantumSphere 
+  ThreeDScene, DataCubeGrid, QuantumSphere 
 } from '../../design-system/ThreeDVisualization';
 import { theme } from '../../design-system/theme';
 
@@ -46,47 +44,56 @@ export const FeaturesSection: React.FC = () => {
 
   const features: Feature[] = [
     {
-      icon: AlertTriangleIcon,
-      title: "Failure Prediction AI",
-      description: "Our quantum-enhanced AI predicts system failures 48 hours before they occur, analyzing millions of data points in real-time.",
-      stats: { value: 99.7, label: "Accuracy", suffix: "%" },
-      color: theme.colors.quantum.pink,
+      icon: LayersIcon,
+      title: "Visual Workflow Builder",
+      description: "Drag-and-drop AI agents to build complex workflows. Like Zapier for AI, but actually powerful.",
+      stats: { value: 5, label: "Minutes to Deploy", suffix: " min" },
+      color: theme.colors.quantum.blue,
       demo: (
-        <ThreeDScene className="h-48">
-          <FourDVisualization dataPoints={15} timeSteps={8} />
-        </ThreeDScene>
+        <div className="h-48 flex items-center justify-center">
+          <motion.div
+            animate={{
+              rotate: [0, 360],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          >
+            <LayersIcon className="w-24 h-24 text-quantum-blue" />
+          </motion.div>
+        </div>
       )
     },
     {
-      icon: BanknoteIcon,
-      title: "Cost Optimization Engine",
-      description: "Intelligent resource allocation reduces AI infrastructure costs by up to 45% while improving performance.",
-      stats: { value: 4.2, label: "Saved Monthly", prefix: "$", suffix: "M" },
+      icon: DollarSignIcon,
+      title: "60% Cost Optimization",
+      description: "Semantic caching, smart model selection, and request batching cut your AI bills in half.",
+      stats: { value: 60, label: "Average Savings", suffix: "%" },
       color: theme.colors.quantum.teal,
       demo: (
         <div className="h-48 flex items-center justify-center">
           <motion.div
             animate={{
               scale: [1, 1.2, 1],
-              rotate: [0, 180, 360],
             }}
             transition={{
-              duration: 4,
+              duration: 2,
               repeat: Infinity,
-              ease: "linear"
             }}
           >
-            <BanknoteIcon className="w-24 h-24 text-quantum-teal" />
+            <DollarSignIcon className="w-24 h-24 text-quantum-teal" />
           </motion.div>
         </div>
       )
     },
     {
-      icon: ServerIcon,
-      title: "Banking System Integration",
-      description: "Native support for FLEXCUBE, T24, Finacle, and M-Pesa with real-time synchronization.",
-      stats: { value: 100, label: "Compatible", suffix: "%" },
-      color: theme.colors.quantum.blue,
+      icon: ZapIcon,
+      title: "Real-Time Execution",
+      description: "Watch your agents work in real-time. Debug, monitor, and optimize on the fly.",
+      stats: { value: 100, label: "Concurrent Agents", suffix: "+" },
+      color: theme.colors.quantum.purple,
       demo: (
         <ThreeDScene className="h-48">
           <DataCubeGrid gridSize={3} spacing={1.2} />
@@ -94,11 +101,11 @@ export const FeaturesSection: React.FC = () => {
       )
     },
     {
-      icon: GlobeIcon,
-      title: "Offline-First Architecture",
-      description: "Works seamlessly even with unstable connectivity. Edge computing ensures operations never stop.",
-      stats: { value: 24, label: "Availability", suffix: "/7" },
-      color: theme.colors.quantum.purple,
+      icon: NetworkIcon,
+      title: "Multi-Model Support",
+      description: "Use OpenAI, Claude, Gemini, and open source models in the same workflow. We handle the complexity.",
+      stats: { value: 15, label: "Models Supported", suffix: "+" },
+      color: theme.colors.quantum.pink,
       demo: (
         <div className="h-48 relative">
           <motion.div
@@ -111,28 +118,15 @@ export const FeaturesSection: React.FC = () => {
               repeat: Infinity,
             }}
           >
-            <GlobeIcon className="w-24 h-24 text-quantum-purple" />
+            <NetworkIcon className="w-24 h-24 text-quantum-pink" />
           </motion.div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              animate={{
-                scale: [1, 1.5, 1],
-                opacity: [0.5, 0, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-              }}
-              className="w-32 h-32 border-2 border-quantum-purple rounded-full"
-            />
-          </div>
         </div>
       )
     },
     {
       icon: ShieldIcon,
-      title: "Quantum Security",
-      description: "Military-grade encryption with quantum-resistant algorithms. Your data is safer than Fort Knox.",
+      title: "Enterprise Security",
+      description: "SOC 2 compliant, end-to-end encryption, and role-based access control. Your data never trains models.",
       stats: { value: 256, label: "Bit Encryption", suffix: "-bit" },
       color: theme.colors.success[500],
       demo: (
@@ -154,10 +148,10 @@ export const FeaturesSection: React.FC = () => {
       )
     },
     {
-      icon: BrainIcon,
-      title: "Self-Learning AI",
-      description: "Our AI learns from your specific patterns, becoming smarter and more efficient every day.",
-      stats: { value: 10, label: "Smarter Daily", suffix: "x" },
+      icon: GitBranchIcon,
+      title: "Version Control for AI",
+      description: "Track changes, rollback workflows, and collaborate with your team. Git for AI workflows.",
+      stats: { value: 100, label: "Version History", suffix: "%" },
       color: theme.colors.accent[500],
       demo: (
         <ThreeDScene className="h-48">
@@ -178,14 +172,14 @@ export const FeaturesSection: React.FC = () => {
           <RevealAnimation direction="up" className="text-center mb-20">
             <GlassBadge variant="quantum" floating>
               <CpuIcon className="w-4 h-4 mr-2" />
-              Revolutionary Features
+              Built for Scale
             </GlassBadge>
             <h2 className="text-5xl md:text-7xl font-bold text-white mt-6 mb-6">
-              Technology from the <span className="text-gradient-quantum">Future</span>
+              Infrastructure That <span className="text-gradient-quantum">Just Works</span>
             </h2>
             <p className="text-xl text-white/70 max-w-3xl mx-auto">
-              Every feature is designed to give African financial institutions 
-              an unfair advantage in the global market.
+              Stop wrestling with complex AI orchestration. Start shipping features that scale.
+              Built by developers who were tired of the status quo.
             </p>
           </RevealAnimation>
           
@@ -278,21 +272,65 @@ export const FeaturesSection: React.FC = () => {
             ))}
           </div>
           
+          {/* Code Example */}
+          <RevealAnimation direction="up" className="mt-20">
+            <GlassCard className="max-w-3xl mx-auto p-8">
+              <h3 className="text-xl font-bold text-white mb-4">
+                Build Complex Workflows in Minutes
+              </h3>
+              <pre className="text-sm text-quantum-blue/80 font-mono overflow-x-auto">
+{`// Create a content generation workflow
+const workflow = await asynova.createWorkflow({
+  name: "Blog Post Generator",
+  agents: [
+    { type: "researcher", model: "gemini-flash" },
+    { type: "writer", model: "claude-3" },
+    { type: "editor", model: "gpt-4" }
+  ],
+  optimization: {
+    enableCaching: true,
+    smartModelSelection: true,
+    targetCostReduction: 0.6
+  }
+});
+
+// Execute with real-time monitoring
+const result = await workflow.execute({
+  topic: "Future of AI",
+  onProgress: (agent, status) => {
+    console.log(\`\${agent}: \${status.message}\`);
+    console.log(\`Cost so far: $\${status.cost}\`);
+  }
+});`}
+              </pre>
+            </GlassCard>
+          </RevealAnimation>
+          
           {/* Call to Action */}
-          <RevealAnimation direction="up" className="text-center mt-20">
+          <RevealAnimation direction="up" className="text-center mt-12">
             <p className="text-xl text-white/70 mb-8">
-              Ready to experience the future of banking technology?
+              Ready to cut your AI costs and ship faster?
             </p>
-            <GlassButton
-              variant="quantum"
-              size="lg"
-              glow
-              pulse
-              className="min-w-[250px]"
-            >
-              <NetworkIcon className="w-5 h-5 mr-2" />
-              Explore All Features
-            </GlassButton>
+            <div className="flex gap-4 justify-center">
+              <GlassButton
+                variant="quantum"
+                size="lg"
+                glow
+                pulse
+                className="min-w-[250px]"
+              >
+                <CodeIcon className="w-5 h-5 mr-2" />
+                Start Building Free
+              </GlassButton>
+              <GlassButton
+                variant="secondary"
+                size="lg"
+                className="min-w-[200px]"
+              >
+                <GitBranchIcon className="w-5 h-5 mr-2" />
+                View on GitHub
+              </GlassButton>
+            </div>
           </RevealAnimation>
           
         </StaggerContainer>

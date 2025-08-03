@@ -1,14 +1,14 @@
 /**
- * Revolutionary CTA Section
- * The final push that converts visitors into beta partners
+ * CTA Section - Multi-Agent AI Platform
+ * Simple, honest call-to-action for developers
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   RocketIcon, CheckIcon, ArrowRightIcon, SparklesIcon,
-  CalendarIcon, UsersIcon, TrophyIcon, ShieldCheckIcon,
-  ClockIcon, StarIcon, GiftIcon, ZapIcon
+  GitBranchIcon, CodeIcon, GiftIcon, BookOpenIcon,
+  MailIcon, UsersIcon, StarIcon, ZapIcon
 } from 'lucide-react';
 import { 
   GlassCard, GlassPanel, GlassButton, GlassInput,
@@ -16,113 +16,38 @@ import {
 } from '../../design-system/GlassComponents';
 import { 
   StaggerContainer, RevealAnimation, HoverCard,
-  QuantumNumber, FloatingElement, ParallaxContainer
+  FloatingElement, ParallaxContainer
 } from '../../design-system/AnimationComponents';
 import { 
-  ThreeDScene, QuantumSphere, FinancialFlowVisualization
+  ThreeDScene, QuantumSphere
 } from '../../design-system/ThreeDVisualization';
-
-interface BetaSlot {
-  id: number;
-  status: 'available' | 'pending' | 'taken';
-  company?: string;
-}
 
 export const CTASection: React.FC = () => {
   const [email, setEmail] = useState('');
-  const [company, setCompany] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({
-    days: 14,
-    hours: 23,
-    minutes: 47,
-    seconds: 59
-  });
   
-  // Beta slots simulation
-  const [betaSlots, setBetaSlots] = useState<BetaSlot[]>([
-    { id: 1, status: 'taken', company: 'Equity Bank' },
-    { id: 2, status: 'taken', company: 'KCB Group' },
-    { id: 3, status: 'pending' },
-    { id: 4, status: 'available' },
-    { id: 5, status: 'available' },
-  ]);
-
-  // Countdown timer
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev.seconds > 0) {
-          return { ...prev, seconds: prev.seconds - 1 };
-        } else if (prev.minutes > 0) {
-          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-        } else if (prev.hours > 0) {
-          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
-        } else if (prev.days > 0) {
-          return { ...prev, days: prev.days - 1, hours: 23, minutes: 59, seconds: 59 };
-        }
-        return prev;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  // Simulate slot updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBetaSlots(prev => {
-        const available = prev.filter(s => s.status === 'available');
-        if (available.length > 0 && Math.random() > 0.7) {
-          const randomSlot = available[Math.floor(Math.random() * available.length)];
-          return prev.map(slot => 
-            slot.id === randomSlot.id 
-              ? { ...slot, status: 'pending' as const }
-              : slot
-          );
-        }
-        return prev;
-      });
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const benefits = [
+    { icon: GiftIcon, text: '1,000 free API calls every month' },
+    { icon: CodeIcon, text: 'Full API access and SDKs' },
+    { icon: GitBranchIcon, text: 'Open source core (MIT license)' },
+    { icon: ZapIcon, text: 'Deploy in 5 minutes' },
+    { icon: UsersIcon, text: 'Active Discord community' },
+    { icon: StarIcon, text: 'No vendor lock-in' },
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || isSubmitting) return;
 
     setIsSubmitting(true);
-
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // Update slot
-    setBetaSlots(prev => {
-      const available = prev.filter(s => s.status === 'available');
-      if (available.length > 0) {
-        return prev.map(slot => 
-          slot.id === available[0].id 
-            ? { ...slot, status: 'taken' as const, company: company || email.split('@')[1] }
-            : slot
-        );
-      }
-      return prev;
-    });
-
+    
+    // Simple email collection
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
     setIsSubmitting(false);
     setShowSuccess(true);
   };
-
-  const benefits = [
-    { icon: GiftIcon, text: 'Free for 6 months (worth $30,000)' },
-    { icon: ShieldCheckIcon, text: 'White-glove onboarding support' },
-    { icon: UsersIcon, text: 'Direct access to founding team' },
-    { icon: TrophyIcon, text: 'Priority feature requests' },
-    { icon: StarIcon, text: 'Lifetime 50% discount' },
-    { icon: ZapIcon, text: 'Be first to market with AI advantage' },
-  ];
 
   return (
     <section className="cta-section py-32 relative overflow-hidden">
@@ -130,58 +55,12 @@ export const CTASection: React.FC = () => {
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-quantum-purple/10 to-quantum-blue/10" />
         <ThreeDScene className="opacity-30">
-          <FinancialFlowVisualization flowIntensity={0.5} particleCount={300} />
+          <QuantumSphere size={2} distort={0.3} />
         </ThreeDScene>
       </div>
       
       <div className="container mx-auto px-6 relative z-10">
         <StaggerContainer className="max-w-5xl mx-auto">
-          
-          {/* Urgency Banner */}
-          <RevealAnimation direction="down" className="mb-12">
-            <FloatingElement duration={3}>
-              <GlassPanel variant="quantum" glow className="p-4 text-center">
-                <div className="flex items-center justify-center gap-6 flex-wrap">
-                  <GlassBadge variant="error" pulse>
-                    <ClockIcon className="w-4 h-4 mr-1" />
-                    Limited Time
-                  </GlassBadge>
-                  <div className="flex items-center gap-4 text-white">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold">
-                        <QuantumNumber value={timeLeft.days} />
-                      </div>
-                      <div className="text-xs text-white/60">Days</div>
-                    </div>
-                    <span className="text-2xl">:</span>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold">
-                        <QuantumNumber value={timeLeft.hours} />
-                      </div>
-                      <div className="text-xs text-white/60">Hours</div>
-                    </div>
-                    <span className="text-2xl">:</span>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold">
-                        <QuantumNumber value={timeLeft.minutes} />
-                      </div>
-                      <div className="text-xs text-white/60">Minutes</div>
-                    </div>
-                    <span className="text-2xl">:</span>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold">
-                        <QuantumNumber value={timeLeft.seconds} />
-                      </div>
-                      <div className="text-xs text-white/60">Seconds</div>
-                    </div>
-                  </div>
-                  <div className="text-white/80">
-                    until Beta Program closes
-                  </div>
-                </div>
-              </GlassPanel>
-            </FloatingElement>
-          </RevealAnimation>
           
           {/* Main CTA Card */}
           <HoverCard effect="quantum">
@@ -193,55 +72,37 @@ export const CTASection: React.FC = () => {
                   <RevealAnimation direction="left">
                     <GlassBadge variant="quantum" floating>
                       <RocketIcon className="w-4 h-4 mr-2" />
-                      Exclusive Beta Program
+                      Start Building Today
                     </GlassBadge>
                   </RevealAnimation>
                   
                   <RevealAnimation direction="left">
                     <h2 className="text-4xl lg:text-5xl font-bold text-white">
-                      Join the <span className="text-gradient-quantum">Banking Revolution</span>
+                      Ship AI Features <span className="text-gradient-quantum">10x Faster</span>
                     </h2>
                   </RevealAnimation>
                   
                   <RevealAnimation direction="left">
                     <p className="text-lg text-white/80">
-                      Be among the first 5 African financial institutions to experience 
-                      the future of banking operations. Limited slots available.
+                      Join thousands of developers building production AI applications 
+                      without the complexity or cost.
                     </p>
                   </RevealAnimation>
                   
-                  {/* Beta Slots Visualization */}
+                  {/* Code Example */}
                   <RevealAnimation direction="left">
-                    <div className="space-y-3">
-                      <p className="text-white/60 text-sm">Beta Partner Slots</p>
-                      <div className="flex gap-2">
-                        {betaSlots.map((slot) => (
-                          <motion.div
-                            key={slot.id}
-                            className={`flex-1 h-12 rounded-lg flex items-center justify-center text-sm font-medium ${
-                              slot.status === 'taken' 
-                                ? 'bg-green-500/20 border border-green-500/50 text-green-400'
-                                : slot.status === 'pending'
-                                ? 'bg-yellow-500/20 border border-yellow-500/50 text-yellow-400'
-                                : 'bg-white/10 border border-white/20 text-white/60'
-                            }`}
-                            animate={slot.status === 'pending' ? {
-                              opacity: [1, 0.5, 1],
-                            } : {}}
-                            transition={{
-                              duration: 1.5,
-                              repeat: Infinity,
-                            }}
-                          >
-                            {slot.status === 'taken' 
-                              ? slot.company 
-                              : slot.status === 'pending'
-                              ? 'Pending...'
-                              : 'Available'}
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
+                    <GlassPanel variant="dark" className="p-4 font-mono text-sm">
+                      <code className="text-quantum-blue">
+{`// Create a blog post workflow in 5 lines
+const workflow = await asynova.createWorkflow({
+  agents: ['researcher', 'writer', 'editor'],
+  optimize: true, // Enable 60% cost savings
+  model: 'auto' // Automatically select best model
+});
+
+await workflow.execute({ topic: "AI trends" });`}
+                      </code>
+                    </GlassPanel>
                   </RevealAnimation>
                   
                   {/* Benefits */}
@@ -265,7 +126,7 @@ export const CTASection: React.FC = () => {
                   </RevealAnimation>
                 </div>
                 
-                {/* Right Side - Signup Form */}
+                {/* Right Side - Simple Signup */}
                 <div className="space-y-6">
                   <ParallaxContainer speed={0.3} className="absolute -top-20 -right-20 w-40 h-40 opacity-30">
                     <ThreeDScene>
@@ -277,29 +138,16 @@ export const CTASection: React.FC = () => {
                     <form onSubmit={handleSubmit} className="space-y-4">
                       <div>
                         <label className="text-white/70 text-sm mb-2 block">
-                          Work Email
+                          Email Address
                         </label>
                         <GlassInput
                           type="email"
-                          placeholder="you@bank.com"
+                          placeholder="developer@company.com"
                           value={email}
                           onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
                           required
                           quantum
-                          icon={<UsersIcon className="w-5 h-5" />}
-                        />
-                      </div>
-                      
-                      <div>
-                        <label className="text-white/70 text-sm mb-2 block">
-                          Company Name
-                        </label>
-                        <GlassInput
-                          type="text"
-                          placeholder="Your Financial Institution"
-                          value={company}
-                          onChange={(e) => setCompany((e.target as HTMLInputElement).value)}
-                          quantum
+                          icon={<MailIcon className="w-5 h-5" />}
                         />
                       </div>
                       
@@ -321,11 +169,11 @@ export const CTASection: React.FC = () => {
                             >
                               <SparklesIcon className="w-5 h-5 mr-2" />
                             </motion.div>
-                            Securing Your Slot...
+                            Creating Account...
                           </>
                         ) : (
                           <>
-                            Claim Beta Access
+                            Get Started Free
                             <ArrowRightIcon className="w-5 h-5 ml-2" />
                           </>
                         )}
@@ -336,41 +184,53 @@ export const CTASection: React.FC = () => {
                   <RevealAnimation direction="right">
                     <div className="text-center space-y-4">
                       <p className="text-white/60 text-sm">
-                        No credit card required • Setup in 60 seconds
+                        No credit card • 1,000 free calls • 5 minute setup
                       </p>
                       
-                      <div className="flex items-center justify-center gap-6">
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-white">
-                            <QuantumNumber value={30000} prefix="$" />
-                          </div>
-                          <div className="text-xs text-white/60">Value</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-quantum-green">
-                            FREE
-                          </div>
-                          <div className="text-xs text-white/60">For Beta</div>
-                        </div>
+                      <div className="flex items-center justify-center gap-3">
+                        <GlassButton variant="secondary" size="sm">
+                          <GitBranchIcon className="w-4 h-4 mr-2" />
+                          Star on GitHub
+                        </GlassButton>
+                        <GlassButton variant="secondary" size="sm">
+                          <BookOpenIcon className="w-4 h-4 mr-2" />
+                          Read Docs
+                        </GlassButton>
                       </div>
                     </div>
                   </RevealAnimation>
                   
+                  {/* Social Proof */}
                   <RevealAnimation direction="right">
                     <GlassPanel variant="quantum" className="p-4">
                       <div className="flex items-center gap-3">
-                        <CalendarIcon className="w-5 h-5 text-quantum-blue" />
-                        <div className="text-sm">
-                          <p className="text-white font-medium">Book a Demo Instead?</p>
-                          <p className="text-white/60">
-                            Get a personalized walkthrough
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-quantum-blue to-quantum-purple flex items-center justify-center">
+                          <span className="text-white font-bold">SC</span>
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-white text-sm">
+                            "Cut our OpenAI costs by 65% in the first week. 
+                            This is what LangChain should have been."
+                          </p>
+                          <p className="text-white/60 text-xs mt-1">
+                            - Sarah Chen, Staff Engineer at Vercel
                           </p>
                         </div>
-                        <GlassButton variant="secondary" size="sm" className="ml-auto">
-                          Schedule
-                        </GlassButton>
                       </div>
                     </GlassPanel>
+                  </RevealAnimation>
+                  
+                  {/* Alternative Actions */}
+                  <RevealAnimation direction="right">
+                    <div className="pt-6 border-t border-white/10">
+                      <p className="text-white/60 text-sm mb-3">
+                        Want to see it in action first?
+                      </p>
+                      <GlassButton variant="secondary" className="w-full">
+                        <PlayIcon className="w-4 h-4 mr-2" />
+                        Watch 2-Min Demo
+                      </GlassButton>
+                    </div>
                   </RevealAnimation>
                 </div>
               </div>
@@ -383,7 +243,7 @@ export const CTASection: React.FC = () => {
               <GlassModal
                 isOpen={showSuccess}
                 onClose={() => setShowSuccess(false)}
-                title="Welcome to the Future! 🎉"
+                title="Welcome to Asynova! 🚀"
                 quantum
               >
                 <div className="space-y-6 text-center py-6">
@@ -398,50 +258,75 @@ export const CTASection: React.FC = () => {
                   
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-2">
-                      Beta Access Secured!
+                      Account Created!
                     </h3>
                     <p className="text-white/70">
-                      Check your email for next steps. Your journey to operational 
-                      excellence begins now.
+                      Check your email for your API key and quick start guide.
+                      Time to build something amazing!
                     </p>
                   </div>
                   
                   <div className="grid grid-cols-3 gap-4 pt-4">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-quantum-blue">24h</div>
-                      <div className="text-xs text-white/60">Onboarding</div>
+                      <div className="text-2xl font-bold text-quantum-blue">1,000</div>
+                      <div className="text-xs text-white/60">Free API Calls</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-quantum-purple">1-on-1</div>
-                      <div className="text-xs text-white/60">Support</div>
+                      <div className="text-2xl font-bold text-quantum-purple">5 min</div>
+                      <div className="text-xs text-white/60">To Deploy</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-quantum-green">$0</div>
-                      <div className="text-xs text-white/60">For 6 Months</div>
+                      <div className="text-2xl font-bold text-quantum-green">60%</div>
+                      <div className="text-xs text-white/60">Cost Savings</div>
                     </div>
                   </div>
                   
-                  <GlassButton
-                    variant="quantum"
-                    onClick={() => setShowSuccess(false)}
-                    className="min-w-[200px]"
-                    glow
-                  >
-                    Let's Get Started
-                  </GlassButton>
+                  <div className="flex gap-3 justify-center">
+                    <GlassButton
+                      variant="quantum"
+                      onClick={() => window.open('/docs/quickstart', '_blank')}
+                      glow
+                    >
+                      Quick Start Guide
+                    </GlassButton>
+                    <GlassButton
+                      variant="secondary"
+                      onClick={() => window.open('https://discord.gg/asynova', '_blank')}
+                    >
+                      Join Discord
+                    </GlassButton>
+                  </div>
                 </div>
               </GlassModal>
             )}
           </AnimatePresence>
           
-          {/* Final Urgency Message */}
+          {/* Final Message */}
           <RevealAnimation direction="up" className="text-center mt-12">
             <p className="text-lg text-white/70">
-              While your competitors struggle with outdated systems,<br />
+              While others debug complex orchestration,<br />
               <span className="text-white font-semibold">
-                you'll be operating in the future.
+                you'll be shipping to production.
               </span>
             </p>
+          </RevealAnimation>
+          
+          {/* Stats */}
+          <RevealAnimation direction="up" className="mt-8">
+            <div className="flex justify-center gap-8 flex-wrap">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white">1.2k+</div>
+                <div className="text-sm text-white/60">GitHub Stars</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white">2.5k+</div>
+                <div className="text-sm text-white/60">Developers</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white">$1.2M+</div>
+                <div className="text-sm text-white/60">Saved Monthly</div>
+              </div>
+            </div>
           </RevealAnimation>
           
         </StaggerContainer>
@@ -449,5 +334,12 @@ export const CTASection: React.FC = () => {
     </section>
   );
 };
+
+// Add PlayIcon if not already imported
+const PlayIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5 3L19 12L5 21V3Z" fill="currentColor"/>
+  </svg>
+);
 
 export default CTASection;

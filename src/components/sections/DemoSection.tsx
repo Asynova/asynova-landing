@@ -1,15 +1,15 @@
 /**
- * Interactive Demo Section
- * Live demonstration that makes visitors say "How is this possible?"
+ * Interactive Demo Section - Multi-Agent AI Platform
+ * Live demonstration of workflow building and cost optimization
  */
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   PlayIcon, PauseIcon, RefreshCwIcon, ExpandIcon,
-  AlertCircleIcon, CheckCircleIcon,
-  ActivityIcon, BrainIcon, ShieldCheckIcon,
-  GitBranchIcon, SparklesIcon
+  DollarSignIcon, CheckCircleIcon, ZapIcon,
+  ActivityIcon, BrainIcon, CodeIcon,
+  GitBranchIcon, SparklesIcon, LayersIcon
 } from 'lucide-react';
 import { 
   GlassCard, GlassPanel, GlassButton, GlassBadge,
@@ -32,97 +32,134 @@ interface DemoStep {
   action: () => void;
 }
 
+interface Agent {
+  id: string;
+  name: string;
+  type: string;
+  model: string;
+  status: 'idle' | 'running' | 'complete';
+  cost: number;
+}
+
 export const DemoSection: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [demoProgress, setDemoProgress] = useState(0);
-  const [selectedBank, setSelectedBank] = useState('');
+  const [workflowType, setWorkflowType] = useState('blog-generator');
   
-  // Simulated real-time data
-  const [metrics, setMetrics] = useState({
-    transactionsPerSecond: 1250,
-    systemHealth: 98.5,
-    costSavings: 42.3,
-    activeAlerts: 0,
-    cpuUsage: 45,
-    memoryUsage: 62,
-    apiLatency: 85,
-    errorRate: 0.02
-  });
+  // Simulated workflow agents
+  const [agents, setAgents] = useState<Agent[]>([
+    { id: '1', name: 'Research Agent', type: 'researcher', model: 'gemini-flash', status: 'idle', cost: 0 },
+    { id: '2', name: 'Writing Agent', type: 'writer', model: 'claude-3-sonnet', status: 'idle', cost: 0 },
+    { id: '3', name: 'Editor Agent', type: 'editor', model: 'gpt-4', status: 'idle', cost: 0 },
+    { id: '4', name: 'SEO Agent', type: 'optimizer', model: 'gemini-flash', status: 'idle', cost: 0 }
+  ]);
 
-  const [predictions, setPredictions] = useState({
-    failureRisk: 'Low',
-    estimatedDowntime: 0,
-    preventedIncidents: 127,
-    nextMaintenance: '3 days'
+  // Cost metrics
+  const [metrics, setMetrics] = useState({
+    totalCost: 0,
+    savedAmount: 0,
+    optimizationRate: 0,
+    apiCalls: 0,
+    cacheHits: 0,
+    executionTime: 0,
+    tokensProcessed: 0
   });
 
   // Demo steps
   const demoSteps: DemoStep[] = useMemo(() => [
     {
-      id: 'connect',
-      title: 'Connect Banking System',
-      description: 'Asynova connects to your core banking system in real-time',
+      id: 'build',
+      title: 'Build Workflow',
+      description: 'Drag and drop agents to create your AI workflow',
       duration: 3000,
       action: () => {
-        setMetrics(prev => ({ ...prev, systemHealth: 99.2 }));
-      }
-    },
-    {
-      id: 'analyze',
-      title: 'AI Analysis Begins',
-      description: 'Our AI analyzes millions of data points per second',
-      duration: 4000,
-      action: () => {
-        setMetrics(prev => ({ 
-          ...prev, 
-          transactionsPerSecond: 2850,
-          cpuUsage: 78
-        }));
-      }
-    },
-    {
-      id: 'predict',
-      title: 'Predict System Failure',
-      description: 'AI detects anomaly pattern indicating potential failure',
-      duration: 3000,
-      action: () => {
-        setPredictions(prev => ({
-          ...prev,
-          failureRisk: 'High',
-          estimatedDowntime: 4
-        }));
-        setMetrics(prev => ({ ...prev, activeAlerts: 3 }));
-      }
-    },
-    {
-      id: 'prevent',
-      title: 'Automatic Prevention',
-      description: 'System automatically scales resources and reroutes traffic',
-      duration: 4000,
-      action: () => {
-        setPredictions(prev => ({
-          ...prev,
-          failureRisk: 'Low',
-          preventedIncidents: 128
-        }));
-        setMetrics(prev => ({ 
-          ...prev, 
-          activeAlerts: 0,
-          cpuUsage: 52
-        }));
+        setAgents(prev => prev.map(agent => ({ ...agent, status: 'idle' })));
       }
     },
     {
       id: 'optimize',
-      title: 'Cost Optimization',
-      description: 'AI optimizes resource allocation, reducing costs',
+      title: 'Optimization Analysis',
+      description: 'AI analyzes the workflow for cost optimization opportunities',
       duration: 3000,
       action: () => {
         setMetrics(prev => ({ 
           ...prev, 
-          costSavings: 47.8,
-          memoryUsage: 48
+          optimizationRate: 62
+        }));
+      }
+    },
+    {
+      id: 'execute-research',
+      title: 'Execute Research',
+      description: 'Research agent gathers information with smart caching',
+      duration: 4000,
+      action: () => {
+        setAgents(prev => prev.map(agent => 
+          agent.id === '1' ? { ...agent, status: 'running', cost: 0.012 } : agent
+        ));
+        setMetrics(prev => ({ 
+          ...prev, 
+          apiCalls: prev.apiCalls + 3,
+          cacheHits: prev.cacheHits + 2,
+          tokensProcessed: prev.tokensProcessed + 1500,
+          totalCost: 0.012,
+          savedAmount: 0.018
+        }));
+      }
+    },
+    {
+      id: 'execute-write',
+      title: 'Generate Content',
+      description: 'Writing agent creates content using optimized model',
+      duration: 4000,
+      action: () => {
+        setAgents(prev => prev.map(agent => {
+          if (agent.id === '1') return { ...agent, status: 'complete' };
+          if (agent.id === '2') return { ...agent, status: 'running', cost: 0.025 };
+          return agent;
+        }));
+        setMetrics(prev => ({ 
+          ...prev, 
+          apiCalls: prev.apiCalls + 1,
+          tokensProcessed: prev.tokensProcessed + 3000,
+          totalCost: 0.037,
+          savedAmount: 0.043
+        }));
+      }
+    },
+    {
+      id: 'execute-edit',
+      title: 'Edit & Polish',
+      description: 'Editor agent refines content with cached context',
+      duration: 3000,
+      action: () => {
+        setAgents(prev => prev.map(agent => {
+          if (agent.id === '2') return { ...agent, status: 'complete' };
+          if (agent.id === '3') return { ...agent, status: 'running', cost: 0.018 };
+          return agent;
+        }));
+        setMetrics(prev => ({ 
+          ...prev, 
+          apiCalls: prev.apiCalls + 1,
+          cacheHits: prev.cacheHits + 1,
+          tokensProcessed: prev.tokensProcessed + 2000,
+          totalCost: 0.055,
+          savedAmount: 0.075,
+          executionTime: 12
+        }));
+      }
+    },
+    {
+      id: 'complete',
+      title: 'Workflow Complete',
+      description: 'All agents finished - 60% cost savings achieved!',
+      duration: 2000,
+      action: () => {
+        setAgents(prev => prev.map(agent => ({ ...agent, status: 'complete' })));
+        setMetrics(prev => ({ 
+          ...prev, 
+          optimizationRate: 58
         }));
       }
     }
@@ -141,7 +178,6 @@ export const DemoSection: React.FC = () => {
         setDemoProgress(((currentStep + 1) / demoSteps.length) * 100);
       } else {
         setIsPlaying(false);
-        setCurrentStep(0);
         setDemoProgress(100);
       }
     }, currentStepData.duration);
@@ -149,45 +185,24 @@ export const DemoSection: React.FC = () => {
     return () => clearTimeout(timer);
   }, [isPlaying, currentStep, demoSteps]);
 
-  // Simulate real-time updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setMetrics(prev => ({
-        ...prev,
-        transactionsPerSecond: prev.transactionsPerSecond + (Math.random() - 0.5) * 100,
-        apiLatency: Math.max(20, Math.min(150, prev.apiLatency + (Math.random() - 0.5) * 10)),
-        errorRate: Math.max(0, Math.min(1, prev.errorRate + (Math.random() - 0.5) * 0.01))
-      }));
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   const handleStartDemo = () => {
+    handleResetDemo();
     setIsPlaying(true);
-    setCurrentStep(0);
-    setDemoProgress(0);
   };
 
   const handleResetDemo = () => {
     setIsPlaying(false);
     setCurrentStep(0);
     setDemoProgress(0);
+    setAgents(prev => prev.map(agent => ({ ...agent, status: 'idle', cost: 0 })));
     setMetrics({
-      transactionsPerSecond: 1250,
-      systemHealth: 98.5,
-      costSavings: 42.3,
-      activeAlerts: 0,
-      cpuUsage: 45,
-      memoryUsage: 62,
-      apiLatency: 85,
-      errorRate: 0.02
-    });
-    setPredictions({
-      failureRisk: 'Low',
-      estimatedDowntime: 0,
-      preventedIncidents: 127,
-      nextMaintenance: '3 days'
+      totalCost: 0,
+      savedAmount: 0,
+      optimizationRate: 0,
+      apiCalls: 0,
+      cacheHits: 0,
+      executionTime: 0,
+      tokensProcessed: 0
     });
   };
 
@@ -205,10 +220,10 @@ export const DemoSection: React.FC = () => {
               Live Demonstration
             </GlassBadge>
             <h2 className="text-5xl md:text-7xl font-bold text-white mt-6 mb-6">
-              See the <span className="text-gradient-quantum">Magic</span> Happen
+              Build & Optimize <span className="text-gradient-quantum">AI Workflows</span>
             </h2>
             <p className="text-xl text-white/70 max-w-3xl mx-auto">
-              Watch how Asynova predicts and prevents a bank system failure in real-time
+              Watch how Asynova orchestrates multiple AI agents while cutting costs by 60%
             </p>
           </RevealAnimation>
           
@@ -250,16 +265,20 @@ export const DemoSection: React.FC = () => {
                   </div>
                   
                   <div className="flex items-center gap-4">
-                    <GlassInput
-                      placeholder="Select your bank..."
-                      value={selectedBank}
-                      onChange={(e) => setSelectedBank((e.target as HTMLInputElement).value)}
-                      className="w-48"
-                    />
+                    <select
+                      value={workflowType}
+                      onChange={(e) => setWorkflowType(e.target.value)}
+                      className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white"
+                      disabled={isPlaying}
+                    >
+                      <option value="blog-generator">Blog Post Generator</option>
+                      <option value="code-reviewer">Code Review Pipeline</option>
+                      <option value="data-analyzer">Data Analysis Workflow</option>
+                    </select>
                     
                     <GlassButton
                       variant="secondary"
-                      onClick={() => console.log('Fullscreen demo coming soon!')}
+                      onClick={() => console.log('Fullscreen demo')}
                     >
                       <ExpandIcon className="w-5 h-5" />
                     </GlassButton>
@@ -277,221 +296,243 @@ export const DemoSection: React.FC = () => {
                 </div>
               </div>
               
-              {/* Demo Steps Timeline */}
-              <div className="p-6 border-b border-white/10">
-                <div className="flex items-center justify-between overflow-x-auto pb-2">
-                  {demoSteps.map((step, index) => (
-                    <div 
-                      key={step.id}
-                      className={`flex items-center ${index < demoSteps.length - 1 ? 'flex-1' : ''}`}
-                    >
-                      <div className="flex flex-col items-center">
-                        <motion.div
-                          animate={{
-                            scale: currentStep === index ? 1.2 : 1,
-                            backgroundColor: currentStep >= index 
-                              ? theme.colors.quantum.blue 
-                              : 'rgba(255, 255, 255, 0.1)'
-                          }}
-                          className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
-                        >
-                          {currentStep > index ? (
-                            <CheckCircleIcon className="w-6 h-6" />
-                          ) : (
-                            index + 1
-                          )}
-                        </motion.div>
-                        <span className="text-xs text-white/60 mt-2 whitespace-nowrap">
-                          {step.title}
-                        </span>
-                      </div>
-                      {index < demoSteps.length - 1 && (
-                        <div className="flex-1 h-0.5 bg-white/10 mx-2 mt-5">
-                          <motion.div
-                            className="h-full bg-quantum-blue"
-                            initial={{ width: '0%' }}
-                            animate={{ 
-                              width: currentStep > index ? '100%' : '0%' 
-                            }}
-                            transition={{ duration: 0.5 }}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
               {/* Main Demo Display */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
                 
-                {/* Left Panel - System Metrics */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-white mb-4">
-                    System Metrics
+                {/* Left Panel - Workflow Builder */}
+                <div className="lg:col-span-2 space-y-4">
+                  <h3 className="text-lg font-semibold text-white">
+                    AI Agent Workflow
                   </h3>
                   
-                  <GlassPanel variant="quantum" className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-white/70">TPS</span>
-                      <span className="text-xl font-bold text-quantum-blue">
-                        <QuantumNumber value={metrics.transactionsPerSecond} />
-                      </span>
+                  <GlassPanel variant="quantum" className="p-6 min-h-[400px]">
+                    {/* Agent Flow Visualization */}
+                    <div className="flex items-center justify-between space-x-4">
+                      {agents.map((agent, index) => (
+                        <React.Fragment key={agent.id}>
+                          <motion.div
+                            animate={{
+                              scale: agent.status === 'running' ? 1.1 : 1,
+                              opacity: agent.status === 'idle' ? 0.6 : 1
+                            }}
+                            className="flex-1"
+                          >
+                            <GlassCard
+                              className={`p-4 text-center ${
+                                agent.status === 'running' ? 'border-quantum-blue' : 
+                                agent.status === 'complete' ? 'border-quantum-green' : ''
+                              }`}
+                              glow={agent.status === 'running'}
+                            >
+                              <div className="w-12 h-12 mx-auto mb-2 rounded-lg bg-white/10 flex items-center justify-center">
+                                <BrainIcon className={`w-6 h-6 ${
+                                  agent.status === 'running' ? 'text-quantum-blue animate-pulse' :
+                                  agent.status === 'complete' ? 'text-quantum-green' :
+                                  'text-white/50'
+                                }`} />
+                              </div>
+                              <h4 className="text-sm font-medium text-white mb-1">
+                                {agent.name}
+                              </h4>
+                              <p className="text-xs text-white/60 mb-2">
+                                {agent.model}
+                              </p>
+                              {agent.cost > 0 && (
+                                <div className="text-xs text-quantum-green">
+                                  ${agent.cost.toFixed(3)}
+                                </div>
+                              )}
+                              {agent.status === 'running' && (
+                                <div className="mt-2">
+                                  <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                                    <motion.div
+                                      className="h-full bg-quantum-blue"
+                                      initial={{ width: '0%' }}
+                                      animate={{ width: '100%' }}
+                                      transition={{ duration: 3 }}
+                                    />
+                                  </div>
+                                </div>
+                              )}
+                              {agent.status === 'complete' && (
+                                <CheckCircleIcon className="w-5 h-5 text-quantum-green mx-auto mt-2" />
+                              )}
+                            </GlassCard>
+                          </motion.div>
+                          {index < agents.length - 1 && (
+                            <motion.div
+                              animate={{
+                                opacity: agents[index].status === 'complete' ? 1 : 0.3
+                              }}
+                              className="w-8"
+                            >
+                              <svg className="w-full h-2">
+                                <line
+                                  x1="0"
+                                  y1="4"
+                                  x2="32"
+                                  y2="4"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  className="text-white/30"
+                                />
+                                <motion.line
+                                  x1="0"
+                                  y1="4"
+                                  x2="32"
+                                  y2="4"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  className="text-quantum-blue"
+                                  initial={{ pathLength: 0 }}
+                                  animate={{ 
+                                    pathLength: agents[index].status === 'complete' ? 1 : 0 
+                                  }}
+                                  transition={{ duration: 0.5 }}
+                                />
+                              </svg>
+                            </motion.div>
+                          )}
+                        </React.Fragment>
+                      ))}
                     </div>
-                    <GlassProgress value={metrics.transactionsPerSecond / 3000 * 100} variant="primary" />
-                  </GlassPanel>
-                  
-                  <GlassPanel variant="quantum" className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-white/70">System Health</span>
-                      <span className="text-xl font-bold text-quantum-green">
-                        <QuantumNumber value={metrics.systemHealth} suffix="%" decimals={1} />
-                      </span>
-                    </div>
-                    <GlassProgress value={metrics.systemHealth} variant="success" />
-                  </GlassPanel>
-                  
-                  <GlassPanel variant="quantum" className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-white/70">Cost Savings</span>
-                      <span className="text-xl font-bold text-quantum-purple">
-                        <QuantumNumber value={metrics.costSavings} suffix="%" decimals={1} />
-                      </span>
-                    </div>
-                    <GlassProgress value={metrics.costSavings} variant="quantum" />
-                  </GlassPanel>
-                  
-                  <GlassPanel variant="quantum" className="p-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/70">Active Alerts</span>
-                      <GlassBadge 
-                        variant={metrics.activeAlerts > 0 ? "error" : "success"}
-                        pulse={metrics.activeAlerts > 0}
-                      >
-                        {metrics.activeAlerts}
-                      </GlassBadge>
-                    </div>
-                  </GlassPanel>
-                </div>
-                
-                {/* Center Panel - 3D Visualization */}
-                <div className="lg:col-span-1">
-                  <h3 className="text-lg font-semibold text-white mb-4">
-                    AI Neural Activity
-                  </h3>
-                  <GlassPanel variant="quantum" className="h-96 relative overflow-hidden">
-                    <ThreeDScene>
-                      <NeuralNetworkVisualization 
-                        nodes={20} 
-                        connections={30}
-                        animated={isPlaying}
-                        color={predictions.failureRisk === 'High' ? '#ff0080' : '#00d4ff'}
-                      />
-                    </ThreeDScene>
                     
-                    {/* Overlay Status */}
-                    <div className="absolute top-4 left-4">
-                      <GlassBadge 
-                        variant={predictions.failureRisk === 'High' ? 'error' : 'success'}
-                        floating
-                      >
-                        {predictions.failureRisk === 'High' ? (
-                          <>
-                            <AlertCircleIcon className="w-4 h-4 mr-1" />
-                            Risk Detected
-                          </>
-                        ) : (
-                          <>
-                            <ShieldCheckIcon className="w-4 h-4 mr-1" />
-                            System Stable
-                          </>
-                        )}
-                      </GlassBadge>
+                    {/* Code Preview */}
+                    <div className="mt-8 p-4 bg-black/30 rounded-lg">
+                      <pre className="text-xs text-quantum-blue/80 font-mono">
+{`const workflow = await asynova.createWorkflow({
+  name: "${workflowType}",
+  agents: [
+    { type: "researcher", model: "gemini-flash" },
+    { type: "writer", model: "claude-3-sonnet" },
+    { type: "editor", model: "gpt-4" }
+  ],
+  optimization: {
+    enableCaching: true,
+    smartModelSelection: true,
+    targetCostReduction: 0.6
+  }
+});`}
+                      </pre>
                     </div>
                   </GlassPanel>
                 </div>
                 
-                {/* Right Panel - AI Predictions */}
+                {/* Right Panel - Metrics */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-white mb-4">
-                    AI Predictions
+                  <h3 className="text-lg font-semibold text-white">
+                    Real-Time Metrics
                   </h3>
                   
-                  <GlassPanel 
-                    variant="quantum" 
-                    className="p-4"
-                    glow={predictions.failureRisk === 'High'}
-                  >
+                  {/* Cost Optimization */}
+                  <GlassPanel variant="quantum" className="p-4">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-white/70">Failure Risk</span>
-                      <span className={`text-xl font-bold ${
-                        predictions.failureRisk === 'High' 
-                          ? 'text-red-500' 
-                          : 'text-green-500'
-                      }`}>
-                        {predictions.failureRisk}
+                      <span className="text-white/70">Total Cost</span>
+                      <span className="text-xl font-bold text-white">
+                        $<QuantumNumber value={metrics.totalCost} decimals={3} />
                       </span>
                     </div>
-                    {predictions.failureRisk === 'High' && (
-                      <div className="text-sm text-white/60">
-                        Estimated downtime: {predictions.estimatedDowntime} hours
-                      </div>
-                    )}
-                  </GlassPanel>
-                  
-                  <GlassPanel variant="quantum" className="p-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/70">Prevented Incidents</span>
-                      <span className="text-xl font-bold text-quantum-blue">
-                        <QuantumNumber value={predictions.preventedIncidents} />
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-white/70">Amount Saved</span>
+                      <span className="text-xl font-bold text-quantum-green">
+                        $<QuantumNumber value={metrics.savedAmount} decimals={3} />
                       </span>
                     </div>
-                  </GlassPanel>
-                  
-                  <GlassPanel variant="quantum" className="p-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/70">Next Maintenance</span>
-                      <span className="text-white font-medium">
-                        {predictions.nextMaintenance}
-                      </span>
-                    </div>
-                  </GlassPanel>
-                  
-                  <GlassPanel variant="quantum" className="p-4">
-                    <div className="space-y-3">
-                      <div className="text-white/70 text-sm">Resource Usage</div>
-                      <div className="space-y-2">
-                        <div>
-                          <div className="flex justify-between text-xs mb-1">
-                            <span>CPU</span>
-                            <span>{metrics.cpuUsage}%</span>
-                          </div>
-                          <GlassProgress value={metrics.cpuUsage} variant="primary" />
+                    <div className="mt-4 p-3 bg-quantum-green/10 rounded-lg">
+                      <div className="text-center">
+                        <div className="text-3xl font-bold text-quantum-green">
+                          <QuantumNumber value={metrics.optimizationRate} suffix="%" />
                         </div>
-                        <div>
-                          <div className="flex justify-between text-xs mb-1">
-                            <span>Memory</span>
-                            <span>{metrics.memoryUsage}%</span>
-                          </div>
-                          <GlassProgress value={metrics.memoryUsage} variant="primary" />
-                        </div>
+                        <div className="text-xs text-white/60 mt-1">Cost Reduction</div>
                       </div>
                     </div>
                   </GlassPanel>
+                  
+                  {/* API Metrics */}
+                  <GlassPanel variant="quantum" className="p-4">
+                    <h4 className="text-sm font-medium text-white mb-3">API Usage</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-white/60">API Calls</span>
+                        <span className="text-white">
+                          <QuantumNumber value={metrics.apiCalls} />
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-white/60">Cache Hits</span>
+                        <span className="text-quantum-blue">
+                          <QuantumNumber value={metrics.cacheHits} />
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-white/60">Tokens</span>
+                        <span className="text-white">
+                          <QuantumNumber value={metrics.tokensProcessed} />
+                        </span>
+                      </div>
+                    </div>
+                  </GlassPanel>
+                  
+                  {/* Optimization Techniques */}
+                  <GlassPanel variant="quantum" className="p-4">
+                    <h4 className="text-sm font-medium text-white mb-3">
+                      Active Optimizations
+                    </h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${
+                          currentStep >= 2 ? 'bg-quantum-green' : 'bg-white/20'
+                        }`} />
+                        <span className="text-xs text-white/70">Semantic Caching</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${
+                          currentStep >= 3 ? 'bg-quantum-green' : 'bg-white/20'
+                        }`} />
+                        <span className="text-xs text-white/70">Smart Model Selection</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${
+                          currentStep >= 2 ? 'bg-quantum-green' : 'bg-white/20'
+                        }`} />
+                        <span className="text-xs text-white/70">Request Batching</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${
+                          currentStep >= 4 ? 'bg-quantum-green' : 'bg-white/20'
+                        }`} />
+                        <span className="text-xs text-white/70">Context Reuse</span>
+                      </div>
+                    </div>
+                  </GlassPanel>
+                  
+                  {/* Execution Time */}
+                  {metrics.executionTime > 0 && (
+                    <GlassPanel variant="quantum" className="p-4">
+                      <div className="text-center">
+                        <ZapIcon className="w-8 h-8 text-quantum-purple mx-auto mb-2" />
+                        <div className="text-2xl font-bold text-white">
+                          <QuantumNumber value={metrics.executionTime} suffix="s" />
+                        </div>
+                        <div className="text-xs text-white/60">Total Execution Time</div>
+                      </div>
+                    </GlassPanel>
+                  )}
                 </div>
               </div>
               
               {/* Current Step Description */}
               <AnimatePresence mode="wait">
-                {isPlaying && (
+                {isPlaying && currentStep < demoSteps.length && (
                   <motion.div
+                    key={currentStep}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     className="p-6 bg-quantum-blue/10 border-t border-white/10"
                   >
                     <div className="flex items-center gap-4">
-                      <BrainIcon className="w-6 h-6 text-quantum-blue animate-pulse" />
+                      <LayersIcon className="w-6 h-6 text-quantum-blue animate-pulse" />
                       <div>
                         <h4 className="text-lg font-semibold text-white">
                           {demoSteps[currentStep].title}
@@ -511,7 +552,7 @@ export const DemoSection: React.FC = () => {
           {/* Call to Action */}
           <RevealAnimation direction="up" className="text-center mt-12">
             <p className="text-xl text-white/70 mb-6">
-              Impressed? This is just a glimpse of what Asynova can do.
+              Ready to cut your AI costs and build powerful workflows?
             </p>
             <div className="flex gap-4 justify-center">
               <GlassButton
@@ -520,15 +561,15 @@ export const DemoSection: React.FC = () => {
                 glow
                 pulse
               >
-                <ActivityIcon className="w-5 h-5 mr-2" />
-                Get Full Demo
+                <CodeIcon className="w-5 h-5 mr-2" />
+                Try It Yourself
               </GlassButton>
               <GlassButton
                 variant="secondary"
                 size="lg"
               >
                 <GitBranchIcon className="w-5 h-5 mr-2" />
-                Technical Details
+                View Source Code
               </GlassButton>
             </div>
           </RevealAnimation>

@@ -1,6 +1,21 @@
 {
   "name": "asynova-landing",
   "version": "2.0.0",
+  "description": "Multi-Agent AI Orchestration Platform - Cut AI costs by 60% while building powerful workflows",
+  "keywords": [
+    "ai",
+    "orchestration",
+    "multi-agent",
+    "cost-optimization",
+    "langchain-alternative",
+    "workflow-builder",
+    "ai-platform"
+  ],
+  "homepage": "https://asynova.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asynova/asynova-landing"
+  },
   "private": true,
   "dependencies": {
     "@headlessui/react": "^2.2.0",
