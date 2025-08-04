@@ -1,576 +1,287 @@
 /**
  * Interactive Demo Section - Multi-Agent AI Platform
- * Live demonstration of workflow building and cost optimization
+ * Simple demonstration of workflow concept and cost savings
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { 
-  PlayIcon, PauseIcon, RefreshCwIcon, ExpandIcon,
-  CheckCircleIcon, ZapIcon,
-  BrainIcon, CodeIcon,
-  GitBranchIcon, SparklesIcon, LayersIcon
+  PlayIcon, GitBranchIcon, ZapIcon, CheckCircleIcon,
+  CodeIcon, CpuIcon
 } from 'lucide-react';
 import { 
-  GlassCard, GlassPanel, GlassButton, GlassBadge,
-  GlassProgress
+  GlassCard, GlassPanel, GlassButton, GlassBadge
 } from '../../design-system/GlassComponents';
-import { 
-  StaggerContainer, RevealAnimation, HoverCard,
-  QuantumNumber
+import {
+  StaggerContainer, RevealAnimation, HoverCard
 } from '../../design-system/AnimationComponents';
-// Theme imports removed - not used
 
-interface DemoStep {
-  id: string;
-  title: string;
-  description: string;
-  duration: number;
-  action: () => void;
-}
+const DemoSection: React.FC = () => {
+  const [isRunning, setIsRunning] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [cost, setCost] = useState({ traditional: 0, optimized: 0 });
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
-interface Agent {
-  id: string;
-  name: string;
-  type: string;
-  model: string;
-  status: 'idle' | 'running' | 'complete';
-  cost: number;
-}
+  const runDemo = () => {
+    // Reset state
+    setIsRunning(true);
+    setProgress(0);
+    setCost({ traditional: 0, optimized: 0 });
+    setCompletedSteps([]);
 
-export const DemoSection: React.FC = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
-  const [demoProgress, setDemoProgress] = useState(0);
-  const [workflowType, setWorkflowType] = useState('blog-generator');
-  
-  // Simulated workflow agents
-  const [agents, setAgents] = useState<Agent[]>([
-    { id: '1', name: 'Research Agent', type: 'researcher', model: 'gemini-flash', status: 'idle', cost: 0 },
-    { id: '2', name: 'Writing Agent', type: 'writer', model: 'claude-3-sonnet', status: 'idle', cost: 0 },
-    { id: '3', name: 'Editor Agent', type: 'editor', model: 'gpt-4', status: 'idle', cost: 0 },
-    { id: '4', name: 'SEO Agent', type: 'optimizer', model: 'gemini-flash', status: 'idle', cost: 0 }
-  ]);
+    // Simulate workflow execution
+    let currentStep = 0;
+    const steps = [
+      { delay: 0, progress: 33, traditional: 4.50, optimized: 1.80 },
+      { delay: 1000, progress: 66, traditional: 9.00, optimized: 3.60 },
+      { delay: 2000, progress: 100, traditional: 12.50, optimized: 5.00 }
+    ];
 
-  // Cost metrics
-  const [metrics, setMetrics] = useState({
-    totalCost: 0,
-    savedAmount: 0,
-    optimizationRate: 0,
-    apiCalls: 0,
-    cacheHits: 0,
-    executionTime: 0,
-    tokensProcessed: 0
-  });
+    steps.forEach(step => {
+      setTimeout(() => {
+        setProgress(step.progress);
+        setCost({
+          traditional: step.traditional,
+          optimized: step.optimized
+        });
+        setCompletedSteps(prev => [...prev, currentStep]);
+        currentStep++;
 
-  // Demo steps
-  const demoSteps: DemoStep[] = useMemo(() => [
-    {
-      id: 'build',
-      title: 'Build Workflow',
-      description: 'Drag and drop agents to create your AI workflow',
-      duration: 3000,
-      action: () => {
-        setAgents(prev => prev.map(agent => ({ ...agent, status: 'idle' })));
-      }
-    },
-    {
-      id: 'optimize',
-      title: 'Optimization Analysis',
-      description: 'AI analyzes the workflow for cost optimization opportunities',
-      duration: 3000,
-      action: () => {
-        setMetrics(prev => ({ 
-          ...prev, 
-          optimizationRate: 62
-        }));
-      }
-    },
-    {
-      id: 'execute-research',
-      title: 'Execute Research',
-      description: 'Research agent gathers information with smart caching',
-      duration: 4000,
-      action: () => {
-        setAgents(prev => prev.map(agent => 
-          agent.id === '1' ? { ...agent, status: 'running', cost: 0.012 } : agent
-        ));
-        setMetrics(prev => ({ 
-          ...prev, 
-          apiCalls: prev.apiCalls + 3,
-          cacheHits: prev.cacheHits + 2,
-          tokensProcessed: prev.tokensProcessed + 1500,
-          totalCost: 0.012,
-          savedAmount: 0.018
-        }));
-      }
-    },
-    {
-      id: 'execute-write',
-      title: 'Generate Content',
-      description: 'Writing agent creates content using optimized model',
-      duration: 4000,
-      action: () => {
-        setAgents(prev => prev.map(agent => {
-          if (agent.id === '1') return { ...agent, status: 'complete' };
-          if (agent.id === '2') return { ...agent, status: 'running', cost: 0.025 };
-          return agent;
-        }));
-        setMetrics(prev => ({ 
-          ...prev, 
-          apiCalls: prev.apiCalls + 1,
-          tokensProcessed: prev.tokensProcessed + 3000,
-          totalCost: 0.037,
-          savedAmount: 0.043
-        }));
-      }
-    },
-    {
-      id: 'execute-edit',
-      title: 'Edit & Polish',
-      description: 'Editor agent refines content with cached context',
-      duration: 3000,
-      action: () => {
-        setAgents(prev => prev.map(agent => {
-          if (agent.id === '2') return { ...agent, status: 'complete' };
-          if (agent.id === '3') return { ...agent, status: 'running', cost: 0.018 };
-          return agent;
-        }));
-        setMetrics(prev => ({ 
-          ...prev, 
-          apiCalls: prev.apiCalls + 1,
-          cacheHits: prev.cacheHits + 1,
-          tokensProcessed: prev.tokensProcessed + 2000,
-          totalCost: 0.055,
-          savedAmount: 0.075,
-          executionTime: 12
-        }));
-      }
-    },
-    {
-      id: 'complete',
-      title: 'Workflow Complete',
-      description: 'All agents finished - 60% cost savings achieved!',
-      duration: 2000,
-      action: () => {
-        setAgents(prev => prev.map(agent => ({ ...agent, status: 'complete' })));
-        setMetrics(prev => ({ 
-          ...prev, 
-          optimizationRate: 58
-        }));
-      }
-    }
-  ], []);
-
-  // Auto-play demo
-  useEffect(() => {
-    if (!isPlaying) return;
-
-    const currentStepData = demoSteps[currentStep];
-    const timer = setTimeout(() => {
-      currentStepData.action();
-      
-      if (currentStep < demoSteps.length - 1) {
-        setCurrentStep(prev => prev + 1);
-        setDemoProgress(((currentStep + 1) / demoSteps.length) * 100);
-      } else {
-        setIsPlaying(false);
-        setDemoProgress(100);
-      }
-    }, currentStepData.duration);
-
-    return () => clearTimeout(timer);
-  }, [isPlaying, currentStep, demoSteps]);
-
-  const handleStartDemo = () => {
-    handleResetDemo();
-    setIsPlaying(true);
-  };
-
-  const handleResetDemo = () => {
-    setIsPlaying(false);
-    setCurrentStep(0);
-    setDemoProgress(0);
-    setAgents(prev => prev.map(agent => ({ ...agent, status: 'idle', cost: 0 })));
-    setMetrics({
-      totalCost: 0,
-      savedAmount: 0,
-      optimizationRate: 0,
-      apiCalls: 0,
-      cacheHits: 0,
-      executionTime: 0,
-      tokensProcessed: 0
+        if (step.progress === 100) {
+          setTimeout(() => setIsRunning(false), 500);
+        }
+      }, step.delay);
     });
   };
 
+  const savings = cost.traditional > 0 
+    ? ((1 - cost.optimized / cost.traditional) * 100).toFixed(0)
+    : 0;
+
   return (
-    <section className="demo-section py-32 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent" />
-      
-      <div className="container mx-auto px-6 relative z-10">
-        <StaggerContainer className="max-w-7xl mx-auto">
-          
+    <section className="demo-section py-20 relative overflow-hidden">
+      <div className="container mx-auto px-6">
+        <StaggerContainer>
           {/* Section Header */}
-          <RevealAnimation direction="up" className="text-center mb-16">
-            <GlassBadge variant="quantum" floating>
-              <SparklesIcon className="w-4 h-4 mr-2" />
-              Live Demonstration
+          <RevealAnimation direction="up" className="text-center mb-12">
+            <GlassBadge variant="quantum" floating className="mb-4">
+              <CodeIcon className="w-4 h-4 mr-2" />
+              Live Demo
             </GlassBadge>
-            <h2 className="text-5xl md:text-7xl font-bold text-white mt-6 mb-6">
-              Build & Optimize <span className="text-gradient-quantum">AI Workflows</span>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+              See The Magic In Action
             </h2>
-            <p className="text-xl text-white/70 max-w-3xl mx-auto">
-              Watch how Asynova orchestrates multiple AI agents while cutting costs by 60%
+            <p className="text-xl text-white/70 max-w-2xl mx-auto">
+              Watch how multi-agent orchestration cuts costs in real-time
             </p>
           </RevealAnimation>
-          
+
           {/* Demo Container */}
-          <HoverCard effect="quantum" className="max-w-6xl mx-auto">
-            <GlassCard gradient className="overflow-hidden">
-              
-              {/* Demo Controls */}
-              <div className="p-6 border-b border-white/10">
-                <div className="flex items-center justify-between flex-wrap gap-4">
-                  <div className="flex items-center gap-4">
+          <RevealAnimation direction="up">
+            <div className="max-w-5xl mx-auto">
+              <HoverCard effect="glow">
+                <GlassCard gradient holographic className="p-6 md:p-8">
+                  {/* Workflow Title */}
+                  <div className="mb-8 text-center">
+                    <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">
+                      Example: AI Blog Post Creation
+                    </h3>
+                    <p className="text-white/60">
+                      Three specialized agents working together efficiently
+                    </p>
+                  </div>
+
+                  {/* Agents Visualization */}
+                  <div className="mb-8">
+                    <div className="flex items-center justify-center gap-2 md:gap-4 flex-wrap">
+                      {/* Research Agent */}
+                      <motion.div
+                        animate={{
+                          scale: isRunning && progress >= 0 ? [1, 1.1, 1] : 1,
+                          opacity: completedSteps.includes(0) ? 1 : 0.6
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="flex-shrink-0"
+                      >
+                        <GlassPanel className="p-3 md:p-4 text-center">
+                          <GitBranchIcon className="w-6 h-6 md:w-8 md:h-8 text-quantum-blue mx-auto mb-2" />
+                          <p className="text-sm font-medium text-white">Research</p>
+                          <p className="text-xs text-white/60">Gemini Flash</p>
+                        </GlassPanel>
+                      </motion.div>
+
+                      <motion.span 
+                        animate={{ opacity: progress >= 33 ? 1 : 0.3 }}
+                        className="text-xl md:text-2xl text-white/50 hidden sm:block"
+                      >
+                        →
+                      </motion.span>
+
+                      {/* Writer Agent */}
+                      <motion.div
+                        animate={{
+                          scale: isRunning && progress >= 33 ? [1, 1.1, 1] : 1,
+                          opacity: completedSteps.includes(1) ? 1 : 0.6
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="flex-shrink-0"
+                      >
+                        <GlassPanel className="p-3 md:p-4 text-center">
+                          <ZapIcon className="w-6 h-6 md:w-8 md:h-8 text-quantum-purple mx-auto mb-2" />
+                          <p className="text-sm font-medium text-white">Writer</p>
+                          <p className="text-xs text-white/60">Gemini Pro</p>
+                        </GlassPanel>
+                      </motion.div>
+
+                      <motion.span 
+                        animate={{ opacity: progress >= 66 ? 1 : 0.3 }}
+                        className="text-xl md:text-2xl text-white/50 hidden sm:block"
+                      >
+                        →
+                      </motion.span>
+
+                      {/* Editor Agent */}
+                      <motion.div
+                        animate={{
+                          scale: isRunning && progress >= 66 ? [1, 1.1, 1] : 1,
+                          opacity: completedSteps.includes(2) ? 1 : 0.6
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="flex-shrink-0"
+                      >
+                        <GlassPanel className="p-3 md:p-4 text-center">
+                          <CheckCircleIcon className="w-6 h-6 md:w-8 md:h-8 text-quantum-green mx-auto mb-2" />
+                          <p className="text-sm font-medium text-white">Editor</p>
+                          <p className="text-xs text-white/60">Gemini Flash</p>
+                        </GlassPanel>
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  {/* Progress Bar */}
+                  {isRunning && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mb-6"
+                    >
+                      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full bg-gradient-to-r from-quantum-blue via-quantum-purple to-quantum-green"
+                          animate={{ width: `${progress}%` }}
+                          transition={{ duration: 0.5, ease: "easeOut" }}
+                        />
+                      </div>
+                      <p className="text-sm text-white/60 mt-2 text-center">
+                        Workflow Progress: {progress}%
+                      </p>
+                    </motion.div>
+                  )}
+
+                  {/* Cost Comparison */}
+                  <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8">
+                    <div className="text-center">
+                      <GlassPanel className="p-4">
+                        <p className="text-sm text-white/60 mb-2">Traditional Cost</p>
+                        <motion.p 
+                          className="text-2xl md:text-3xl font-bold text-white/80"
+                          animate={{ scale: cost.traditional > 0 ? [1, 1.1, 1] : 1 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          ${cost.traditional.toFixed(2)}
+                        </motion.p>
+                        <p className="text-xs text-white/50 mt-1">Single Model Approach</p>
+                      </GlassPanel>
+                    </div>
+                    
+                    <div className="text-center">
+                      <GlassPanel className="p-4 border-quantum-green/30">
+                        <p className="text-sm text-white/60 mb-2">With Asynova</p>
+                        <motion.p 
+                          className="text-2xl md:text-3xl font-bold text-quantum-green"
+                          animate={{ scale: cost.optimized > 0 ? [1, 1.1, 1] : 1 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          ${cost.optimized.toFixed(2)}
+                        </motion.p>
+                        {savings > 0 && (
+                          <motion.p 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="text-xs text-quantum-green mt-1"
+                          >
+                            {savings}% Saved!
+                          </motion.p>
+                        )}
+                      </GlassPanel>
+                    </div>
+                  </div>
+
+                  {/* Optimization Features */}
+                  {progress === 100 && !isRunning && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mb-6"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-center">
+                        <div className="text-sm">
+                          <CpuIcon className="w-5 h-5 text-quantum-blue mx-auto mb-1" />
+                          <p className="text-white/80">Smart Model Selection</p>
+                        </div>
+                        <div className="text-sm">
+                          <GitBranchIcon className="w-5 h-5 text-quantum-purple mx-auto mb-1" />
+                          <p className="text-white/80">Parallel Processing</p>
+                        </div>
+                        <div className="text-sm">
+                          <ZapIcon className="w-5 h-5 text-quantum-green mx-auto mb-1" />
+                          <p className="text-white/80">Semantic Caching</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* Action Button */}
+                  <div className="text-center">
                     <GlassButton
                       variant="quantum"
-                      onClick={isPlaying ? () => setIsPlaying(false) : handleStartDemo}
+                      size="lg"
+                      onClick={runDemo}
+                      disabled={isRunning}
+                      style={{ position: 'relative', zIndex: 10 }}
                       glow
-                      disabled={demoProgress === 100 && !isPlaying}
+                      pulse={!isRunning}
                     >
-                      {isPlaying ? (
-                        <>
-                          <PauseIcon className="w-5 h-5 mr-2" />
-                          Pause Demo
-                        </>
-                      ) : (
-                        <>
-                          <PlayIcon className="w-5 h-5 mr-2" />
-                          Start Demo
-                        </>
-                      )}
-                    </GlassButton>
-                    
-                    <GlassButton
-                      variant="secondary"
-                      onClick={handleResetDemo}
-                      disabled={isPlaying}
-                    >
-                      <RefreshCwIcon className="w-5 h-5 mr-2" />
-                      Reset
+                      <PlayIcon className="w-5 h-5 mr-2" />
+                      {isRunning ? 'Running Workflow...' : progress === 100 ? 'Run Again' : 'Run Demo Workflow'}
                     </GlassButton>
                   </div>
-                  
-                  <div className="flex items-center gap-4">
-                    <select
-                      value={workflowType}
-                      onChange={(e) => setWorkflowType(e.target.value)}
-                      className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white"
-                      disabled={isPlaying}
-                    >
-                      <option value="blog-generator">Blog Post Generator</option>
-                      <option value="code-reviewer">Code Review Pipeline</option>
-                      <option value="data-analyzer">Data Analysis Workflow</option>
-                    </select>
-                    
-                    <GlassButton
-                      variant="secondary"
-                      onClick={() => console.log('Fullscreen demo')}
-                    >
-                      <ExpandIcon className="w-5 h-5" />
-                    </GlassButton>
-                  </div>
-                </div>
-                
-                {/* Progress Bar */}
-                <div className="mt-4">
-                  <GlassProgress 
-                    value={demoProgress} 
-                    variant="quantum" 
-                    animated 
-                    particles
-                  />
-                </div>
-              </div>
-              
-              {/* Main Demo Display */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
-                
-                {/* Left Panel - Workflow Builder */}
-                <div className="lg:col-span-2 space-y-4">
-                  <h3 className="text-lg font-semibold text-white">
-                    AI Agent Workflow
-                  </h3>
-                  
-                  <GlassPanel variant="quantum" className="p-6 min-h-[400px]">
-                    {/* Agent Flow Visualization */}
-                    <div className="flex items-center justify-between space-x-4">
-                      {agents.map((agent, index) => (
-                        <React.Fragment key={agent.id}>
-                          <motion.div
-                            animate={{
-                              scale: agent.status === 'running' ? 1.1 : 1,
-                              opacity: agent.status === 'idle' ? 0.6 : 1
-                            }}
-                            className="flex-1"
-                          >
-                            <GlassCard
-                              className={`p-4 text-center ${
-                                agent.status === 'running' ? 'border-quantum-blue' : 
-                                agent.status === 'complete' ? 'border-quantum-green' : ''
-                              }`}
-                              glow={agent.status === 'running'}
-                            >
-                              <div className="w-12 h-12 mx-auto mb-2 rounded-lg bg-white/10 flex items-center justify-center">
-                                <BrainIcon className={`w-6 h-6 ${
-                                  agent.status === 'running' ? 'text-quantum-blue animate-pulse' :
-                                  agent.status === 'complete' ? 'text-quantum-green' :
-                                  'text-white/50'
-                                }`} />
-                              </div>
-                              <h4 className="text-sm font-medium text-white mb-1">
-                                {agent.name}
-                              </h4>
-                              <p className="text-xs text-white/60 mb-2">
-                                {agent.model}
-                              </p>
-                              {agent.cost > 0 && (
-                                <div className="text-xs text-quantum-green">
-                                  ${agent.cost.toFixed(3)}
-                                </div>
-                              )}
-                              {agent.status === 'running' && (
-                                <div className="mt-2">
-                                  <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-                                    <motion.div
-                                      className="h-full bg-quantum-blue"
-                                      initial={{ width: '0%' }}
-                                      animate={{ width: '100%' }}
-                                      transition={{ duration: 3 }}
-                                    />
-                                  </div>
-                                </div>
-                              )}
-                              {agent.status === 'complete' && (
-                                <CheckCircleIcon className="w-5 h-5 text-quantum-green mx-auto mt-2" />
-                              )}
-                            </GlassCard>
-                          </motion.div>
-                          {index < agents.length - 1 && (
-                            <motion.div
-                              animate={{
-                                opacity: agents[index].status === 'complete' ? 1 : 0.3
-                              }}
-                              className="w-8"
-                            >
-                              <svg className="w-full h-2">
-                                <line
-                                  x1="0"
-                                  y1="4"
-                                  x2="32"
-                                  y2="4"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  className="text-white/30"
-                                />
-                                <motion.line
-                                  x1="0"
-                                  y1="4"
-                                  x2="32"
-                                  y2="4"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  className="text-quantum-blue"
-                                  initial={{ pathLength: 0 }}
-                                  animate={{ 
-                                    pathLength: agents[index].status === 'complete' ? 1 : 0 
-                                  }}
-                                  transition={{ duration: 0.5 }}
-                                />
-                              </svg>
-                            </motion.div>
-                          )}
-                        </React.Fragment>
-                      ))}
-                    </div>
-                    
-                    {/* Code Preview */}
-                    <div className="mt-8 p-4 bg-black/30 rounded-lg">
-                      <pre className="text-xs text-quantum-blue/80 font-mono">
-{`const workflow = await asynova.createWorkflow({
-  name: "${workflowType}",
-  agents: [
-    { type: "researcher", model: "gemini-flash" },
-    { type: "writer", model: "claude-3-sonnet" },
-    { type: "editor", model: "gpt-4" }
-  ],
-  optimization: {
-    enableCaching: true,
-    smartModelSelection: true,
-    targetCostReduction: 0.6
-  }
-});`}
-                      </pre>
-                    </div>
-                  </GlassPanel>
-                </div>
-                
-                {/* Right Panel - Metrics */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-white">
-                    Real-Time Metrics
-                  </h3>
-                  
-                  {/* Cost Optimization */}
-                  <GlassPanel variant="quantum" className="p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-white/70">Total Cost</span>
-                      <span className="text-xl font-bold text-white">
-                        $<QuantumNumber value={metrics.totalCost} decimals={3} />
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-white/70">Amount Saved</span>
-                      <span className="text-xl font-bold text-quantum-green">
-                        $<QuantumNumber value={metrics.savedAmount} decimals={3} />
-                      </span>
-                    </div>
-                    <div className="mt-4 p-3 bg-quantum-green/10 rounded-lg">
-                      <div className="text-center">
-                        <div className="text-3xl font-bold text-quantum-green">
-                          <QuantumNumber value={metrics.optimizationRate} suffix="%" />
-                        </div>
-                        <div className="text-xs text-white/60 mt-1">Cost Reduction</div>
-                      </div>
-                    </div>
-                  </GlassPanel>
-                  
-                  {/* API Metrics */}
-                  <GlassPanel variant="quantum" className="p-4">
-                    <h4 className="text-sm font-medium text-white mb-3">API Usage</h4>
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-white/60">API Calls</span>
-                        <span className="text-white">
-                          <QuantumNumber value={metrics.apiCalls} />
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-white/60">Cache Hits</span>
-                        <span className="text-quantum-blue">
-                          <QuantumNumber value={metrics.cacheHits} />
-                        </span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-white/60">Tokens</span>
-                        <span className="text-white">
-                          <QuantumNumber value={metrics.tokensProcessed} />
-                        </span>
-                      </div>
-                    </div>
-                  </GlassPanel>
-                  
-                  {/* Optimization Techniques */}
-                  <GlassPanel variant="quantum" className="p-4">
-                    <h4 className="text-sm font-medium text-white mb-3">
-                      Active Optimizations
-                    </h4>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${
-                          currentStep >= 2 ? 'bg-quantum-green' : 'bg-white/20'
-                        }`} />
-                        <span className="text-xs text-white/70">Semantic Caching</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${
-                          currentStep >= 3 ? 'bg-quantum-green' : 'bg-white/20'
-                        }`} />
-                        <span className="text-xs text-white/70">Smart Model Selection</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${
-                          currentStep >= 2 ? 'bg-quantum-green' : 'bg-white/20'
-                        }`} />
-                        <span className="text-xs text-white/70">Request Batching</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${
-                          currentStep >= 4 ? 'bg-quantum-green' : 'bg-white/20'
-                        }`} />
-                        <span className="text-xs text-white/70">Context Reuse</span>
-                      </div>
-                    </div>
-                  </GlassPanel>
-                  
-                  {/* Execution Time */}
-                  {metrics.executionTime > 0 && (
-                    <GlassPanel variant="quantum" className="p-4">
-                      <div className="text-center">
-                        <ZapIcon className="w-8 h-8 text-quantum-purple mx-auto mb-2" />
-                        <div className="text-2xl font-bold text-white">
-                          <QuantumNumber value={metrics.executionTime} suffix="s" />
-                        </div>
-                        <div className="text-xs text-white/60">Total Execution Time</div>
-                      </div>
-                    </GlassPanel>
-                  )}
-                </div>
-              </div>
-              
-              {/* Current Step Description */}
-              <AnimatePresence mode="wait">
-                {isPlaying && currentStep < demoSteps.length && (
-                  <motion.div
-                    key={currentStep}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="p-6 bg-quantum-blue/10 border-t border-white/10"
-                  >
-                    <div className="flex items-center gap-4">
-                      <LayersIcon className="w-6 h-6 text-quantum-blue animate-pulse" />
-                      <div>
-                        <h4 className="text-lg font-semibold text-white">
-                          {demoSteps[currentStep].title}
-                        </h4>
-                        <p className="text-white/70">
-                          {demoSteps[currentStep].description}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-              
-            </GlassCard>
-          </HoverCard>
-          
-          {/* Call to Action */}
-          <RevealAnimation direction="up" className="text-center mt-12">
-            <p className="text-xl text-white/70 mb-6">
-              Ready to cut your AI costs and build powerful workflows?
-            </p>
-            <div className="flex gap-4 justify-center">
-              <GlassButton
-                variant="quantum"
-                size="lg"
-                glow
-                pulse
-              >
-                <CodeIcon className="w-5 h-5 mr-2" />
-                Try It Yourself
-              </GlassButton>
-              <GlassButton
-                variant="secondary"
-                size="lg"
-              >
-                <GitBranchIcon className="w-5 h-5 mr-2" />
-                View Source Code
-              </GlassButton>
+
+                  {/* Info Note */}
+                  <p className="text-xs text-white/50 text-center mt-6">
+                    This demo simulates our multi-agent orchestration using real cost data
+                  </p>
+                </GlassCard>
+              </HoverCard>
             </div>
           </RevealAnimation>
-          
+
+          {/* CTA Below Demo */}
+          <RevealAnimation direction="up" className="text-center mt-12">
+            <p className="text-lg text-white/70 mb-4">
+              Ready to cut your AI costs by 60%?
+            </p>
+            <GlassButton 
+              variant="secondary" 
+              size="lg" 
+              onClick={() => {
+                document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              style={{ position: 'relative', zIndex: 10 }}
+            >
+              Get Early Access →
+            </GlassButton>
+          </RevealAnimation>
         </StaggerContainer>
       </div>
     </section>

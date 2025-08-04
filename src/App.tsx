@@ -12,6 +12,7 @@ import { RocketIcon, MenuIcon, XIcon } from 'lucide-react';
 import { GlassLoader, GlassButton } from './design-system/GlassComponents';
 import { PageTransition } from './design-system/AnimationComponents';
 import './App.css';
+import './App.mobile.css'; // Mobile responsive styles
 
 // Context Imports
 import { PerformanceProvider } from './context/PerformanceContext';
@@ -107,7 +108,7 @@ const Navigation: React.FC = () => {
               Docs
             </a>
             <a
-              href="https://github.com/asynova"
+              href="https://github.com/asynova/asynova-core"
               className="text-white/80 hover:text-white transition-colors"
               target="_blank"
               rel="noopener noreferrer"
@@ -165,7 +166,7 @@ const Navigation: React.FC = () => {
                   Documentation
                 </a>
                 <a
-                  href="https://github.com/asynova"
+                  href="https://github.com/asynova/asynova-core"
                   className="text-white/80 hover:text-white transition-colors py-2"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -211,7 +212,7 @@ const Footer: React.FC = () => (
         </p>
         <div className="mt-6 flex justify-center gap-6">
           <a 
-            href="https://github.com/asynova" 
+            href="https://github.com/asynova/asynova-core" 
             className="hover:text-white transition-colors"
           >
             GitHub

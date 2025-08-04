@@ -100,7 +100,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
             
             {/* Main Headline with Morphing Effect */}
             <RevealAnimation direction="up" className="text-center mb-8">
-              <h1 className="text-6xl md:text-8xl font-bold leading-tight">
+              <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold leading-tight">
                 <MorphingText text={dynamicHeadline} speed={0.1} className="text-gradient" />
                 <br />
                 <span className="text-white opacity-90">
@@ -151,6 +151,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                             variant="quantum"
                             onClick={calculateSavings}
                             disabled={!apiSpend || isCalculating}
+                            style={{ position: 'relative', zIndex: 10, cursor: 'pointer' }}
                             glow
                             pulse
                             morphing

@@ -34,7 +34,7 @@ const SEO: React.FC<SEOProps> = ({
     "url": url,
     "logo": "https://asynova.com/logo.png",
     "sameAs": [
-      "https://github.com/asynova",
+      "https://github.com/asynova/asynova-core",
       "https://twitter.com/asynova",
       "https://discord.gg/asynova",
       "https://dev.to/asynova"
@@ -96,7 +96,7 @@ const SEO: React.FC<SEOProps> = ({
     ],
     "screenshot": "https://asynova.com/screenshot.png",
     "softwareVersion": "2.0",
-    "releaseNotes": "https://github.com/asynova/releases"
+    "releaseNotes": "https://github.com/asynova/asynova-core/releases"
   };
 
   // FAQ structured data
