@@ -53,7 +53,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
   }, [headlines]);
 
   const calculateSavings = () => {
-    if (!apiSpend) return;
+    console.log('Calculate button clicked, apiSpend:', apiSpend); // Debug log
+    if (!apiSpend || parseFloat(apiSpend) <= 0) {
+      console.log('Invalid apiSpend, returning'); // Debug log
+      return;
+    }
     
     setIsCalculating(true);
     
@@ -74,20 +78,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
   };
 
   return (
-    <section ref={heroRef} className="hero-section relative min-h-screen overflow-hidden">
-      {/* Quantum Background */}
-      <QuantumBackground variant="nebula" />
-      
-      {/* 3D Visualization Layer - Updated for AI workflows */}
-      <div className="absolute inset-0 opacity-50">
-        <ThreeDScene fog={false} stars>
-          <NeuralNetworkVisualization nodes={30} connections={50} />
+    <section 
+      ref={heroRef}
+      className="hero-section relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      {/* Background Elements */}
+      <QuantumBackground />
+      <motion.div style={{ y }} className="absolute inset-0 z-0">
+        <ThreeDScene className="opacity-30">
+          <NeuralNetworkVisualization />
         </ThreeDScene>
-      </div>
+      </motion.div>
       
-      {/* Parallax Content Layer */}
-      <motion.div style={{ y }} className="relative z-10">
-        <div className="container mx-auto px-6 pt-32 pb-20">
+      <div className="container mx-auto px-6 relative z-10 py-20">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
           <StaggerContainer staggerDelay={0.1} className="max-w-6xl mx-auto">
             
             {/* Floating Badge - Updated for developers */}
@@ -132,42 +140,62 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                       Calculate Your <span className="text-gradient">AI Cost Savings</span>
                     </h3>
                     
-                    <div className="space-y-6">
+                    <form onSubmit={(e) => {
+                      e.preventDefault();
+                      calculateSavings();
+                    }} className="space-y-6">
                       <div>
-                        <label className="text-white/70 text-sm mb-2 block">
+                        <label htmlFor="api-spend-input" className="text-white/70 text-sm mb-2 block">
                           Your Monthly AI API Spend (OpenAI, Claude, Gemini, etc.)
                         </label>
                         <div className="flex gap-4">
-                          <GlassInput
-                            type="number"
-                            placeholder="e.g., 500"
-                            value={apiSpend}
-                            onChange={(e) => setApiSpend((e.target as HTMLInputElement).value)}
-                            icon={<span className="text-white/50">$</span>}
-                            quantum
-                            className="flex-1"
-                          />
-                          <GlassButton
-                            variant="quantum"
-                            onClick={calculateSavings}
-                            disabled={!apiSpend || isCalculating}
-                            style={{ position: 'relative', zIndex: 10, cursor: 'pointer' }}
-                            glow
-                            pulse
-                            morphing
+                          <div className="flex-1 relative" style={{ zIndex: 20 }}>
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 text-lg z-10 pointer-events-none">$</span>
+                            <input
+                              id="api-spend-input"
+                              type="number"
+                              placeholder="e.g., 500"
+                              value={apiSpend}
+                              onChange={(e) => {
+                                console.log('Input changed:', e.target.value); // Debug log
+                                setApiSpend(e.target.value);
+                              }}
+                              className="w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl pl-12 pr-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-quantum-blue transition-all relative z-20"
+                              style={{ 
+                                fontSize: '16px',
+                                WebkitAppearance: 'none',
+                                MozAppearance: 'none',
+                                appearance: 'none',
+                                position: 'relative',
+                                zIndex: 20
+                              }}
+                              min="0"
+                              step="any"
+                              autoComplete="off"
+                            />
+                          </div>
+                          <button
+                            type="submit"
+                            disabled={!apiSpend || isCalculating || parseFloat(apiSpend) <= 0}
+                            className={`px-6 py-3 rounded-xl font-medium transition-all relative z-20 ${
+                              !apiSpend || isCalculating || parseFloat(apiSpend) <= 0
+                                ? 'bg-white/10 text-white/50 cursor-not-allowed'
+                                : 'bg-gradient-to-r from-quantum-blue to-quantum-purple text-white hover:shadow-lg hover:shadow-quantum-blue/50 cursor-pointer'
+                            }`}
+                            style={{ minWidth: '140px' }}
                           >
                             {isCalculating ? (
-                              <>
+                              <span className="flex items-center justify-center">
                                 <GlassLoader size="sm" quantum />
-                                <span className="ml-2">Optimizing...</span>
-                              </>
+                                <span className="ml-2">Calculating...</span>
+                              </span>
                             ) : (
-                              <>
+                              <span className="flex items-center justify-center">
                                 Calculate
                                 <ArrowRightIcon className="w-5 h-5 ml-2" />
-                              </>
+                              </span>
                             )}
-                          </GlassButton>
+                          </button>
                         </div>
                       </div>
                       
@@ -181,7 +209,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                           <GlassProgress value={75} variant="quantum" animated particles />
                         </motion.div>
                       )}
-                    </div>
+                    </form>
                     
                     {/* Quick code example */}
                     <div className="mt-6 pt-6 border-t border-white/10">
@@ -218,107 +246,98 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                           <QuantumNumber 
                             value={savings.amount} 
                             prefix="$" 
-                            decimals={0}
-                            duration={1500}
+                            suffix="/mo"
+                            duration={2}
                             quantum
                           />
                         </div>
-                        <p className="text-white/70 mt-2">Monthly Savings</p>
+                        <p className="text-white/70 text-sm mt-2">Monthly Savings</p>
                       </GlassPanel>
                     </HoverCard>
                     
                     <HoverCard effect="holographic">
                       <GlassPanel variant="quantum" glow className="p-6 text-center">
-                        <TrendingUpIcon className="w-10 h-10 text-quantum-purple mx-auto mb-4" />
+                        <TrendingUpIcon className="w-10 h-10 text-quantum-blue mx-auto mb-4" />
                         <div className="text-4xl font-bold text-white">
                           <QuantumNumber 
                             value={savings.percentage} 
-                            suffix="%" 
-                            decimals={1}
-                            duration={1500}
+                            suffix="%"
+                            duration={2}
                             quantum
                           />
                         </div>
-                        <p className="text-white/70 mt-2">Cost Reduction</p>
+                        <p className="text-white/70 text-sm mt-2">Cost Reduction</p>
                       </GlassPanel>
                     </HoverCard>
                     
                     <HoverCard effect="holographic">
                       <GlassPanel variant="quantum" glow className="p-6 text-center">
-                        <ZapIcon className="w-10 h-10 text-quantum-blue mx-auto mb-4" />
+                        <ZapIcon className="w-10 h-10 text-quantum-purple mx-auto mb-4" />
                         <div className="text-4xl font-bold text-white">
                           <QuantumNumber 
                             value={savings.amount * 12} 
-                            prefix="$" 
-                            decimals={0}
-                            duration={1500}
+                            prefix="$"
+                            duration={2}
                             quantum
                           />
                         </div>
-                        <p className="text-white/70 mt-2">Annual Savings</p>
+                        <p className="text-white/70 text-sm mt-2">Annual Savings</p>
                       </GlassPanel>
                     </HoverCard>
                   </div>
                   
-                  <div className="text-center relative z-10">
+                  {/* CTA Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
                     <GlassButton
                       variant="quantum"
-                      size="xl"
-                      onClick={onGetStarted}
+                      size="lg"
+                      onClick={() => {
+                        if (onGetStarted) onGetStarted();
+                        else document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth' });
+                      }}
                       glow
                       pulse
-                      className="min-w-[300px]"
+                      morphing
                     >
-                      Start Building for Free
-                      <ArrowRightIcon className="w-6 h-6 ml-3" />
+                      Start Saving Now
+                      <ArrowRightIcon className="w-5 h-5 ml-2" />
                     </GlassButton>
-                    <p className="text-white/60 mt-4 text-sm">
-                      1,000 API calls free • No credit card required
-                    </p>
+                    
+                    <GlassButton
+                      variant="secondary"
+                      size="lg"
+                      onClick={() => {
+                        setShowResults(false);
+                        setApiSpend('');
+                      }}
+                    >
+                      Recalculate
+                    </GlassButton>
                   </div>
                 </GlassCard>
               </motion.div>
             )}
             
-            {/* Trust Indicators - Updated for developers */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-              className="mt-16 text-center"
-            >
-              <p className="text-white/60 mb-6">Built by developers, for developers</p>
-              <div className="flex justify-center items-center gap-8 flex-wrap">
-                {['Open Source', '5-Min Setup', 'MIT License', 'No Vendor Lock-in'].map((name, i) => (
-                  <FloatingElement key={i} delay={i * 0.2} duration={4}>
-                    <div className="w-32 h-12 bg-white/10 rounded-lg backdrop-blur-sm flex items-center justify-center">
-                      <span className="text-white/50 text-sm">{name}</span>
-                    </div>
-                  </FloatingElement>
-                ))}
+            {/* Trust Indicators */}
+            <RevealAnimation direction="up" className="mt-12">
+              <div className="flex flex-wrap justify-center items-center gap-8 text-white/60">
+                <div className="flex items-center gap-2">
+                  <GitBranchIcon className="w-5 h-5" />
+                  <span className="text-sm">Open Source Core</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CpuIcon className="w-5 h-5" />
+                  <span className="text-sm">5 Min Integration</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CodeIcon className="w-5 h-5" />
+                  <span className="text-sm">1,000 Free API Calls</span>
+                </div>
               </div>
-            </motion.div>
-            
-            {/* Social proof */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.5 }}
-              className="mt-8 flex justify-center gap-4"
-            >
-              <GlassBadge variant="secondary">
-                <GitBranchIcon className="w-4 h-4 mr-1" />
-                1.2k GitHub Stars
-              </GlassBadge>
-              <GlassBadge variant="secondary">
-                <CpuIcon className="w-4 h-4 mr-1" />
-                50ms Latency
-              </GlassBadge>
-            </motion.div>
-            
+            </RevealAnimation>
           </StaggerContainer>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
       
       {/* Scroll Indicator */}
       <motion.div
@@ -329,8 +348,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="text-white/60"
+          transition={{ repeat: Infinity, duration: 1.5 }}
+          className="text-white/40 cursor-pointer"
+          onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
         >
           <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-white/60 rounded-full mt-2" />

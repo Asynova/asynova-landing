@@ -1,9 +1,9 @@
 /**
  * Asynova Landing Page - Revolutionary Styles
- * Global styles for the most advanced fintech landing page
+ * Global styles for the most advanced AI orchestration landing page
  */
 
-/* Import design system */
+/* Import design system FIRST */
 @import './design-system/glass-components.css';
 @import './design-system/animations.css';
 
@@ -35,11 +35,57 @@
   --transition-smooth: 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* Custom Input Styling for Calculator */
+input[type="text"]:focus,
+input[type="number"]:focus {
+  outline: none;
+  border-color: var(--quantum-blue) !important;
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+}
+
 /* Global Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* CRITICAL FIX: Ensure calculator input works */
+.hero-section input#api-spend-input {
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 9999 !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+  cursor: text !important;
+  touch-action: manipulation !important;
+}
+
+.hero-section form {
+  position: relative !important;
+  z-index: 1000 !important;
+}
+
+.hero-section button[type="submit"] {
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 9999 !important;
+  cursor: pointer !important;
+}
+
+/* Override any glass effects that might block */
+.glass-card *,
+.hover-card * {
+  pointer-events: auto !important;
+}
+
+.glass-card::before,
+.glass-card::after,
+.hover-card::before,
+.hover-card::after {
+  pointer-events: none !important;
 }
 
 html {
@@ -420,3 +466,6 @@ section {
     color: #ffffff;
   }
 }
+
+/* CRITICAL: Import mobile CSS at the END to ensure overrides work */
+@import './App.mobile.css';

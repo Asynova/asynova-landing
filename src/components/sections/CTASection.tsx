@@ -220,16 +220,20 @@ await workflow.execute({ topic: "AI trends" });`}
                     </GlassPanel>
                   </RevealAnimation>
                   
-                  {/* Alternative Actions */}
+                  {/* Simple Sign Up Instructions */}
                   <RevealAnimation direction="right">
                     <div className="pt-6 border-t border-white/10">
                       <p className="text-white/60 text-sm mb-3">
-                        Want to see it in action first?
+                        Join developers who are already saving
                       </p>
-                      <GlassButton variant="secondary" className="w-full">
-                        <PlayIcon className="w-4 h-4 mr-2" />
-                        Watch 2-Min Demo
-                      </GlassButton>
+                      <div className="flex items-center justify-center gap-2 text-white/50 text-xs">
+                        <CheckIcon className="w-4 h-4 text-quantum-green" />
+                        <span>No credit card required</span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2 text-white/50 text-xs mt-1">
+                        <CheckIcon className="w-4 h-4 text-quantum-green" />
+                        <span>1,000 free API calls</span>
+                      </div>
                     </div>
                   </RevealAnimation>
                 </div>

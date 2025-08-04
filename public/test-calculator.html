@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator Test</title>
+    <style>
+        body {
+            background: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 50px;
+        }
+        .calculator {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 15px 30px;
+            background: #00d4ff;
+            color: black;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #00a8cc;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0,255,136,0.1);
+            border-radius: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Simple Calculator Test</h1>
+        <p>This tests if basic input functionality works</p>
+        
+        <form id="calc-form">
+            <label for="test-input">Enter amount:</label>
+            <input 
+                type="number" 
+                id="test-input" 
+                placeholder="e.g., 500"
+                min="0"
+            >
+            <button type="submit">Calculate</button>
+        </form>
+        
+        <div id="result">
+            <h3>Results:</h3>
+            <p>Amount: $<span id="amount">0</span></p>
+            <p>Savings (60%): $<span id="savings">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('calc-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const input = document.getElementById('test-input');
+            const value = parseFloat(input.value);
+            
+            if (value > 0) {
+                const savings = value * 0.6;
+                
+                document.getElementById('amount').textContent = value.toFixed(2);
+                document.getElementById('savings').textContent = savings.toFixed(2);
+                document.getElementById('result').style.display = 'block';
+            } else {
+                alert('Please enter a valid amount');
+            }
+        });
+        
+        // Log all interactions
+        document.getElementById('test-input').addEventListener('input', function(e) {
+            console.log('Input changed:', e.target.value);
+        });
+        
+        document.getElementById('test-input').addEventListener('focus', function(e) {
+            console.log('Input focused');
+        });
+        
+        document.getElementById('test-input').addEventListener('click', function(e) {
+            console.log('Input clicked');
+        });
+    </script>
+</body>
+</html>
