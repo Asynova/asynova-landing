@@ -30,7 +30,6 @@ import {
 // Component Imports
 import HeroSection from './components/sections/HeroSection';
 import FeaturesSection from './components/sections/FeaturesSection';
-import { InputDiagnostic } from './components/InputDiagnostic'; // Temporary diagnostic
 
 // Lazy Loaded Components
 const DemoSection = lazy(() => import('./components/sections/DemoSection'));
@@ -299,9 +298,6 @@ const App: React.FC = () => {
         <SEO />
         <PageTransition variant="fade">
           <div className="app">
-            {/* Temporary diagnostic component */}
-            <InputDiagnostic />
-            
             {/* Skip to main content link */}
             <SkipToMain />
             
