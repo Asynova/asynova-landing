@@ -7,12 +7,12 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   ZapIcon, TrendingUpIcon, ArrowRightIcon, 
-  GitBranchIcon, DollarSignIcon,
-  CodeIcon, CpuIcon
+  GitBranchIcon, CheckCircleIcon,
+  CodeIcon, CpuIcon, RocketIcon, DollarSignIcon
 } from 'lucide-react';
 import { 
-  GlassCard, GlassButton, GlassInput, 
-  GlassBadge, GlassProgress, GlassLoader, GlassPanel 
+  GlassCard, GlassButton, 
+  GlassBadge, GlassPanel 
 } from '../../design-system/GlassComponents';
 import { 
   QuantumNumber, StaggerContainer, 
@@ -27,13 +27,10 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
-  const [apiSpend, setApiSpend] = useState('');
-  const [isCalculating, setIsCalculating] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const [savings, setSavings] = useState({ amount: 0, percentage: 0 });
   const heroRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -300]);
+  const [selectedTier, setSelectedTier] = useState<'small' | 'startup' | 'enterprise'>('startup');
 
   // Dynamic text for developers
   const [dynamicHeadline, setDynamicHeadline] = useState("Multi-Agent AI Orchestration");
@@ -52,30 +49,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
     return () => clearInterval(interval);
   }, [headlines]);
 
-  const calculateSavings = () => {
-    console.log('Calculate button clicked, apiSpend:', apiSpend); // Debug log
-    if (!apiSpend || parseFloat(apiSpend) <= 0) {
-      console.log('Invalid apiSpend, returning'); // Debug log
-      return;
+  // Pricing tiers with real examples
+  const pricingTiers = {
+    small: {
+      name: 'Small Team',
+      current: 500,
+      optimized: 200,
+      savings: 300,
+      percentage: 60,
+      example: 'Perfect for MVP development',
+      features: ['Up to 10k API calls/day', '3 agent workflows', 'Email support']
+    },
+    startup: {
+      name: 'Growing Startup',
+      current: 2000,
+      optimized: 800,
+      savings: 1200,
+      percentage: 60,
+      example: 'Scale your AI features',
+      features: ['Up to 100k API calls/day', 'Unlimited workflows', 'Priority support']
+    },
+    enterprise: {
+      name: 'Enterprise',
+      current: 10000,
+      optimized: 4000,
+      savings: 6000,
+      percentage: 60,
+      example: 'Mission-critical AI infrastructure',
+      features: ['Unlimited API calls', 'Custom optimizations', 'Dedicated support']
     }
-    
-    setIsCalculating(true);
-    
-    // Simulate AI calculation with realistic processing
-    setTimeout(() => {
-      const spend = parseFloat(apiSpend);
-      const savingsPercentage = 55 + Math.random() * 10; // 55-65%
-      const savingsAmount = spend * (savingsPercentage / 100);
-      
-      setSavings({
-        amount: savingsAmount,
-        percentage: savingsPercentage,
-      });
-      
-      setShowResults(true);
-      setIsCalculating(false);
-    }, 2000);
   };
+
+  const currentTier = pricingTiers[selectedTier];
 
   return (
     <section 
@@ -126,197 +131,165 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
               </p>
             </RevealAnimation>
             
-            {/* Interactive Savings Calculator */}
-            {!showResults ? (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="max-w-2xl mx-auto"
-              >
-                <HoverCard effect="quantum" intensity={1.5}>
-                  <GlassCard gradient holographic className="p-8">
-                    <h3 className="text-2xl font-bold text-white mb-6 text-center">
-                      Calculate Your <span className="text-gradient">AI Cost Savings</span>
-                    </h3>
-                    
-                    <form onSubmit={(e) => {
-                      e.preventDefault();
-                      calculateSavings();
-                    }} className="space-y-6">
-                      <div>
-                        <label htmlFor="api-spend-input" className="text-white/70 text-sm mb-2 block">
-                          Your Monthly AI API Spend (OpenAI, Claude, Gemini, etc.)
-                        </label>
-                        <div className="flex gap-4">
-                          <div className="flex-1 relative" style={{ zIndex: 20 }}>
-                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 text-lg z-10 pointer-events-none">$</span>
-                            <input
-                              id="api-spend-input"
-                              type="number"
-                              placeholder="e.g., 500"
-                              value={apiSpend}
-                              onChange={(e) => {
-                                console.log('Input changed:', e.target.value); // Debug log
-                                setApiSpend(e.target.value);
-                              }}
-                              className="w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl pl-12 pr-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-quantum-blue transition-all relative z-20"
-                              style={{ 
-                                fontSize: '16px',
-                                WebkitAppearance: 'none',
-                                MozAppearance: 'none',
-                                appearance: 'none',
-                                position: 'relative',
-                                zIndex: 20
-                              }}
-                              min="0"
-                              step="any"
-                              autoComplete="off"
-                            />
-                          </div>
-                          <button
-                            type="submit"
-                            disabled={!apiSpend || isCalculating || parseFloat(apiSpend) <= 0}
-                            className={`px-6 py-3 rounded-xl font-medium transition-all relative z-20 ${
-                              !apiSpend || isCalculating || parseFloat(apiSpend) <= 0
-                                ? 'bg-white/10 text-white/50 cursor-not-allowed'
-                                : 'bg-gradient-to-r from-quantum-blue to-quantum-purple text-white hover:shadow-lg hover:shadow-quantum-blue/50 cursor-pointer'
-                            }`}
-                            style={{ minWidth: '140px' }}
-                          >
-                            {isCalculating ? (
-                              <span className="flex items-center justify-center">
-                                <GlassLoader size="sm" quantum />
-                                <span className="ml-2">Calculating...</span>
-                              </span>
-                            ) : (
-                              <span className="flex items-center justify-center">
-                                Calculate
-                                <ArrowRightIcon className="w-5 h-5 ml-2" />
-                              </span>
-                            )}
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {isCalculating && (
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          className="space-y-2"
+            {/* Interactive Pricing Showcase - NO INPUT REQUIRED */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="max-w-5xl mx-auto"
+            >
+              <GlassCard gradient holographic className="p-8">
+                <h3 className="text-3xl font-bold text-white mb-2 text-center">
+                  See Your <span className="text-gradient">Instant Savings</span>
+                </h3>
+                <p className="text-white/60 text-center mb-8">
+                  Click your team size to see real cost reduction
+                </p>
+                
+                {/* Tier Selector */}
+                <div className="grid md:grid-cols-3 gap-4 mb-8">
+                  {Object.entries(pricingTiers).map(([key, tier]) => (
+                    <motion.div
+                      key={key}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <HoverCard effect="quantum">
+                        <GlassPanel 
+                          className={`p-6 cursor-pointer transition-all ${
+                            selectedTier === key 
+                              ? 'border-quantum-blue shadow-lg shadow-quantum-blue/30' 
+                              : 'border-white/10 hover:border-white/30'
+                          }`}
+                          onClick={() => setSelectedTier(key as typeof selectedTier)}
                         >
-                          <p className="text-white/70 text-sm">Analyzing optimization potential...</p>
-                          <GlassProgress value={75} variant="quantum" animated particles />
-                        </motion.div>
-                      )}
-                    </form>
+                          <div className="text-center">
+                            <p className="text-white/60 text-sm mb-2">{tier.name}</p>
+                            <p className="text-2xl font-bold text-white mb-1">
+                              ${tier.current.toLocaleString()}/mo
+                            </p>
+                            <p className="text-sm text-white/40">{tier.example}</p>
+                            {selectedTier === key && (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="mt-3"
+                              >
+                                <CheckCircleIcon className="w-6 h-6 text-quantum-blue mx-auto" />
+                              </motion.div>
+                            )}
+                          </div>
+                        </GlassPanel>
+                      </HoverCard>
+                    </motion.div>
+                  ))}
+                </div>
+                
+                {/* Dynamic Results Display */}
+                <motion.div
+                  key={selectedTier}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6"
+                >
+                  {/* Savings Visualization */}
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <GlassPanel className="p-4 text-center">
+                      <p className="text-white/60 text-sm mb-1">Current Cost</p>
+                      <p className="text-xl text-white/80 line-through">
+                        ${currentTier.current.toLocaleString()}/mo
+                      </p>
+                    </GlassPanel>
                     
-                    {/* Quick code example */}
-                    <div className="mt-6 pt-6 border-t border-white/10">
-                      <p className="text-white/60 text-xs mb-2">Quick Example:</p>
-                      <pre className="text-xs text-quantum-blue/80 font-mono">
-{`const workflow = await asynova.createWorkflow({
-  agents: ['researcher', 'writer', 'editor'],
-  optimize: true // 60% cost savings
+                    <GlassPanel className="p-4 text-center border-quantum-green/30">
+                      <p className="text-white/60 text-sm mb-1">Optimized Cost</p>
+                      <p className="text-2xl font-bold text-quantum-green">
+                        ${currentTier.optimized.toLocaleString()}/mo
+                      </p>
+                    </GlassPanel>
+                    
+                    <GlassPanel className="p-4 text-center border-quantum-blue/30">
+                      <p className="text-white/60 text-sm mb-1">You Save</p>
+                      <p className="text-2xl font-bold text-quantum-blue">
+                        ${currentTier.savings.toLocaleString()}/mo
+                      </p>
+                    </GlassPanel>
+                    
+                    <GlassPanel className="p-4 text-center border-quantum-purple/30">
+                      <p className="text-white/60 text-sm mb-1">Annual Savings</p>
+                      <p className="text-2xl font-bold text-quantum-purple">
+                        ${(currentTier.savings * 12).toLocaleString()}
+                      </p>
+                    </GlassPanel>
+                  </div>
+                  
+                  {/* Features for selected tier */}
+                  <div className="flex flex-wrap justify-center gap-4 text-sm">
+                    {currentTier.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-white/70">
+                        <CheckCircleIcon className="w-4 h-4 text-quantum-green" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Smart Code Example */}
+                  <div className="bg-black/20 rounded-lg p-4 border border-white/10">
+                    <p className="text-white/60 text-xs mb-2">Your workflow with Asynova:</p>
+                    <pre className="text-sm text-quantum-blue/90 font-mono">
+{`// Before: $${currentTier.current}/month
+const response = await openai.chat.completions.create({
+  model: "gpt-4",
+  messages: [...]
+});
+
+// After: $${currentTier.optimized}/month (${currentTier.percentage}% savings)
+const response = await asynova.optimize({
+  workflow: "research-analyze-respond",
+  agents: ["gpt-4", "claude-3", "gemini-pro"],
+  smartRouting: true
 });`}
-                      </pre>
-                    </div>
-                  </GlassCard>
-                </HoverCard>
-              </motion.div>
-            ) : (
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="max-w-4xl mx-auto"
-              >
-                <GlassCard gradient className="p-8 relative overflow-hidden">
-                  {/* Holographic overlay effect */}
-                  <div className="absolute inset-0 bg-gradient-holographic opacity-20 animate-pulse" />
-                  
-                  <h3 className="text-3xl font-bold text-white mb-8 text-center relative z-10">
-                    Your Savings with Asynova
-                  </h3>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 relative z-10">
-                    <HoverCard effect="holographic">
-                      <GlassPanel variant="quantum" glow className="p-6 text-center">
-                        <DollarSignIcon className="w-10 h-10 text-quantum-green mx-auto mb-4" />
-                        <div className="text-4xl font-bold text-white">
-                          <QuantumNumber 
-                            value={savings.amount} 
-                            prefix="$" 
-                            suffix="/mo"
-                            duration={2}
-                            quantum
-                          />
-                        </div>
-                        <p className="text-white/70 text-sm mt-2">Monthly Savings</p>
-                      </GlassPanel>
-                    </HoverCard>
-                    
-                    <HoverCard effect="holographic">
-                      <GlassPanel variant="quantum" glow className="p-6 text-center">
-                        <TrendingUpIcon className="w-10 h-10 text-quantum-blue mx-auto mb-4" />
-                        <div className="text-4xl font-bold text-white">
-                          <QuantumNumber 
-                            value={savings.percentage} 
-                            suffix="%"
-                            duration={2}
-                            quantum
-                          />
-                        </div>
-                        <p className="text-white/70 text-sm mt-2">Cost Reduction</p>
-                      </GlassPanel>
-                    </HoverCard>
-                    
-                    <HoverCard effect="holographic">
-                      <GlassPanel variant="quantum" glow className="p-6 text-center">
-                        <ZapIcon className="w-10 h-10 text-quantum-purple mx-auto mb-4" />
-                        <div className="text-4xl font-bold text-white">
-                          <QuantumNumber 
-                            value={savings.amount * 12} 
-                            prefix="$"
-                            duration={2}
-                            quantum
-                          />
-                        </div>
-                        <p className="text-white/70 text-sm mt-2">Annual Savings</p>
-                      </GlassPanel>
-                    </HoverCard>
+                    </pre>
                   </div>
+                </motion.div>
+                
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                  <GlassButton
+                    variant="quantum"
+                    size="lg"
+                    onClick={() => {
+                      if (onGetStarted) onGetStarted();
+                      else document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    glow
+                    pulse
+                    morphing
+                  >
+                    <RocketIcon className="w-5 h-5 mr-2" />
+                    Start Saving Now
+                    <ArrowRightIcon className="w-5 h-5 ml-2" />
+                  </GlassButton>
                   
-                  {/* CTA Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
-                    <GlassButton
-                      variant="quantum"
-                      size="lg"
-                      onClick={() => {
-                        if (onGetStarted) onGetStarted();
-                        else document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                      glow
-                      pulse
-                      morphing
-                    >
-                      Start Saving Now
-                      <ArrowRightIcon className="w-5 h-5 ml-2" />
-                    </GlassButton>
-                    
-                    <GlassButton
-                      variant="secondary"
-                      size="lg"
-                      onClick={() => {
-                        setShowResults(false);
-                        setApiSpend('');
-                      }}
-                    >
-                      Recalculate
-                    </GlassButton>
-                  </div>
-                </GlassCard>
-              </motion.div>
-            )}
+                  <GlassButton
+                    variant="secondary"
+                    size="lg"
+                    onClick={() => document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    <ZapIcon className="w-5 h-5 mr-2" />
+                    See Live Demo
+                  </GlassButton>
+                </div>
+                
+                {/* Trust Indicator */}
+                <p className="text-sm text-white/60 mt-6 text-center">
+                  <span className="text-quantum-green">✓</span> No credit card required • 
+                  <span className="text-quantum-blue"> 1,000 free API calls</span> • 
+                  <span className="text-quantum-purple"> 5 minute setup</span>
+                </p>
+              </GlassCard>
+            </motion.div>
             
             {/* Trust Indicators */}
             <RevealAnimation direction="up" className="mt-12">
@@ -330,8 +303,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                   <span className="text-sm">5 Min Integration</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CodeIcon className="w-5 h-5" />
-                  <span className="text-sm">1,000 Free API Calls</span>
+                  <DollarSignIcon className="w-5 h-5" />
+                  <span className="text-sm">Pay Only What You Save</span>
                 </div>
               </div>
             </RevealAnimation>
