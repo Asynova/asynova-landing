@@ -6,7 +6,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
-  ZapIcon, TrendingUpIcon, ArrowRightIcon, 
+  ZapIcon, ArrowRightIcon, 
   GitBranchIcon, CheckCircleIcon,
   CodeIcon, CpuIcon, RocketIcon, DollarSignIcon
 } from 'lucide-react';
@@ -15,7 +15,7 @@ import {
   GlassBadge, GlassPanel 
 } from '../../design-system/GlassComponents';
 import { 
-  QuantumNumber, StaggerContainer, 
+  StaggerContainer, 
   QuantumBackground, HoverCard, MorphingText, FloatingElement, RevealAnimation
 } from '../../design-system/AnimationComponents';
 import { 
