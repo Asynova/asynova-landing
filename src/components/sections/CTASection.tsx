@@ -1,5 +1,5 @@
 /**
- * CTA Section - Production Ready
+ * CTA Section - Production Ready with Netlify Forms Fix
  * Email collection via Netlify Forms (FREE for 100 submissions/month)
  */
 
@@ -23,12 +23,13 @@ export const CTASection: React.FC = () => {
     
     try {
       // Netlify Forms submission
-      const formData = new FormData(e.currentTarget);
-      
       const response = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as any).toString()
+        body: new URLSearchParams({
+          'form-name': 'early-access',
+          'email': email
+        }).toString()
       });
 
       if (response.ok) {
@@ -46,10 +47,18 @@ export const CTASection: React.FC = () => {
         // Auto-hide success message after 7 seconds
         setTimeout(() => setShowSuccess(false), 7000);
       } else {
-        alert('Something went wrong. Please try again or email us directly at team@asynova.com');
+        // Fallback message with clearer instructions
+        alert('We couldn\'t process your submission automatically.\n\n' +
+              'Please email us directly at: support@asynova.com\n' +
+              'We\'ll add you to the early access list manually!\n\n' +
+              `Your email: ${email}`);
       }
     } catch (error) {
-      alert('Something went wrong. Please try again or email us directly at team@asynova.com');
+      // Fallback message
+      alert('We couldn\'t process your submission automatically.\n\n' +
+            'Please email us directly at: support@asynova.com\n' +
+            'We\'ll add you to the early access list manually!\n\n' +
+            `Your email: ${email}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -162,25 +171,15 @@ export const CTASection: React.FC = () => {
                     </motion.div>
                   )}
 
-                  {/* NETLIFY FORM - This will collect emails for FREE! */}
+                  {/* NETLIFY FORM - Properly configured for React SPA */}
                   <form 
                     name="early-access"
                     method="POST"
-                    data-netlify="true"
-                    netlify-honeypot="bot-field"
                     onSubmit={handleSubmit}
                     className="space-y-4"
                   >
-                    {/* Hidden inputs for Netlify */}
+                    {/* Hidden input REQUIRED for Netlify to recognize the form */}
                     <input type="hidden" name="form-name" value="early-access" />
-                    
-                    {/* Honeypot field for spam protection (hidden) */}
-                    <p className="hidden">
-                      <label>
-                        Don't fill this out if you're human: 
-                        <input name="bot-field" />
-                      </label>
-                    </p>
                     
                     <div>
                       <label htmlFor="email" className="text-gray-400 text-sm mb-2 block">
