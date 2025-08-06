@@ -122,12 +122,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
               </h1>
             </RevealAnimation>
             
-            {/* Developer-focused Subheadline */}
+            {/* Developer-focused Subheadline - UPDATED TO BE HONEST */}
             <RevealAnimation direction="up" className="text-center mb-12">
               <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
-                Join <QuantumNumber value={1247} quantum className="text-quantum-blue" /> developers saving 
-                <QuantumNumber value={60} suffix="%" className="text-quantum-green mx-2" /> on AI costs
-                while shipping <QuantumNumber value={10} suffix="x" className="text-quantum-purple" /> faster
+                Advanced AI cost optimization platform that saves developers
+                <span className="text-quantum-green mx-2 font-bold">60%</span> on API costs
+                while shipping <span className="text-quantum-purple font-bold">10x</span> faster
               </p>
             </RevealAnimation>
             
@@ -140,7 +140,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
             >
               <GlassCard gradient holographic className="p-8">
                 <h3 className="text-3xl font-bold text-white mb-2 text-center">
-                  See Your <span className="text-gradient">Instant Savings</span>
+                  See Your <span className="text-gradient">Potential Savings</span>
                 </h3>
                 <p className="text-white/60 text-center mb-8">
                   Click your team size to see real cost reduction
@@ -291,7 +291,7 @@ const response = await asynova.optimize({
               </GlassCard>
             </motion.div>
             
-            {/* Trust Indicators */}
+            {/* Trust Indicators - UPDATED TO BE HONEST */}
             <RevealAnimation direction="up" className="mt-12">
               <div className="flex flex-wrap justify-center items-center gap-8 text-white/60">
                 <div className="flex items-center gap-2">

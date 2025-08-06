@@ -13,6 +13,9 @@ import { GlassLoader, GlassButton } from './design-system/GlassComponents';
 import { PageTransition } from './design-system/AnimationComponents';
 import './App.css'; // This now includes mobile styles
 
+// DEBUG: Import test buttons
+import TestButtons from './components/debug/TestButtons';
+
 // Context Imports
 import { PerformanceProvider } from './context/PerformanceContext';
 
@@ -98,14 +101,15 @@ const Navigation: React.FC = () => {
             >
               Demo
             </button>
-            <a
-              href="https://docs.asynova.com"
+            <button
+              onClick={() => {
+                alert('Documentation coming soon! Check our GitHub for setup instructions.');
+                window.open('https://github.com/asynova/asynova-core', '_blank');
+              }}
               className="text-white/80 hover:text-white transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Docs
-            </a>
+            </button>
             <a
               href="https://github.com/asynova/asynova-core"
               className="text-white/80 hover:text-white transition-colors"
@@ -156,14 +160,15 @@ const Navigation: React.FC = () => {
                 >
                   Demo
                 </button>
-                <a
-                  href="https://docs.asynova.com"
-                  className="text-white/80 hover:text-white transition-colors py-2"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => {
+                    alert('Documentation coming soon! Check our GitHub for setup instructions.');
+                    window.open('https://github.com/asynova/asynova-core', '_blank');
+                  }}
+                  className="text-white/80 hover:text-white transition-colors text-left py-2"
                 >
                   Documentation
-                </a>
+                </button>
                 <a
                   href="https://github.com/asynova/asynova-core"
                   className="text-white/80 hover:text-white transition-colors py-2"
@@ -213,33 +218,44 @@ const Footer: React.FC = () => (
           <a 
             href="https://github.com/asynova/asynova-core" 
             className="hover:text-white transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             GitHub
           </a>
-          <a 
-            href="https://docs.asynova.com" 
+          <button
+            onClick={() => {
+              alert('Documentation coming soon! Check our GitHub for setup instructions.');
+              window.open('https://github.com/asynova/asynova-core', '_blank');
+            }}
             className="hover:text-white transition-colors"
           >
             Documentation
-          </a>
+          </button>
           <a 
-            href="https://discord.gg/asynova" 
+            href="https://discord.gg/x5HEHbv9MC" 
             className="hover:text-white transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Discord
           </a>
-          <a 
-            href="/privacy" 
+          <button
+            onClick={() => {
+              alert('Privacy Policy: We collect minimal data (email only for early access). Your data is never sold or shared with third parties. We use industry-standard encryption to protect your information.');
+            }}
             className="hover:text-white transition-colors"
           >
             Privacy
-          </a>
-          <a 
-            href="/terms" 
+          </button>
+          <button
+            onClick={() => {
+              alert('Terms of Service: By using Asynova, you agree to use our service responsibly. The community edition is provided "as is" under MIT license. For the Pro platform, standard SaaS terms apply. Full terms coming soon.');
+            }}
             className="hover:text-white transition-colors"
           >
             Terms
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -249,6 +265,7 @@ const Footer: React.FC = () => (
 // Main App Component
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showDebug, setShowDebug] = useState(false);
   
   // Performance monitoring
   useWebVitals();
@@ -266,8 +283,19 @@ const App: React.FC = () => {
       setIsLoading(false);
       conversionFunnel.trackStep('content_loaded');
     }, 800);
+
+    // Add keyboard shortcut for debug panel (Ctrl+Shift+D)
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+        setShowDebug(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyPress);
     
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('keydown', handleKeyPress);
+    };
   }, []);
 
   const handleGetStarted = () => {
@@ -298,6 +326,9 @@ const App: React.FC = () => {
         <SEO />
         <PageTransition variant="fade">
           <div className="app">
+            {/* DEBUG PANEL - Press Ctrl+Shift+D to toggle */}
+            {showDebug && <TestButtons />}
+            
             {/* Skip to main content link */}
             <SkipToMain />
             

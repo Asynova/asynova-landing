@@ -54,8 +54,8 @@ const DemoSection: React.FC = () => {
     });
   };
 
-  const savings = cost.traditional > 0 
-    ? ((1 - cost.optimized / cost.traditional) * 100).toFixed(0)
+  const savingsPercentage = cost.traditional > 0 
+    ? Math.round((1 - cost.optimized / cost.traditional) * 100)
     : 0;
 
   return (
@@ -64,10 +64,12 @@ const DemoSection: React.FC = () => {
         <StaggerContainer>
           {/* Section Header */}
           <RevealAnimation direction="up" className="text-center mb-12">
-            <GlassBadge variant="quantum" floating className="mb-4">
-              <CodeIcon className="w-4 h-4 mr-2" />
-              Live Demo
-            </GlassBadge>
+            <div className="mb-4">
+              <GlassBadge variant="quantum" floating>
+                <CodeIcon className="w-4 h-4 mr-2" />
+                Live Demo
+              </GlassBadge>
+            </div>
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
               See The Magic In Action
             </h2>
@@ -204,13 +206,13 @@ const DemoSection: React.FC = () => {
                         >
                           ${cost.optimized.toFixed(2)}
                         </motion.p>
-                        {savings > 0 && (
+                        {savingsPercentage > 0 && (
                           <motion.p 
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             className="text-xs text-quantum-green mt-1"
                           >
-                            {savings}% Saved!
+                            {savingsPercentage}% Saved!
                           </motion.p>
                         )}
                       </GlassPanel>

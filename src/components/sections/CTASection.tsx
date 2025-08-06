@@ -1,349 +1,341 @@
 /**
- * CTA Section - Multi-Agent AI Platform
- * Simple, honest call-to-action for developers
+ * CTA Section - WITH NETLIFY FORMS INTEGRATION
+ * FREE email collection (100 submissions/month)
  */
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   RocketIcon, CheckIcon, ArrowRightIcon, SparklesIcon,
-  GitBranchIcon, CodeIcon, GiftIcon, BookOpenIcon,
-  MailIcon, UsersIcon, StarIcon, ZapIcon
+  GitBranchIcon, BookOpenIcon, MailIcon
 } from 'lucide-react';
-import { 
-  GlassCard, GlassPanel, GlassButton, GlassInput,
-  GlassBadge, GlassModal
-} from '../../design-system/GlassComponents';
-import { 
-  StaggerContainer, RevealAnimation, HoverCard,
-  ParallaxContainer
-} from '../../design-system/AnimationComponents';
-import { 
-  ThreeDScene, QuantumSphere
-} from '../../design-system/ThreeDVisualization';
 
 export const CTASection: React.FC = () => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  
-  const benefits = [
-    { icon: GiftIcon, text: '1,000 free API calls every month' },
-    { icon: CodeIcon, text: 'Full API access and SDKs' },
-    { icon: GitBranchIcon, text: 'Open source core (MIT license)' },
-    { icon: ZapIcon, text: 'Deploy in 5 minutes' },
-    { icon: UsersIcon, text: 'Active Discord community' },
-    { icon: StarIcon, text: 'No vendor lock-in' },
-  ];
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email || isSubmitting) return;
 
     setIsSubmitting(true);
     
-    // Simple email collection
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setShowSuccess(true);
+    try {
+      // Netlify Forms submission
+      const formData = new FormData(e.currentTarget);
+      
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString()
+      });
+
+      if (response.ok) {
+        console.log('✅ Form submitted successfully!');
+        setShowSuccess(true);
+        setEmail('');
+        
+        // Track conversion
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          (window as any).gtag('event', 'conversion', {
+            'event_category': 'engagement',
+            'event_label': 'early_access_signup'
+          });
+        }
+        
+        // Auto-hide success message after 7 seconds
+        setTimeout(() => setShowSuccess(false), 7000);
+      } else {
+        console.error('Form submission failed');
+        alert('Something went wrong. Please try again or email us directly at team@asynova.com');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Something went wrong. Please try again or email us directly at team@asynova.com');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const openGitHub = () => {
+    window.open('https://github.com/asynova/asynova-core', '_blank', 'noopener,noreferrer');
+  };
+
+  const showDocs = () => {
+    window.open('https://github.com/asynova/asynova-core#readme', '_blank', 'noopener,noreferrer');
   };
 
   return (
-    <section className="cta-section py-32 relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-quantum-purple/10 to-quantum-blue/10" />
-        <ThreeDScene className="opacity-30">
-          <QuantumSphere size={2} distort={0.3} />
-        </ThreeDScene>
-      </div>
+    <section id="cta" className="py-24 relative overflow-hidden bg-black/50">
+      {/* Simple gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 via-blue-900/20 to-black/50 pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <StaggerContainer className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           
-          {/* Main CTA Card */}
-          <HoverCard effect="quantum">
-            <GlassCard gradient holographic className="overflow-hidden">
-              <div className="grid lg:grid-cols-2 gap-8 p-8 lg:p-12">
+          {/* Main Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden"
+            style={{ 
+              boxShadow: '0 0 40px rgba(99, 102, 241, 0.1)',
+              position: 'relative',
+              zIndex: 1
+            }}
+          >
+            <div className="grid lg:grid-cols-2 gap-8 p-8 lg:p-12">
+              
+              {/* Left Side - Value Proposition */}
+              <div className="space-y-6">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="inline-flex items-center px-3 py-1 bg-purple-500/20 border border-purple-500/30 rounded-full"
+                >
+                  <RocketIcon className="w-4 h-4 mr-2 text-purple-400" />
+                  <span className="text-sm text-purple-300">Start Building Today</span>
+                </motion.div>
                 
-                {/* Left Side - Value Proposition */}
-                <div className="space-y-6">
-                  <RevealAnimation direction="left">
-                    <GlassBadge variant="quantum" floating>
-                      <RocketIcon className="w-4 h-4 mr-2" />
-                      Start Building Today
-                    </GlassBadge>
-                  </RevealAnimation>
-                  
-                  <RevealAnimation direction="left">
-                    <h2 className="text-4xl lg:text-5xl font-bold text-white">
-                      Ship AI Features <span className="text-gradient-quantum">10x Faster</span>
-                    </h2>
-                  </RevealAnimation>
-                  
-                  <RevealAnimation direction="left">
-                    <p className="text-lg text-white/80">
-                      Join thousands of developers building production AI applications 
-                      without the complexity or cost.
-                    </p>
-                  </RevealAnimation>
-                  
-                  {/* Code Example */}
-                  <RevealAnimation direction="left">
-                    <GlassPanel variant="dark" className="p-4 font-mono text-sm">
-                      <code className="text-quantum-blue">
-{`// Create a blog post workflow in 5 lines
-const workflow = await asynova.createWorkflow({
-  agents: ['researcher', 'writer', 'editor'],
-  optimize: true, // Enable 60% cost savings
-  model: 'auto' // Automatically select best model
-});
+                <motion.h2
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-4xl lg:text-5xl font-bold text-white"
+                >
+                  Ship AI Features{' '}
+                  <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                    10x Faster
+                  </span>
+                </motion.h2>
+                
+                <motion.p
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="text-lg text-gray-300"
+                >
+                  Build production AI applications with advanced cost optimization
+                  that saves you thousands monthly.
+                </motion.p>
+                
+                {/* Benefits List */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="space-y-3"
+                >
+                  {[
+                    '✅ 60% cost reduction guaranteed',
+                    '✅ 1,000 free API calls monthly',
+                    '✅ Open source core (MIT)',
+                    '✅ Deploy in 5 minutes',
+                    '✅ No vendor lock-in'
+                  ].map((benefit, i) => (
+                    <div key={i} className="text-gray-300">{benefit}</div>
+                  ))}
+                </motion.div>
+              </div>
+              
+              {/* Right Side - NETLIFY FORMS */}
+              <div className="space-y-6">
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  {/* Success Message */}
+                  {showSuccess && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="mb-6 p-4 bg-green-500/20 border border-green-500/30 rounded-lg"
+                    >
+                      <div className="flex items-center text-green-400">
+                        <CheckIcon className="w-5 h-5 mr-2" />
+                        <span className="font-semibold">Success! You're on the early access list.</span>
+                      </div>
+                      <p className="text-sm text-green-300 mt-2">
+                        We'll email you as soon as we launch (very soon!)
+                      </p>
+                    </motion.div>
+                  )}
 
-await workflow.execute({ topic: "AI trends" });`}
-                      </code>
-                    </GlassPanel>
-                  </RevealAnimation>
-                  
-                  {/* Benefits */}
-                  <RevealAnimation direction="left">
-                    <div className="space-y-3">
-                      {benefits.map((benefit, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                          className="flex items-center gap-3"
-                        >
-                          <div className="w-8 h-8 rounded-lg bg-quantum-blue/20 flex items-center justify-center">
-                            <benefit.icon className="w-4 h-4 text-quantum-blue" />
-                          </div>
-                          <span className="text-white/80">{benefit.text}</span>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </RevealAnimation>
-                </div>
-                
-                {/* Right Side - Simple Signup */}
-                <div className="space-y-6">
-                  <ParallaxContainer speed={0.3} className="absolute -top-20 -right-20 w-40 h-40 opacity-30">
-                    <ThreeDScene>
-                      <QuantumSphere size={1} distort={0.4} />
-                    </ThreeDScene>
-                  </ParallaxContainer>
-                  
-                  <RevealAnimation direction="right">
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                      <div>
-                        <label className="text-white/70 text-sm mb-2 block">
-                          Email Address
-                        </label>
-                        <GlassInput
+                  {/* NETLIFY FORM - This will collect emails for FREE! */}
+                  <form 
+                    name="early-access"
+                    method="POST"
+                    data-netlify="true"
+                    netlify-honeypot="bot-field"
+                    onSubmit={handleSubmit}
+                    className="space-y-4"
+                  >
+                    {/* Hidden inputs for Netlify */}
+                    <input type="hidden" name="form-name" value="early-access" />
+                    
+                    {/* Honeypot field for spam protection (hidden) */}
+                    <p className="hidden">
+                      <label>
+                        Don't fill this out if you're human: 
+                        <input name="bot-field" />
+                      </label>
+                    </p>
+                    
+                    <div>
+                      <label htmlFor="email" className="text-gray-400 text-sm mb-2 block">
+                        Work Email Address
+                      </label>
+                      <div className="relative">
+                        <MailIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+                        <input
+                          id="email"
+                          name="email"
                           type="email"
                           placeholder="developer@company.com"
                           value={email}
-                          onChange={(e) => setEmail((e.target as HTMLInputElement).value)}
+                          onChange={(e) => setEmail(e.target.value)}
                           required
-                          quantum
-                          icon={<MailIcon className="w-5 h-5" />}
+                          disabled={isSubmitting}
+                          className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:bg-white/15 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                          style={{ 
+                            fontSize: '16px',
+                            WebkitAppearance: 'none',
+                            MozAppearance: 'none',
+                            appearance: 'none'
+                          }}
                         />
                       </div>
-                      
-                      <GlassButton
-                        type="submit"
-                        variant="quantum"
-                        size="lg"
-                        className="w-full"
-                        disabled={isSubmitting || !email}
-                        glow
-                        pulse
-                        morphing
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <motion.div
-                              animate={{ rotate: 360 }}
-                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                            >
-                              <SparklesIcon className="w-5 h-5 mr-2" />
-                            </motion.div>
-                            Creating Account...
-                          </>
-                        ) : (
-                          <>
-                            Get Started Free
-                            <ArrowRightIcon className="w-5 h-5 ml-2" />
-                          </>
-                        )}
-                      </GlassButton>
-                    </form>
-                  </RevealAnimation>
-                  
-                  <RevealAnimation direction="right">
-                    <div className="text-center space-y-4">
-                      <p className="text-white/60 text-sm">
-                        No credit card • 1,000 free calls • 5 minute setup
-                      </p>
-                      
-                      <div className="flex items-center justify-center gap-3">
-                        <GlassButton variant="secondary" size="sm">
-                          <GitBranchIcon className="w-4 h-4 mr-2" />
-                          Star on GitHub
-                        </GlassButton>
-                        <GlassButton variant="secondary" size="sm">
-                          <BookOpenIcon className="w-4 h-4 mr-2" />
-                          Read Docs
-                        </GlassButton>
-                      </div>
                     </div>
-                  </RevealAnimation>
+                    
+                    {/* Submit Button */}
+                    <button
+                      type="submit"
+                      disabled={isSubmitting || !email}
+                      className={`w-full py-3 px-6 rounded-lg font-medium transition-all transform hover:scale-[1.02] active:scale-[0.98] ${
+                        isSubmitting || !email
+                          ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                          : 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 cursor-pointer shadow-lg hover:shadow-xl'
+                      }`}
+                      style={{ 
+                        position: 'relative',
+                        zIndex: 10,
+                        pointerEvents: 'auto'
+                      }}
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center justify-center">
+                          <SparklesIcon className="w-5 h-5 mr-2 animate-spin" />
+                          Joining Waitlist...
+                        </span>
+                      ) : (
+                        <span className="flex items-center justify-center">
+                          Get Early Access
+                          <ArrowRightIcon className="w-5 h-5 ml-2" />
+                        </span>
+                      )}
+                    </button>
+                  </form>
                   
-                  {/* Social Proof */}
-                  <RevealAnimation direction="right">
-                    <GlassPanel variant="quantum" className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-quantum-blue to-quantum-purple flex items-center justify-center">
-                          <span className="text-white font-bold">SC</span>
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-white text-sm">
-                            "Cut our OpenAI costs by 65% in the first week. 
-                            This is what LangChain should have been."
-                          </p>
-                          <p className="text-white/60 text-xs mt-1">
-                            - Sarah Chen, Staff Engineer at Vercel
-                          </p>
-                        </div>
-                      </div>
-                    </GlassPanel>
-                  </RevealAnimation>
-                  
-                  {/* Simple Sign Up Instructions */}
-                  <RevealAnimation direction="right">
-                    <div className="pt-6 border-t border-white/10">
-                      <p className="text-white/60 text-sm mb-3">
-                        Join developers who are already saving
-                      </p>
-                      <div className="flex items-center justify-center gap-2 text-white/50 text-xs">
-                        <CheckIcon className="w-4 h-4 text-quantum-green" />
-                        <span>No credit card required</span>
-                      </div>
-                      <div className="flex items-center justify-center gap-2 text-white/50 text-xs mt-1">
-                        <CheckIcon className="w-4 h-4 text-quantum-green" />
-                        <span>1,000 free API calls</span>
-                      </div>
-                    </div>
-                  </RevealAnimation>
-                </div>
-              </div>
-            </GlassCard>
-          </HoverCard>
-          
-          {/* Success Modal */}
-          <AnimatePresence>
-            {showSuccess && (
-              <GlassModal
-                isOpen={showSuccess}
-                onClose={() => setShowSuccess(false)}
-                title="Welcome to Asynova! 🚀"
-                quantum
-              >
-                <div className="space-y-6 text-center py-6">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", duration: 0.5 }}
-                    className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-quantum-blue to-quantum-purple flex items-center justify-center"
-                  >
-                    <CheckIcon className="w-12 h-12 text-white" />
-                  </motion.div>
-                  
-                  <div>
-                    <h3 className="text-2xl font-bold text-white mb-2">
-                      Account Created!
-                    </h3>
-                    <p className="text-white/70">
-                      Check your email for your API key and quick start guide.
-                      Time to build something amazing!
+                  <div className="text-center space-y-4">
+                    <p className="text-gray-500 text-sm">
+                      No credit card required • 1,000 free calls • 5 minute setup
                     </p>
+                    
+                    {/* Secondary Buttons */}
+                    <div className="flex items-center justify-center gap-3">
+                      <button
+                        type="button"
+                        onClick={openGitHub}
+                        className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white hover:bg-white/20 transition-all cursor-pointer flex items-center transform hover:scale-105 active:scale-95"
+                        style={{ 
+                          position: 'relative',
+                          zIndex: 10,
+                          pointerEvents: 'auto'
+                        }}
+                      >
+                        <GitBranchIcon className="w-4 h-4 mr-2" />
+                        <span>Star on GitHub</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={showDocs}
+                        className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white hover:bg-white/20 transition-all cursor-pointer flex items-center transform hover:scale-105 active:scale-95"
+                        style={{ 
+                          position: 'relative',
+                          zIndex: 10,
+                          pointerEvents: 'auto'
+                        }}
+                      >
+                        <BookOpenIcon className="w-4 h-4 mr-2" />
+                        <span>Read Docs</span>
+                      </button>
+                    </div>
                   </div>
                   
-                  <div className="grid grid-cols-3 gap-4 pt-4">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-quantum-blue">1,000</div>
-                      <div className="text-xs text-white/60">Free API Calls</div>
+                  {/* Trust Badge */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                    className="pt-6 border-t border-white/10"
+                  >
+                    <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
+                      <p className="text-sm text-gray-300">
+                        "Built by engineers who were tired of paying thousands for AI APIs. 
+                        This is the solution we wished existed."
+                      </p>
+                      <p className="text-xs text-gray-500 mt-2">- The Asynova Team</p>
                     </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-quantum-purple">5 min</div>
-                      <div className="text-xs text-white/60">To Deploy</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-quantum-green">60%</div>
-                      <div className="text-xs text-white/60">Cost Savings</div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-3 justify-center">
-                    <GlassButton
-                      variant="quantum"
-                      onClick={() => window.open('/docs/quickstart', '_blank')}
-                      glow
-                    >
-                      Quick Start Guide
-                    </GlassButton>
-                    <GlassButton
-                      variant="secondary"
-                      onClick={() => window.open('https://discord.gg/asynova', '_blank')}
-                    >
-                      Join Discord
-                    </GlassButton>
-                  </div>
-                </div>
-              </GlassModal>
-            )}
-          </AnimatePresence>
+                  </motion.div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
           
-          {/* Final Message */}
-          <RevealAnimation direction="up" className="text-center mt-12">
-            <p className="text-lg text-white/70">
-              While others debug complex orchestration,<br />
+          {/* Bottom Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="mt-12 text-center"
+          >
+            <p className="text-lg text-gray-400 mb-8">
+              While others debug complex orchestration,{' '}
               <span className="text-white font-semibold">
                 you'll be shipping to production.
               </span>
             </p>
-          </RevealAnimation>
-          
-          {/* Stats */}
-          <RevealAnimation direction="up" className="mt-8">
+            
             <div className="flex justify-center gap-8 flex-wrap">
               <div className="text-center">
-                <div className="text-3xl font-bold text-white">1.2k+</div>
-                <div className="text-sm text-white/60">GitHub Stars</div>
+                <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                  Open Source
+                </div>
+                <div className="text-sm text-gray-500">Core on GitHub</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-white">2.5k+</div>
-                <div className="text-sm text-white/60">Developers</div>
+                <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                  60% Savings
+                </div>
+                <div className="text-sm text-gray-500">Guaranteed</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-white">$1.2M+</div>
-                <div className="text-sm text-white/60">Saved Monthly</div>
+                <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                  5 Min Setup
+                </div>
+                <div className="text-sm text-gray-500">To production</div>
               </div>
             </div>
-          </RevealAnimation>
+          </motion.div>
           
-        </StaggerContainer>
+        </div>
       </div>
     </section>
   );
 };
-
-// Add PlayIcon if not already imported
-const PlayIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 3L19 12L5 21V3Z" fill="currentColor"/>
-  </svg>
-);
 
 export default CTASection;

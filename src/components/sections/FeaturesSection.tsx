@@ -155,7 +155,7 @@ export const FeaturesSection: React.FC = () => {
       color: theme.colors.accent[500],
       demo: (
         <ThreeDScene className="h-48">
-          <QuantumSphere size={1.5} distort={0.3} />
+          <QuantumSphere size={1.5} />
         </ThreeDScene>
       )
     }
@@ -306,7 +306,7 @@ const result = await workflow.execute({
             </GlassCard>
           </RevealAnimation>
           
-          {/* Call to Action */}
+          {/* Call to Action - FIXED BUTTONS */}
           <RevealAnimation direction="up" className="text-center mt-12">
             <p className="text-xl text-white/70 mb-8">
               Ready to cut your AI costs and ship faster?
@@ -318,6 +318,12 @@ const result = await workflow.execute({
                 glow
                 pulse
                 className="min-w-[250px]"
+                onClick={() => {
+                  const ctaSection = document.getElementById('cta');
+                  if (ctaSection) {
+                    ctaSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
               >
                 <CodeIcon className="w-5 h-5 mr-2" />
                 Start Building Free
@@ -326,6 +332,9 @@ const result = await workflow.execute({
                 variant="secondary"
                 size="lg"
                 className="min-w-[200px]"
+                onClick={() => {
+                  window.open('https://github.com/asynova/asynova-core', '_blank');
+                }}
               >
                 <GitBranchIcon className="w-5 h-5 mr-2" />
                 View on GitHub

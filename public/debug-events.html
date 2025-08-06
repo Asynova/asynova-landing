@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asynova - Debug Event Handlers</title>
+    <style>
+        body {
+            background: #0f0f23;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .debug-section {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            background: linear-gradient(to right, #a855f7, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #60a5fa;
+            margin-bottom: 15px;
+        }
+        button, input[type="submit"] {
+            background: linear-gradient(to right, #a855f7, #3b82f6);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        button:hover, input[type="submit"]:hover {
+            transform: scale(1.05);
+        }
+        button:active, input[type="submit"]:active {
+            transform: scale(0.95);
+        }
+        input[type="email"], input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        input[type="email"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #a855f7;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .log {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .success {
+            color: #10b981;
+        }
+        .error {
+            color: #ef4444;
+        }
+        .warning {
+            color: #f59e0b;
+        }
+        .info {
+            color: #60a5fa;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .test-pass {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+        }
+        .test-fail {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Asynova Event Handler Debugger</h1>
+        
+        <div class="debug-section">
+            <h2>1. Basic Event Tests</h2>
+            <button onclick="testClick()">Test Click Event</button>
+            <button onmousedown="testMouseDown(event)">Test MouseDown</button>
+            <button onmouseup="testMouseUp(event)">Test MouseUp</button>
+            <button ontouchstart="testTouch(event)">Test Touch (Mobile)</button>
+        </div>
+
+        <div class="debug-section">
+            <h2>2. Form Input Tests</h2>
+            <form id="testForm" onsubmit="testFormSubmit(event)">
+                <input type="email" 
+                       id="testEmail" 
+                       placeholder="test@example.com"
+                       oninput="testInput(event)"
+                       onfocus="testFocus(event)"
+                       onblur="testBlur(event)">
+                <input type="submit" value="Test Submit">
+            </form>
+        </div>
+
+        <div class="debug-section">
+            <h2>3. Window Events</h2>
+            <button onclick="testWindowOpen()">Test window.open()</button>
+            <button onclick="testConsoleLog()">Test console.log()</button>
+            <button onclick="testAlert()">Test alert()</button>
+        </div>
+
+        <div class="debug-section">
+            <h2>4. Z-Index & Pointer Events</h2>
+            <div style="position: relative;">
+                <button onclick="testZIndex()" style="position: relative; z-index: 1;">
+                    Button with z-index: 1
+                </button>
+                <button onclick="testZIndex()" style="position: relative; z-index: 10;">
+                    Button with z-index: 10
+                </button>
+                <button onclick="testZIndex()" style="position: relative; z-index: 100;">
+                    Button with z-index: 100
+                </button>
+            </div>
+        </div>
+
+        <div class="debug-section">
+            <h2>5. Browser Diagnostics</h2>
+            <button onclick="runDiagnostics()">🔍 Run Full Diagnostics</button>
+            <div id="diagnostics"></div>
+        </div>
+
+        <div class="debug-section">
+            <h2>Event Log</h2>
+            <button onclick="clearLog()" style="background: #ef4444;">Clear Log</button>
+            <div id="log" class="log"></div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize
+        let eventCount = 0;
+        const log = document.getElementById('log');
+        
+        function addLog(message, type = 'info') {
+            eventCount++;
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerHTML = `[${eventCount}] ${new Date().toLocaleTimeString()} - ${message}`;
+            log.insertBefore(entry, log.firstChild);
+            console.log(`[Debug] ${message}`);
+        }
+
+        function clearLog() {
+            log.innerHTML = '';
+            eventCount = 0;
+            addLog('Log cleared', 'warning');
+        }
+
+        // Test functions
+        function testClick() {
+            addLog('✅ Click event fired successfully!', 'success');
+        }
+
+        function testMouseDown(e) {
+            addLog(`✅ MouseDown fired! Button: ${e.button}, X: ${e.clientX}, Y: ${e.clientY}`, 'success');
+        }
+
+        function testMouseUp(e) {
+            addLog(`✅ MouseUp fired! Button: ${e.button}`, 'success');
+        }
+
+        function testTouch(e) {
+            addLog('✅ Touch event fired! (Mobile interaction detected)', 'success');
+        }
+
+        function testInput(e) {
+            addLog(`📝 Input changed: "${e.target.value}"`, 'info');
+        }
+
+        function testFocus(e) {
+            addLog('🎯 Input focused', 'info');
+        }
+
+        function testBlur(e) {
+            addLog('👋 Input blurred', 'info');
+        }
+
+        function testFormSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('testEmail').value;
+            addLog(`✅ Form submitted! Email: ${email}`, 'success');
+            return false;
+        }
+
+        function testWindowOpen() {
+            try {
+                const win = window.open('https://github.com', '_blank');
+                if (win) {
+                    addLog('✅ window.open() successful! (Check for popup blocker if no window appeared)', 'success');
+                    setTimeout(() => win.close(), 3000);
+                } else {
+                    addLog('⚠️ window.open() blocked by popup blocker', 'warning');
+                }
+            } catch (e) {
+                addLog(`❌ window.open() error: ${e.message}`, 'error');
+            }
+        }
+
+        function testConsoleLog() {
+            console.log('Test console.log message');
+            addLog('✅ console.log() working! Check browser console (F12)', 'success');
+        }
+
+        function testAlert() {
+            alert('Alert test successful!');
+            addLog('✅ alert() working!', 'success');
+        }
+
+        function testZIndex() {
+            addLog('✅ Z-index button clicked successfully!', 'success');
+        }
+
+        function runDiagnostics() {
+            const diagnostics = document.getElementById('diagnostics');
+            const results = [];
+
+            // Check JavaScript
+            results.push({
+                test: 'JavaScript Enabled',
+                pass: true,
+                details: 'JavaScript is working'
+            });
+
+            // Check Event Listeners
+            const testBtn = document.createElement('button');
+            let listenerWorks = false;
+            testBtn.addEventListener('click', () => { listenerWorks = true; });
+            testBtn.click();
+            results.push({
+                test: 'Event Listeners',
+                pass: listenerWorks,
+                details: listenerWorks ? 'addEventListener working' : 'Event listeners may be blocked'
+            });
+
+            // Check Console
+            results.push({
+                test: 'Console API',
+                pass: typeof console !== 'undefined',
+                details: typeof console !== 'undefined' ? 'Console available' : 'Console not available'
+            });
+
+            // Check Local Storage
+            try {
+                localStorage.setItem('test', '1');
+                localStorage.removeItem('test');
+                results.push({
+                    test: 'Local Storage',
+                    pass: true,
+                    details: 'Local storage working'
+                });
+            } catch (e) {
+                results.push({
+                    test: 'Local Storage',
+                    pass: false,
+                    details: 'Local storage blocked or disabled'
+                });
+            }
+
+            // Check Cookies
+            const cookiesEnabled = navigator.cookieEnabled;
+            results.push({
+                test: 'Cookies',
+                pass: cookiesEnabled,
+                details: cookiesEnabled ? 'Cookies enabled' : 'Cookies disabled'
+            });
+
+            // Check Browser
+            results.push({
+                test: 'Browser',
+                pass: true,
+                details: navigator.userAgent.substring(0, 50) + '...'
+            });
+
+            // Check for Extensions
+            const adBlockTest = document.createElement('div');
+            adBlockTest.className = 'ad ads advertisement';
+            document.body.appendChild(adBlockTest);
+            setTimeout(() => {
+                const blocked = adBlockTest.offsetHeight === 0;
+                document.body.removeChild(adBlockTest);
+                results.push({
+                    test: 'Ad Blocker',
+                    pass: !blocked,
+                    details: blocked ? 'Ad blocker may interfere with some features' : 'No ad blocker detected'
+                });
+
+                // Display results
+                diagnostics.innerHTML = '<h3>Diagnostic Results:</h3>' + 
+                    results.map(r => `
+                        <div class="test-result ${r.pass ? 'test-pass' : 'test-fail'}">
+                            ${r.pass ? '✅' : '❌'} <strong>${r.test}:</strong> ${r.details}
+                        </div>
+                    `).join('');
+
+                addLog('Diagnostics complete! Check results above.', 'info');
+            }, 100);
+        }
+
+        // Initial log entry
+        addLog('Debug console ready! Test the buttons above to verify event handlers.', 'info');
+
+        // Add keyboard listener
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                addLog('ESC key pressed', 'info');
+            }
+        });
+
+        // Check for common issues on load
+        window.addEventListener('load', () => {
+            addLog('Page loaded successfully', 'success');
+            
+            // Check if in iframe
+            if (window.self !== window.top) {
+                addLog('⚠️ Page is loaded in an iframe - some features may be restricted', 'warning');
+            }
+            
+            // Check for touch support
+            if ('ontouchstart' in window) {
+                addLog('📱 Touch support detected', 'info');
+            }
+        });
+    </script>
+</body>
+</html>
