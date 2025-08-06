@@ -1,5 +1,5 @@
 /**
- * CTA Section - Production Ready with Netlify Forms Fix
+ * CTA Section - FIXED Netlify Forms Implementation
  * Email collection via Netlify Forms (FREE for 100 submissions/month)
  */
 
@@ -22,14 +22,18 @@ export const CTASection: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Netlify Forms submission
+      // CRITICAL FIX: Include bot-field in submission
+      const formData = new URLSearchParams();
+      formData.append('form-name', 'early-access');
+      formData.append('email', email);
+      formData.append('bot-field', ''); // Honeypot field must be empty
+      
       const response = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          'form-name': 'early-access',
-          'email': email
-        }).toString()
+        headers: { 
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
       });
 
       if (response.ok) {
@@ -47,13 +51,10 @@ export const CTASection: React.FC = () => {
         // Auto-hide success message after 7 seconds
         setTimeout(() => setShowSuccess(false), 7000);
       } else {
-        // Fallback message with clearer instructions
-        alert('We couldn\'t process your submission automatically.\n\n' +
-              'Please email us directly at: support@asynova.com\n' +
-              'We\'ll add you to the early access list manually!\n\n' +
-              `Your email: ${email}`);
+        throw new Error('Form submission failed');
       }
     } catch (error) {
+      console.error('Form submission error:', error);
       // Fallback message
       alert('We couldn\'t process your submission automatically.\n\n' +
             'Please email us directly at: support@asynova.com\n' +
@@ -147,7 +148,7 @@ export const CTASection: React.FC = () => {
                 </motion.div>
               </div>
               
-              {/* Right Side - NETLIFY FORMS */}
+              {/* Right Side - NETLIFY FORMS FIXED */}
               <div className="space-y-6">
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
@@ -171,15 +172,25 @@ export const CTASection: React.FC = () => {
                     </motion.div>
                   )}
 
-                  {/* NETLIFY FORM - Properly configured for React SPA */}
+                  {/* NETLIFY FORM - Properly configured */}
                   <form 
                     name="early-access"
                     method="POST"
+                    data-netlify="true"
+                    netlify-honeypot="bot-field"
                     onSubmit={handleSubmit}
                     className="space-y-4"
                   >
-                    {/* Hidden input REQUIRED for Netlify to recognize the form */}
+                    {/* Hidden inputs REQUIRED for Netlify */}
                     <input type="hidden" name="form-name" value="early-access" />
+                    
+                    {/* Honeypot field for spam protection */}
+                    <div className="hidden">
+                      <label>
+                        Don't fill this out if you're human: 
+                        <input name="bot-field" />
+                      </label>
+                    </div>
                     
                     <div>
                       <label htmlFor="email" className="text-gray-400 text-sm mb-2 block">

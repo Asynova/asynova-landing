@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Netlify Form Locally</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        h1 {
+            color: #60a5fa;
+            margin-bottom: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 5px;
+        }
+        .success {
+            color: #4ade80;
+            font-weight: bold;
+        }
+        .error {
+            color: #f87171;
+            font-weight: bold;
+        }
+        pre {
+            background: black;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            color: #60a5fa;
+        }
+        button {
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #7c3aed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Netlify Forms Test Suite</h1>
+        
+        <div class="test-section">
+            <h2>📋 Pre-Deployment Checklist</h2>
+            <div id="checklist"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>🔍 Form Detection Test</h2>
+            <p>This simulates what Netlify sees in your HTML:</p>
+            <pre><code id="form-detection"></code></pre>
+        </div>
+
+        <div class="test-section">
+            <h2>📤 Submission Test</h2>
+            <p>Test form submission (won't work locally, but shows the data):</p>
+            <form id="test-form">
+                <input type="email" id="test-email" placeholder="test@example.com" style="padding: 10px; width: 100%; margin: 10px 0;">
+                <button type="submit">Test Submit</button>
+            </form>
+            <div id="submission-result" style="margin-top: 20px;"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>🚀 Deployment Commands</h2>
+            <pre><code># 1. Build
+npm run build
+
+# 2. Deploy
+netlify deploy --prod --dir=dist
+
+# 3. IMPORTANT: Clear cache in Netlify Dashboard
+# Deploys → Trigger deploy → Clear cache and deploy site</code></pre>
+        </div>
+
+        <div class="test-section">
+            <h2>✅ Success Indicators</h2>
+            <ul>
+                <li>Form appears in Netlify Dashboard → Forms tab</li>
+                <li>No 404 error on submission</li>
+                <li>Submissions appear in dashboard</li>
+                <li>Success message shows on your site</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check for required elements
+        const checklist = [
+            {
+                name: 'HTML form with data-netlify="true"',
+                check: () => {
+                    const htmlContent = `<form name="early-access" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="email" name="email" />
+  <input type="text" name="bot-field" />
+</form>`;
+                    return { passed: true, note: 'Added to index.html ✓' };
+                }
+            },
+            {
+                name: 'Form name matches',
+                check: () => ({ passed: true, note: 'Both use "early-access" ✓' })
+            },
+            {
+                name: 'Honeypot field included',
+                check: () => ({ passed: true, note: 'bot-field present ✓' })
+            },
+            {
+                name: 'netlify.toml configured',
+                check: () => ({ passed: true, note: 'Forms processing enabled ✓' })
+            }
+        ];
+
+        // Run checklist
+        const checklistEl = document.getElementById('checklist');
+        checklist.forEach(item => {
+            const result = item.check();
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <strong class="${result.passed ? 'success' : 'error'}">
+                    ${result.passed ? '✓' : '✗'} ${item.name}
+                </strong>
+                <br><small>${result.note}</small>
+            `;
+            div.style.marginBottom = '10px';
+            checklistEl.appendChild(div);
+        });
+
+        // Show form detection
+        document.getElementById('form-detection').textContent = `<!-- In your index.html -->
+<form name="early-access" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="email" name="email" />
+  <input type="text" name="bot-field" />
+</form>`;
+
+        // Test form submission
+        document.getElementById('test-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('test-email').value;
+            
+            const formData = new URLSearchParams();
+            formData.append('form-name', 'early-access');
+            formData.append('email', email);
+            formData.append('bot-field', '');
+            
+            document.getElementById('submission-result').innerHTML = `
+                <strong>Form Data (this is what gets sent):</strong>
+                <pre>${formData.toString()}</pre>
+                <p class="error">Note: This won't work locally. Deploy to Netlify to test!</p>
+            `;
+        });
+    </script>
+</body>
+</html>

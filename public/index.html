@@ -73,9 +73,9 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     
     <!-- Hidden HTML form for Netlify to detect during build -->
-    <!-- This is REQUIRED for Netlify Forms to work with React SPAs -->
-    <form name="early-access" netlify netlify-honeypot="bot-field" hidden>
-      <input type="text" name="email" />
+    <!-- CRITICAL: Must use data-netlify="true" NOT just netlify -->
+    <form name="early-access" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="email" name="email" />
       <input type="text" name="bot-field" />
     </form>
     
