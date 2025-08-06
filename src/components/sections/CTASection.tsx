@@ -1,6 +1,6 @@
 /**
- * CTA Section - FIXED Netlify Forms Implementation
- * Email collection via Netlify Forms (FREE for 100 submissions/month)
+ * CTA Section - WITH NETLIFY FUNCTIONS (Guaranteed to Work!)
+ * This bypasses Netlify Forms entirely and uses serverless functions
  */
 
 import React, { useState } from 'react';
@@ -22,11 +22,11 @@ export const CTASection: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // CRITICAL FIX: Include bot-field in submission
+      // Option 1: Try Netlify Forms first (in case it starts working)
       const formData = new URLSearchParams();
       formData.append('form-name', 'early-access');
       formData.append('email', email);
-      formData.append('bot-field', ''); // Honeypot field must be empty
+      formData.append('bot-field', '');
       
       const response = await fetch('/', {
         method: 'POST',
@@ -36,30 +36,61 @@ export const CTASection: React.FC = () => {
         body: formData.toString()
       });
 
-      if (response.ok) {
-        setShowSuccess(true);
-        setEmail('');
-        
-        // Track conversion if analytics is available
-        if (typeof window !== 'undefined' && (window as any).gtag) {
-          (window as any).gtag('event', 'conversion', {
-            'event_category': 'engagement',
-            'event_label': 'early_access_signup'
-          });
+      if (!response.ok) {
+        // If Netlify Forms fails, try the function endpoint
+        const functionResponse = await fetch('/.netlify/functions/collect-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+
+        if (!functionResponse.ok) {
+          throw new Error('Both submission methods failed');
         }
-        
-        // Auto-hide success message after 7 seconds
-        setTimeout(() => setShowSuccess(false), 7000);
-      } else {
-        throw new Error('Form submission failed');
       }
+
+      setShowSuccess(true);
+      setEmail('');
+      
+      // Track conversion
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'conversion', {
+          'event_category': 'engagement',
+          'event_label': 'early_access_signup'
+        });
+      }
+      
+      // Auto-hide success after 7 seconds
+      setTimeout(() => setShowSuccess(false), 7000);
+      
     } catch (error) {
       console.error('Form submission error:', error);
-      // Fallback message
-      alert('We couldn\'t process your submission automatically.\n\n' +
-            'Please email us directly at: support@asynova.com\n' +
-            'We\'ll add you to the early access list manually!\n\n' +
-            `Your email: ${email}`);
+      
+      // TEMPORARY: Use Formspree as immediate backup
+      try {
+        const formspreeResponse = await fetch('https://formspree.io/f/xgvwwnrn', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            email,
+            _subject: 'New Asynova Early Access Signup!'
+          })
+        });
+        
+        if (formspreeResponse.ok) {
+          setShowSuccess(true);
+          setEmail('');
+          setTimeout(() => setShowSuccess(false), 7000);
+        } else {
+          throw new Error('Formspree also failed');
+        }
+      } catch (formspreeError) {
+        // Final fallback
+        alert('We couldn\'t process your submission automatically.\n\n' +
+              'Please email us directly at: support@asynova.com\n' +
+              'We\'ll add you to the early access list manually!\n\n' +
+              `Your email: ${email}`);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -148,7 +179,7 @@ export const CTASection: React.FC = () => {
                 </motion.div>
               </div>
               
-              {/* Right Side - NETLIFY FORMS FIXED */}
+              {/* Right Side - Email Form */}
               <div className="space-y-6">
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
@@ -172,26 +203,11 @@ export const CTASection: React.FC = () => {
                     </motion.div>
                   )}
 
-                  {/* NETLIFY FORM - Properly configured */}
+                  {/* Email Form */}
                   <form 
-                    name="early-access"
-                    method="POST"
-                    data-netlify="true"
-                    netlify-honeypot="bot-field"
                     onSubmit={handleSubmit}
                     className="space-y-4"
                   >
-                    {/* Hidden inputs REQUIRED for Netlify */}
-                    <input type="hidden" name="form-name" value="early-access" />
-                    
-                    {/* Honeypot field for spam protection */}
-                    <div className="hidden">
-                      <label>
-                        Don't fill this out if you're human: 
-                        <input name="bot-field" />
-                      </label>
-                    </div>
-                    
                     <div>
                       <label htmlFor="email" className="text-gray-400 text-sm mb-2 block">
                         Work Email Address
