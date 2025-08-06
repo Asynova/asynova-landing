@@ -1,6 +1,6 @@
 /**
- * CTA Section - WITH NETLIFY FUNCTIONS (Guaranteed to Work!)
- * This bypasses Netlify Forms entirely and uses serverless functions
+ * CTA Section - BULLETPROOF EMAIL COLLECTION
+ * Uses Netlify Function with form fallback
  */
 
 import React, { useState } from 'react';
@@ -22,13 +22,41 @@ export const CTASection: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Option 1: Try Netlify Forms first (in case it starts working)
+      // PRIMARY: Use Netlify Function (most reliable)
+      const functionResponse = await fetch('/.netlify/functions/collect-email', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email })
+      });
+
+      if (functionResponse.ok) {
+        console.log('✅ Netlify function success');
+        setShowSuccess(true);
+        setEmail('');
+        
+        // Track conversion
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          (window as any).gtag('event', 'conversion', {
+            'event_category': 'engagement',
+            'event_label': 'early_access_signup'
+          });
+        }
+        
+        // Auto-hide success after 7 seconds
+        setTimeout(() => setShowSuccess(false), 7000);
+        return;
+      }
+
+      // FALLBACK: Try Netlify Forms
+      console.log('⚠️ Function failed, trying Netlify Forms...');
       const formData = new URLSearchParams();
       formData.append('form-name', 'early-access');
       formData.append('email', email);
       formData.append('bot-field', '');
       
-      const response = await fetch('/', {
+      const formResponse = await fetch('/', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -36,61 +64,40 @@ export const CTASection: React.FC = () => {
         body: formData.toString()
       });
 
-      if (!response.ok) {
-        // If Netlify Forms fails, try the function endpoint
-        const functionResponse = await fetch('/.netlify/functions/collect-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
-        });
-
-        if (!functionResponse.ok) {
-          throw new Error('Both submission methods failed');
-        }
+      if (formResponse.ok) {
+        console.log('✅ Netlify Forms success');
+        setShowSuccess(true);
+        setEmail('');
+        setTimeout(() => setShowSuccess(false), 7000);
+        return;
       }
 
-      setShowSuccess(true);
-      setEmail('');
-      
-      // Track conversion
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('event', 'conversion', {
-          'event_category': 'engagement',
-          'event_label': 'early_access_signup'
-        });
-      }
-      
-      // Auto-hide success after 7 seconds
-      setTimeout(() => setShowSuccess(false), 7000);
+      // If both fail, throw error
+      throw new Error(`Function: ${functionResponse.status}, Form: ${formResponse.status}`);
       
     } catch (error) {
-      console.error('Form submission error:', error);
+      console.error('❌ All submission methods failed:', error);
       
-      // TEMPORARY: Use Formspree as immediate backup
-      try {
-        const formspreeResponse = await fetch('https://formspree.io/f/xgvwwnrn', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            email,
-            _subject: 'New Asynova Early Access Signup!'
-          })
-        });
-        
-        if (formspreeResponse.ok) {
-          setShowSuccess(true);
-          setEmail('');
-          setTimeout(() => setShowSuccess(false), 7000);
-        } else {
-          throw new Error('Formspree also failed');
-        }
-      } catch (formspreeError) {
-        // Final fallback
-        alert('We couldn\'t process your submission automatically.\n\n' +
-              'Please email us directly at: support@asynova.com\n' +
-              'We\'ll add you to the early access list manually!\n\n' +
-              `Your email: ${email}`);
+      // FINAL FALLBACK: Direct email prompt
+      const confirmed = window.confirm(
+        `Submission failed. Would you like to email us directly?\n\n` +
+        `Email: support@asynova.com\n` +
+        `Subject: Early Access Request\n` +
+        `Your email: ${email}\n\n` +
+        `Click OK to open your email client.`
+      );
+      
+      if (confirmed) {
+        const subject = encodeURIComponent('Early Access Request - Asynova');
+        const body = encodeURIComponent(
+          `Hi Asynova team,\n\n` +
+          `I'd like to join the early access list.\n\n` +
+          `Email: ${email}\n\n` +
+          `Thanks!`
+        );
+        window.open(`mailto:support@asynova.com?subject=${subject}&body=${body}`);
       }
+      
     } finally {
       setIsSubmitting(false);
     }

@@ -72,9 +72,8 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     
-    <!-- Hidden HTML form for Netlify to detect during build -->
-    <!-- CRITICAL: Must use data-netlify="true" NOT just netlify -->
-    <form name="early-access" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <!-- Netlify Forms Detection - MUST be exactly like this -->
+    <form name="early-access" data-netlify="true" netlify-honeypot="bot-field" style="display: none;">
       <input type="email" name="email" />
       <input type="text" name="bot-field" />
     </form>
