@@ -71,10 +71,10 @@ const DemoSection: React.FC = () => {
               </GlassBadge>
             </div>
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-              See The Magic In Action
+              Watch Your Costs Drop in Real-Time
             </h2>
             <p className="text-xl text-white/70 max-w-2xl mx-auto">
-              Watch how multi-agent orchestration cuts costs in real-time
+              See how our optimization algorithms reduce AI costs while preserving quality
             </p>
           </RevealAnimation>
 
@@ -83,20 +83,20 @@ const DemoSection: React.FC = () => {
             <div className="max-w-5xl mx-auto">
               <HoverCard effect="glow">
                 <GlassCard gradient holographic className="p-6 md:p-8">
-                  {/* Workflow Title */}
+                  {/* Demo Title */}
                   <div className="mb-8 text-center">
                     <h3 className="text-xl md:text-2xl font-semibold text-white mb-2">
-                      Example: AI Blog Post Creation
+                      Example: AI API Cost Reduction
                     </h3>
                     <p className="text-white/60">
-                      Three specialized agents working together efficiently
+                      Three optimization techniques working together
                     </p>
                   </div>
 
-                  {/* Agents Visualization */}
+                  {/* Optimization Techniques Visualization */}
                   <div className="mb-8">
                     <div className="flex items-center justify-center gap-2 md:gap-4 flex-wrap">
-                      {/* Research Agent */}
+                      {/* Cache Check */}
                       <motion.div
                         animate={{
                           scale: isRunning && progress >= 0 ? [1, 1.1, 1] : 1,
@@ -107,8 +107,8 @@ const DemoSection: React.FC = () => {
                       >
                         <GlassPanel className="p-3 md:p-4 text-center">
                           <GitBranchIcon className="w-6 h-6 md:w-8 md:h-8 text-quantum-blue mx-auto mb-2" />
-                          <p className="text-sm font-medium text-white">Research</p>
-                          <p className="text-xs text-white/60">Gemini Flash</p>
+                          <p className="text-sm font-medium text-white">Cache Check</p>
+                          <p className="text-xs text-white/60">95% similarity</p>
                         </GlassPanel>
                       </motion.div>
 
@@ -119,7 +119,7 @@ const DemoSection: React.FC = () => {
                         →
                       </motion.span>
 
-                      {/* Writer Agent */}
+                      {/* Model Selection */}
                       <motion.div
                         animate={{
                           scale: isRunning && progress >= 33 ? [1, 1.1, 1] : 1,
@@ -130,8 +130,8 @@ const DemoSection: React.FC = () => {
                       >
                         <GlassPanel className="p-3 md:p-4 text-center">
                           <ZapIcon className="w-6 h-6 md:w-8 md:h-8 text-quantum-purple mx-auto mb-2" />
-                          <p className="text-sm font-medium text-white">Writer</p>
-                          <p className="text-xs text-white/60">Gemini Pro</p>
+                          <p className="text-sm font-medium text-white">Model Select</p>
+                          <p className="text-xs text-white/60">GPT-4 → GPT-3.5</p>
                         </GlassPanel>
                       </motion.div>
 
@@ -142,7 +142,7 @@ const DemoSection: React.FC = () => {
                         →
                       </motion.span>
 
-                      {/* Editor Agent */}
+                      {/* Token Optimization */}
                       <motion.div
                         animate={{
                           scale: isRunning && progress >= 66 ? [1, 1.1, 1] : 1,
@@ -153,8 +153,8 @@ const DemoSection: React.FC = () => {
                       >
                         <GlassPanel className="p-3 md:p-4 text-center">
                           <CheckCircleIcon className="w-6 h-6 md:w-8 md:h-8 text-quantum-green mx-auto mb-2" />
-                          <p className="text-sm font-medium text-white">Editor</p>
-                          <p className="text-xs text-white/60">Gemini Flash</p>
+                          <p className="text-sm font-medium text-white">Optimize</p>
+                          <p className="text-xs text-white/60">Compress & Save</p>
                         </GlassPanel>
                       </motion.div>
                     </div>
@@ -175,7 +175,7 @@ const DemoSection: React.FC = () => {
                         />
                       </div>
                       <p className="text-sm text-white/60 mt-2 text-center">
-                        Workflow Progress: {progress}%
+                        Optimization Progress: {progress}%
                       </p>
                     </motion.div>
                   )}
@@ -184,7 +184,7 @@ const DemoSection: React.FC = () => {
                   <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8">
                     <div className="text-center">
                       <GlassPanel className="p-4">
-                        <p className="text-sm text-white/60 mb-2">Traditional Cost</p>
+                        <p className="text-sm text-white/60 mb-2">Without Optimization</p>
                         <motion.p 
                           className="text-2xl md:text-3xl font-bold text-white/80"
                           animate={{ scale: cost.traditional > 0 ? [1, 1.1, 1] : 1 }}
@@ -192,7 +192,7 @@ const DemoSection: React.FC = () => {
                         >
                           ${cost.traditional.toFixed(2)}
                         </motion.p>
-                        <p className="text-xs text-white/50 mt-1">Single Model Approach</p>
+                        <p className="text-xs text-white/50 mt-1">Full Price API Calls</p>
                       </GlassPanel>
                     </div>
                     
@@ -229,15 +229,15 @@ const DemoSection: React.FC = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-center">
                         <div className="text-sm">
                           <CpuIcon className="w-5 h-5 text-quantum-blue mx-auto mb-1" />
-                          <p className="text-white/80">Smart Model Selection</p>
+                          <p className="text-white/80">Smart Caching</p>
                         </div>
                         <div className="text-sm">
                           <GitBranchIcon className="w-5 h-5 text-quantum-purple mx-auto mb-1" />
-                          <p className="text-white/80">Parallel Processing</p>
+                          <p className="text-white/80">Model Selection</p>
                         </div>
                         <div className="text-sm">
                           <ZapIcon className="w-5 h-5 text-quantum-green mx-auto mb-1" />
-                          <p className="text-white/80">Semantic Caching</p>
+                          <p className="text-white/80">Token Compression</p>
                         </div>
                       </div>
                     </motion.div>
@@ -255,13 +255,13 @@ const DemoSection: React.FC = () => {
                       pulse={!isRunning}
                     >
                       <PlayIcon className="w-5 h-5 mr-2" />
-                      {isRunning ? 'Running Workflow...' : progress === 100 ? 'Run Again' : 'Run Demo Workflow'}
+                      {isRunning ? 'Optimizing Costs...' : progress === 100 ? 'Run Again' : 'See Cost Optimization'}
                     </GlassButton>
                   </div>
 
                   {/* Info Note */}
                   <p className="text-xs text-white/50 text-center mt-6">
-                    This demo simulates our multi-agent orchestration using real cost data
+                    This demo simulates our cost optimization algorithms using real savings data
                   </p>
                 </GlassCard>
               </HoverCard>
@@ -271,7 +271,7 @@ const DemoSection: React.FC = () => {
           {/* CTA Below Demo */}
           <RevealAnimation direction="up" className="text-center mt-12">
             <p className="text-lg text-white/70 mb-4">
-              Ready to cut your AI costs by 60%?
+              Ready to start saving on your AI costs?
             </p>
             <GlassButton 
               variant="secondary" 
@@ -281,7 +281,7 @@ const DemoSection: React.FC = () => {
               }}
               style={{ position: 'relative', zIndex: 10 }}
             >
-              Get Early Access →
+              Connect Your API Keys →
             </GlassButton>
           </RevealAnimation>
         </StaggerContainer>

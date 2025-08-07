@@ -30,6 +30,7 @@ import {
 // Component Imports
 import HeroSection from './components/sections/HeroSection';
 import FeaturesSection from './components/sections/FeaturesSection';
+import PricingSection from './components/sections/PricingSection';
 
 // Lazy Loaded Components
 const DemoSection = lazy(() => import('./components/sections/DemoSection'));
@@ -93,6 +94,12 @@ const Navigation: React.FC = () => {
               Features
             </button>
             <button
+              onClick={() => scrollToSection('pricing')}
+              className="text-white/80 hover:text-white transition-colors"
+            >
+              Pricing
+            </button>
+            <button
               onClick={() => scrollToSection('demo')}
               className="text-white/80 hover:text-white transition-colors"
             >
@@ -120,7 +127,7 @@ const Navigation: React.FC = () => {
               onClick={() => scrollToSection('cta')}
               glow
             >
-              Get Started Free
+              Start Saving Free
             </GlassButton>
           </div>
 
@@ -151,6 +158,12 @@ const Navigation: React.FC = () => {
                   Features
                 </button>
                 <button
+                  onClick={() => scrollToSection('pricing')}
+                  className="text-white/80 hover:text-white transition-colors text-left py-2"
+                >
+                  Pricing
+                </button>
+                <button
                   onClick={() => scrollToSection('demo')}
                   className="text-white/80 hover:text-white transition-colors text-left py-2"
                 >
@@ -179,7 +192,7 @@ const Navigation: React.FC = () => {
                   className="mt-2"
                   glow
                 >
-                  Get Started Free
+                  Start Saving Free
                 </GlassButton>
               </div>
             </motion.div>
@@ -204,10 +217,10 @@ const Footer: React.FC = () => (
     <div className="container mx-auto px-6">
       <div className="text-center text-white/60">
         <p className="mb-4">
-          © 2025 Asynova. Multi-Agent AI Orchestration Platform.
+          © 2025 Asynova. AI Cost Optimization Platform.
         </p>
         <p className="text-sm">
-          Cut your AI costs by 60% while building powerful workflows.
+          Cut your AI costs by up to 70% with quality-first optimization.
         </p>
         <div className="mt-6 flex justify-center gap-6">
           <a 
@@ -226,6 +239,15 @@ const Footer: React.FC = () => (
           >
             Documentation
           </a>
+          <button
+            onClick={() => {
+              const section = document.getElementById('pricing');
+              if (section) section.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="hover:text-white transition-colors"
+          >
+            Pricing
+          </button>
           <a 
             href="https://discord.gg/asynova" 
             className="hover:text-white transition-colors"
@@ -236,7 +258,7 @@ const Footer: React.FC = () => (
           </a>
           <button
             onClick={() => {
-              alert('Privacy Policy: We collect minimal data (email only for early access). Your data is never sold or shared with third parties. We use industry-standard encryption to protect your information.');
+              alert('Privacy Policy: We collect minimal data (email only for early access). Your API keys are encrypted and never stored in plain text. Your data is never sold or shared with third parties. We use industry-standard encryption to protect your information.');
             }}
             className="hover:text-white transition-colors"
           >
@@ -244,12 +266,20 @@ const Footer: React.FC = () => (
           </button>
           <button
             onClick={() => {
-              alert('Terms of Service: By using Asynova, you agree to use our service responsibly. The community edition is provided "as is" under MIT license. For the Pro platform, standard SaaS terms apply. Full terms coming soon.');
+              alert('Terms of Service: By using Asynova, you agree to use our service responsibly. The community edition is provided "as is" under MIT license. For the Pro platform, you pay only 20% of verified savings. Full terms available on GitHub.');
             }}
             className="hover:text-white transition-colors"
           >
             Terms
           </button>
+        </div>
+        <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10 max-w-md mx-auto">
+          <p className="text-sm text-white/70 mb-2">
+            <strong>Coming Q1 2026:</strong> Multi-Agent Workflow Builder
+          </p>
+          <p className="text-xs text-white/50">
+            Join our Discord for early access to workflow features
+          </p>
         </div>
       </div>
     </div>
@@ -324,6 +354,11 @@ const App: React.FC = () => {
               {/* Features Section */}
               <section id="features" aria-label={ariaLabels.sections.features}>
                 <FeaturesSection />
+              </section>
+              
+              {/* Pricing Section */}
+              <section id="pricing" aria-label="Pricing information">
+                <PricingSection />
               </section>
               
               {/* Demo Section - Lazy loaded */}

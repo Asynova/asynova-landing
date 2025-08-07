@@ -1,14 +1,15 @@
 {
   "name": "asynova-landing",
   "version": "2.0.0",
-  "description": "Multi-Agent AI Orchestration Platform - Cut AI costs by 60% while building powerful workflows",
+  "description": "AI Cost Optimization Platform - Cut AI API costs by up to 70% with quality-first approach",
   "keywords": [
     "ai",
-    "orchestration",
-    "multi-agent",
     "cost-optimization",
-    "langchain-alternative",
-    "workflow-builder",
+    "api-optimization",
+    "openai",
+    "claude",
+    "gemini",
+    "cost-reduction",
     "ai-platform"
   ],
   "homepage": "https://asynova.com",

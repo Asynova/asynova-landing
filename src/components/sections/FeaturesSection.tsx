@@ -44,34 +44,11 @@ export const FeaturesSection: React.FC = () => {
 
   const features: Feature[] = [
     {
-      icon: LayersIcon,
-      title: "Visual Workflow Builder",
-      description: "Drag-and-drop AI agents to build complex workflows. Like Zapier for AI, but actually powerful.",
-      stats: { value: 5, label: "Minutes to Deploy", suffix: " min" },
-      color: theme.colors.quantum.blue,
-      demo: (
-        <div className="h-48 flex items-center justify-center">
-          <motion.div
-            animate={{
-              rotate: [0, 360],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          >
-            <LayersIcon className="w-24 h-24 text-quantum-blue" />
-          </motion.div>
-        </div>
-      )
-    },
-    {
       icon: DollarSignIcon,
-      title: "60% Cost Optimization",
-      description: "Semantic caching, smart model selection, and request batching cut your AI bills in half.",
-      stats: { value: 60, label: "Average Savings", suffix: "%" },
-      color: theme.colors.quantum.teal,
+      title: "Progressive Cost Savings",
+      description: "Connect one provider, save 45%. Add more providers to unlock up to 70% savings. Quality-first optimization.",
+      stats: { value: 70, label: "Maximum Savings", suffix: "%" },
+      color: theme.colors.quantum.blue,
       demo: (
         <div className="h-48 flex items-center justify-center">
           <motion.div
@@ -83,16 +60,40 @@ export const FeaturesSection: React.FC = () => {
               repeat: Infinity,
             }}
           >
-            <DollarSignIcon className="w-24 h-24 text-quantum-teal" />
+            <DollarSignIcon className="w-24 h-24 text-quantum-blue" />
+          </motion.div>
+        </div>
+      )
+    },
+    {
+      icon: NetworkIcon,
+      title: "Multi-Provider Optimization",
+      description: "Connect OpenAI, Claude, and Gemini. Our algorithms select the best model for each task while preserving quality.",
+      stats: { value: 3, label: "AI Providers", suffix: " providers" },
+      color: theme.colors.quantum.teal,
+      demo: (
+        <div className="h-48 flex items-center justify-center">
+          <motion.div
+            animate={{
+              rotateY: [0, 360],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            <NetworkIcon className="w-24 h-24 text-quantum-teal" />
           </motion.div>
         </div>
       )
     },
     {
       icon: ZapIcon,
-      title: "Real-Time Execution",
-      description: "Watch your agents work in real-time. Debug, monitor, and optimize on the fly.",
-      stats: { value: 100, label: "Concurrent Agents", suffix: "+" },
+      title: "Real-Time Monitoring",
+      description: "Watch your savings accumulate in real-time. Track every optimization, cache hit, and cost reduction.",
+      stats: { value: 100, label: "Real-Time Updates", suffix: "%" },
       color: theme.colors.quantum.purple,
       demo: (
         <ThreeDScene className="h-48">
@@ -101,10 +102,10 @@ export const FeaturesSection: React.FC = () => {
       )
     },
     {
-      icon: NetworkIcon,
-      title: "Multi-Model Support",
-      description: "Use OpenAI, Claude, Gemini, and open source models in the same workflow. We handle the complexity.",
-      stats: { value: 15, label: "Models Supported", suffix: "+" },
+      icon: LayersIcon,
+      title: "Smart Caching System",
+      description: "Semantic similarity matching finds 95% similar requests and serves cached responses instantly. Zero cost, zero latency.",
+      stats: { value: 95, label: "Cache Accuracy", suffix: "%" },
       color: theme.colors.quantum.pink,
       demo: (
         <div className="h-48 relative">
@@ -118,16 +119,16 @@ export const FeaturesSection: React.FC = () => {
               repeat: Infinity,
             }}
           >
-            <NetworkIcon className="w-24 h-24 text-quantum-pink" />
+            <LayersIcon className="w-24 h-24 text-quantum-pink" />
           </motion.div>
         </div>
       )
     },
     {
       icon: ShieldIcon,
-      title: "Enterprise Security",
-      description: "SOC 2 compliant, end-to-end encryption, and role-based access control. Your data never trains models.",
-      stats: { value: 256, label: "Bit Encryption", suffix: "-bit" },
+      title: "Quality Protection",
+      description: "Conservative defaults preserve response quality. Smart task classification never downgrades critical operations.",
+      stats: { value: 100, label: "Quality Preserved", suffix: "%" },
       color: theme.colors.success[500],
       demo: (
         <div className="h-48 flex items-center justify-center">
@@ -148,10 +149,10 @@ export const FeaturesSection: React.FC = () => {
       )
     },
     {
-      icon: GitBranchIcon,
-      title: "Version Control for AI",
-      description: "Track changes, rollback workflows, and collaborate with your team. Git for AI workflows.",
-      stats: { value: 100, label: "Version History", suffix: "%" },
+      icon: CodeIcon,
+      title: "Developer-First API",
+      description: "Drop-in replacement for existing AI SDKs. No code changes required. Works with OpenAI, Claude, and Gemini clients.",
+      stats: { value: 5, label: "Minutes to Integrate", suffix: " min" },
       color: theme.colors.accent[500],
       demo: (
         <ThreeDScene className="h-48">
@@ -175,11 +176,11 @@ export const FeaturesSection: React.FC = () => {
               Built for Scale
             </GlassBadge>
             <h2 className="text-5xl md:text-7xl font-bold text-white mt-6 mb-6">
-              Infrastructure That <span className="text-gradient-quantum">Just Works</span>
+              Cost Optimization That <span className="text-gradient-quantum">Actually Works</span>
             </h2>
             <p className="text-xl text-white/70 max-w-3xl mx-auto">
-              Stop wrestling with complex AI orchestration. Start shipping features that scale.
-              Built by developers who were tired of the status quo.
+              Stop paying full price for AI APIs. Our intelligent optimization reduces costs while 
+              preserving the quality you need. Connect more providers to unlock higher savings.
             </p>
           </RevealAnimation>
           
@@ -276,32 +277,36 @@ export const FeaturesSection: React.FC = () => {
           <RevealAnimation direction="up" className="mt-20">
             <GlassCard className="max-w-3xl mx-auto p-8">
               <h3 className="text-xl font-bold text-white mb-4">
-                Build Complex Workflows in Minutes
+                Start Saving in 5 Minutes
               </h3>
               <pre className="text-sm text-quantum-blue/80 font-mono overflow-x-auto">
-{`// Create a content generation workflow
-const workflow = await asynova.createWorkflow({
-  name: "Blog Post Generator",
-  agents: [
-    { type: "researcher", model: "gemini-flash" },
-    { type: "writer", model: "claude-3" },
-    { type: "editor", model: "gpt-4" }
-  ],
-  optimization: {
-    enableCaching: true,
-    smartModelSelection: true,
-    targetCostReduction: 0.6
-  }
+{`// Install the SDK
+npm install asynova
+
+// Replace your existing AI client
+import asynova from 'asynova';
+
+// Connect your providers for maximum savings
+await asynova.connect({
+  openai: 'sk-your-openai-key',     // 45% savings
+  claude: 'sk-your-claude-key',     // +15% more (60% total)  
+  gemini: 'your-gemini-key'         // +10% more (70% total)
 });
 
-// Execute with real-time monitoring
-const result = await workflow.execute({
-  topic: "Future of AI",
-  onProgress: (agent, status) => {
-    console.log(\`\${agent}: \${status.message}\`);
-    console.log(\`Cost so far: $\${status.cost}\`);
-  }
-});`}
+// Use exactly like before - we handle optimization
+const response = await asynova.chat.completions.create({
+  model: "gpt-4",
+  messages: [{ role: "user", content: "Hello!" }],
+  // Our system automatically:
+  // ✓ Checks cache for similar requests
+  // ✓ Selects optimal model for task
+  // ✓ Compresses prompts when safe
+  // ✓ Preserves quality always
+});
+
+console.log('Original cost: $0.03');
+console.log('Optimized cost: $0.009'); 
+console.log('You saved: 70%');`}
               </pre>
             </GlassCard>
           </RevealAnimation>
@@ -309,7 +314,7 @@ const result = await workflow.execute({
           {/* Call to Action - FIXED BUTTONS */}
           <RevealAnimation direction="up" className="text-center mt-12">
             <p className="text-xl text-white/70 mb-8">
-              Ready to cut your AI costs and ship faster?
+              Ready to cut your AI costs while preserving quality?
             </p>
             <div className="flex gap-4 justify-center">
               <GlassButton
@@ -326,7 +331,7 @@ const result = await workflow.execute({
                 }}
               >
                 <CodeIcon className="w-5 h-5 mr-2" />
-                Start Building Free
+                Start Saving Free
               </GlassButton>
               <GlassButton
                 variant="secondary"

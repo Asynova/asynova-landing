@@ -151,9 +151,9 @@ export const CTASection: React.FC = () => {
                   transition={{ delay: 0.3 }}
                   className="text-4xl lg:text-5xl font-bold text-white"
                 >
-                  Ship AI Features{' '}
+                  Cut Your AI Costs{' '}
                   <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                    10x Faster
+                    by 70%
                   </span>
                 </motion.h2>
                 
@@ -163,8 +163,8 @@ export const CTASection: React.FC = () => {
                   transition={{ delay: 0.4 }}
                   className="text-lg text-gray-300"
                 >
-                  Build production AI applications with advanced cost optimization
-                  that saves you thousands monthly.
+                  Advanced AI cost optimization dashboard with quality-first approach.
+                  Connect your API keys and start saving immediately.
                 </motion.p>
                 
                 {/* Benefits List */}
@@ -175,11 +175,11 @@ export const CTASection: React.FC = () => {
                   className="space-y-3"
                 >
                   {[
-                    '✅ 60% cost reduction guaranteed',
-                    '✅ 1,000 free API calls monthly',
+                    '✅ Up to 70% cost reduction guaranteed',
+                    '✅ Use your own API keys (zero cost to you)',
                     '✅ Open source core (MIT)',
                     '✅ Deploy in 5 minutes',
-                    '✅ No vendor lock-in'
+                    '✅ Pay only 20% of what you save'
                   ].map((benefit, i) => (
                     <div key={i} className="text-gray-300">{benefit}</div>
                   ))}
@@ -267,7 +267,7 @@ export const CTASection: React.FC = () => {
                   
                   <div className="text-center space-y-4">
                     <p className="text-gray-500 text-sm">
-                      No credit card required • 1,000 free calls • 5 minute setup
+                      No credit card required • Use your own API keys • Pay only from savings
                     </p>
                     
                     {/* Secondary Buttons */}

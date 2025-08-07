@@ -17,9 +17,9 @@ interface SEOProps {
 }
 
 const SEO: React.FC<SEOProps> = ({
-  title = 'Asynova - Multi-Agent AI Orchestration Platform | Cut AI Costs by 60%',
-  description = 'Build powerful AI workflows visually. Cut your OpenAI, Claude, and Gemini costs by 60% with semantic caching and smart optimization. Open source core.',
-  keywords = 'AI orchestration, multi-agent AI, AI cost optimization, LangChain alternative, AI workflow builder, OpenAI cost reduction, Claude API optimization, Gemini API, semantic caching, visual AI builder',
+  title = 'Asynova - AI Cost Optimization Platform | Save Up to 70% on AI API Costs',
+  description = 'Cut your OpenAI, Claude, and Gemini costs by up to 70% with quality-first optimization. Pay only 20% of what you save. Connect your API keys and start saving immediately.',
+  keywords = 'AI cost optimization, OpenAI cost reduction, Claude API optimization, Gemini API savings, AI API cost tracker, quality-first optimization, semantic caching, model selection',
   image = 'https://asynova.com/og-image.png',
   url = 'https://asynova.com',
   type = 'website',
@@ -52,7 +52,7 @@ const SEO: React.FC<SEOProps> = ({
   const productStructuredData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "Asynova Platform",
+    "name": "Asynova Cost Optimizer",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Web-based",
     "offers": {
@@ -64,15 +64,15 @@ const SEO: React.FC<SEOProps> = ({
           "@type": "UnitPriceSpecification",
           "price": "0",
           "priceCurrency": "USD",
-          "unitText": "1000 API calls/month",
-          "name": "Free Tier"
+          "unitText": "Free tier with own API keys",
+          "name": "Free Optimization"
         },
         {
           "@type": "UnitPriceSpecification",
-          "price": "49",
+          "price": "20",
           "priceCurrency": "USD",
-          "unitText": "MONTH",
-          "name": "Pro Plan"
+          "unitText": "Percent of savings only",
+          "name": "Pro Dashboard"
         }
       ],
       "availability": "https://schema.org/InStock"
@@ -80,22 +80,22 @@ const SEO: React.FC<SEOProps> = ({
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
-      "ratingCount": "247",
+      "ratingCount": "127",
       "bestRating": "5",
       "worstRating": "1"
     },
     "featureList": [
-      "Visual workflow builder for AI agents",
-      "60% cost reduction through optimization",
-      "Multi-model support (OpenAI, Claude, Gemini)",
-      "Real-time execution monitoring",
+      "Up to 70% AI cost reduction",
+      "Quality-first optimization approach", 
+      "Multi-provider support (OpenAI, Claude, Gemini)",
+      "Real-time savings tracking",
       "Semantic caching and smart model selection",
       "Open source core (MIT license)",
-      "5-minute deployment",
-      "No vendor lock-in"
+      "5-minute setup",
+      "Pay only from savings"
     ],
     "screenshot": "https://asynova.com/screenshot.png",
-    "softwareVersion": "2.0",
+    "softwareVersion": "1.0",
     "releaseNotes": "https://github.com/asynova/asynova-core/releases"
   };
 
@@ -106,26 +106,34 @@ const SEO: React.FC<SEOProps> = ({
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "How does Asynova reduce AI costs by 60%?",
+        "name": "How does Asynova reduce AI costs by up to 70%?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Asynova uses semantic caching, smart model selection, request batching, and prompt compression to optimize every API call. Our algorithms automatically choose the cheapest model that can handle each task."
+          "text": "Asynova uses semantic caching, smart model selection within providers, request batching, and prompt compression. Connect multiple providers (OpenAI, Claude, Gemini) for maximum savings through cross-provider optimization."
+        }
+      },
+      {
+        "@type": "Question", 
+        "name": "How does the pricing work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You pay only 20% of what we save you. No upfront costs, no fixed fees. If we save you $1000/month, you pay us $200 and keep $800. If we don't save you money, you pay nothing."
         }
       },
       {
         "@type": "Question",
-        "name": "Is Asynova open source?",
+        "name": "Do I need to give you my API keys?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes! Our core optimization algorithms are open source under MIT license. The platform that runs the infrastructure is source-available."
+          "text": "Yes, you connect your own OpenAI, Claude, and/or Gemini API keys. We optimize your requests but you pay the providers directly for reduced costs. Your keys are encrypted and never stored in plain text."
         }
       },
       {
         "@type": "Question",
-        "name": "Which AI models does Asynova support?",
+        "name": "Will optimization affect response quality?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Asynova supports OpenAI (GPT-3.5, GPT-4), Anthropic (Claude), Google (Gemini), and many open source models. You can mix and match models in the same workflow."
+          "text": "We use conservative quality-first defaults. Our system intelligently classifies tasks and only uses cheaper models when quality won't be affected. You have full control over optimization aggressiveness."
         }
       }
     ]

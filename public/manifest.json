@@ -1,7 +1,7 @@
 {
   "short_name": "Asynova",
-  "name": "Asynova - Multi-Agent AI Orchestration",
-  "description": "Production-grade infrastructure for multi-agent AI systems with 60% cost optimization",
+  "name": "Asynova - AI Cost Optimization Platform",
+  "description": "Cut your AI API costs by up to 70% with quality-first optimization. Pay only 20% of what you save.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -23,5 +23,5 @@
   "display": "standalone",
   "theme_color": "#0A1E3D",
   "background_color": "#0A1E3D",
-  "categories": ["developer", "productivity", "utilities"]
+  "categories": ["developer", "productivity", "utilities", "cost-optimization"]
 }

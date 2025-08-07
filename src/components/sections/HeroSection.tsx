@@ -32,14 +32,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
   const y = useTransform(scrollY, [0, 1000], [0, -300]);
   const [selectedTier, setSelectedTier] = useState<'small' | 'startup' | 'enterprise'>('startup');
 
-  // Dynamic text for developers
-  const [dynamicHeadline, setDynamicHeadline] = useState("Multi-Agent AI Orchestration");
+  // Dynamic text for cost optimization focus
+  const [dynamicHeadline, setDynamicHeadline] = useState("Cut Your AI Costs by 60%");
   
   const headlines = useMemo(() => [
-    "Multi-Agent AI Orchestration",
     "Cut Your AI Costs by 60%",
-    "Build Complex AI Workflows",
-    "Ship AI Features 10x Faster"
+    "Smart AI Cost Optimization", 
+    "Save Money on Every API Call",
+    "Quality-First Cost Reduction"
   ], []);
 
   useEffect(() => {
@@ -49,34 +49,34 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
     return () => clearInterval(interval);
   }, [headlines]);
 
-  // Pricing tiers with real examples
+  // Progressive savings examples (NOT pricing tiers)
   const pricingTiers = {
     small: {
-      name: 'Small Team',
+      name: 'Small Developer',
       current: 500,
-      optimized: 200,
-      savings: 300,
-      percentage: 60,
-      example: 'Perfect for MVP development',
-      features: ['Up to 10k API calls/day', '3 agent workflows', 'Email support']
+      optimized: 275,
+      savings: 225,
+      percentage: 45,
+      example: 'If you currently spend $500/mo on AI APIs',
+      features: ['Smart caching & compression', 'Model optimization', 'Real-time tracking']
     },
     startup: {
-      name: 'Growing Startup',
+      name: 'Growing Team',
       current: 2000,
       optimized: 800,
       savings: 1200,
       percentage: 60,
-      example: 'Scale your AI features',
-      features: ['Up to 100k API calls/day', 'Unlimited workflows', 'Priority support']
+      example: 'If you currently spend $2,000/mo on AI APIs',
+      features: ['All single provider features', 'Cross-provider routing', 'Enhanced savings']
     },
     enterprise: {
-      name: 'Enterprise',
+      name: 'Large Company',
       current: 10000,
-      optimized: 4000,
-      savings: 6000,
-      percentage: 60,
-      example: 'Mission-critical AI infrastructure',
-      features: ['Unlimited API calls', 'Custom optimizations', 'Dedicated support']
+      optimized: 3000,
+      savings: 7000,
+      percentage: 70,
+      example: 'If you currently spend $10,000/mo on AI APIs',
+      features: ['All features included', 'Maximum savings potential', 'Priority support']
     }
   };
 
@@ -117,7 +117,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                 <MorphingText text={dynamicHeadline} speed={0.1} className="text-gradient" />
                 <br />
                 <span className="text-white opacity-90">
-                  Made <span className="text-gradient-quantum">Simple</span>
+                  Pay Only <span className="text-gradient-quantum">What You Save</span>
                 </span>
               </h1>
             </RevealAnimation>
@@ -125,9 +125,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
             {/* Developer-focused Subheadline - UPDATED TO BE HONEST */}
             <RevealAnimation direction="up" className="text-center mb-12">
               <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto">
-                Advanced AI cost optimization platform that saves developers
-                <span className="text-quantum-green mx-2 font-bold">60%</span> on API costs
-                while shipping <span className="text-quantum-purple font-bold">10x</span> faster
+                Advanced AI cost optimization dashboard that saves developers
+                <span className="text-quantum-green mx-2 font-bold">up to 70%</span> on API costs
+                with <span className="text-quantum-purple font-bold">zero quality loss</span>
               </p>
             </RevealAnimation>
             
@@ -140,11 +140,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
             >
               <GlassCard gradient holographic className="p-8">
                 <h3 className="text-3xl font-bold text-white mb-2 text-center">
-                  See Your <span className="text-gradient">Potential Savings</span>
+                  Calculate <span className="text-gradient">Your Savings</span>
                 </h3>
-                <p className="text-white/60 text-center mb-8">
-                  Click your team size to see real cost reduction
+                <p className="text-white/60 text-center mb-2">
+                  Select your current monthly AI spending to see potential savings
                 </p>
+                <p className="text-sm text-quantum-green text-center mb-8">
+                  ✓ Pay only 20% of what we save you • ✓ Quality-first optimization • ✓ Zero risk guarantee
+                </p>
+                
+                
+                {/* Spending Example Selector */}
+                <div className="mb-6">
+                  <p className="text-white text-center mb-2 font-semibold">
+                    💡 Select Your Current AI Spending Level
+                  </p>
+                  <p className="text-white/60 text-center text-sm">
+                    (These are examples of what YOU currently spend, not our pricing)
+                  </p>
+                </div>
                 
                 {/* Tier Selector */}
                 <div className="grid md:grid-cols-3 gap-4 mb-8">
@@ -164,7 +178,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                           onClick={() => setSelectedTier(key as typeof selectedTier)}
                         >
                           <div className="text-center">
-                            <p className="text-white/60 text-sm mb-2">{tier.name}</p>
+                            <p className="text-white/60 text-sm mb-2">{tier.name} Example</p>
+                            <p className="text-xs text-quantum-blue mb-1">Currently spending on AI:</p>
                             <p className="text-2xl font-bold text-white mb-1">
                               ${tier.current.toLocaleString()}/mo
                             </p>
@@ -236,19 +251,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                   
                   {/* Smart Code Example */}
                   <div className="bg-black/20 rounded-lg p-4 border border-white/10">
-                    <p className="text-white/60 text-xs mb-2">Your workflow with Asynova:</p>
+                    <p className="text-white/60 text-xs mb-2">Simple integration with instant savings:</p>
                     <pre className="text-sm text-quantum-blue/90 font-mono">
 {`// Before: $${currentTier.current}/month
+import openai from 'openai';
 const response = await openai.chat.completions.create({
   model: "gpt-4",
   messages: [...]
 });
 
 // After: $${currentTier.optimized}/month (${currentTier.percentage}% savings)
-const response = await asynova.optimize({
-  workflow: "research-analyze-respond",
-  agents: ["gpt-4", "claude-3", "gemini-pro"],
-  smartRouting: true
+import asynova from 'asynova';
+const response = await asynova.optimize.openai({
+  model: "gpt-4", // Auto-selected to cheaper model when safe
+  messages: [...], // Auto-compressed and cached
+  qualityFirst: true // Default: preserve quality
 });`}
                     </pre>
                   </div>
@@ -285,8 +302,8 @@ const response = await asynova.optimize({
                 {/* Trust Indicator */}
                 <p className="text-sm text-white/60 mt-6 text-center">
                   <span className="text-quantum-green">✓</span> No credit card required • 
-                  <span className="text-quantum-blue"> 1,000 free API calls</span> • 
-                  <span className="text-quantum-purple"> 5 minute setup</span>
+                  <span className="text-quantum-blue"> Use your own API keys</span> • 
+                  <span className="text-quantum-purple"> Pay only from savings</span>
                 </p>
               </GlassCard>
             </motion.div>
@@ -300,11 +317,11 @@ const response = await asynova.optimize({
                 </div>
                 <div className="flex items-center gap-2">
                   <CpuIcon className="w-5 h-5" />
-                  <span className="text-sm">5 Min Integration</span>
+                  <span className="text-sm">Quality-First Optimization</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <DollarSignIcon className="w-5 h-5" />
-                  <span className="text-sm">Pay Only What You Save</span>
+                  <span className="text-sm">Pay Only from Savings</span>
                 </div>
               </div>
             </RevealAnimation>
