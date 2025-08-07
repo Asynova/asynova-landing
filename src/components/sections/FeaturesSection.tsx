@@ -104,8 +104,8 @@ export const FeaturesSection: React.FC = () => {
     {
       icon: LayersIcon,
       title: "Smart Caching System",
-      description: "Semantic similarity matching finds 95% similar requests and serves cached responses instantly. Zero cost, zero latency.",
-      stats: { value: 95, label: "Cache Accuracy", suffix: "%" },
+      description: "Advanced pattern matching identifies similar requests and serves cached responses instantly. Zero cost, zero latency.",
+      stats: { value: 99, label: "Cache Accuracy", suffix: "%" },
       color: theme.colors.quantum.pink,
       demo: (
         <div className="h-48 relative">

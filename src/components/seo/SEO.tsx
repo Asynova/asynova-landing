@@ -19,7 +19,7 @@ interface SEOProps {
 const SEO: React.FC<SEOProps> = ({
   title = 'Asynova - AI Cost Optimization Platform | Save Up to 70% on AI API Costs',
   description = 'Cut your OpenAI, Claude, and Gemini costs by up to 70% with quality-first optimization. Pay only 20% of what you save. Connect your API keys and start saving immediately.',
-  keywords = 'AI cost optimization, OpenAI cost reduction, Claude API optimization, Gemini API savings, AI API cost tracker, quality-first optimization, semantic caching, model selection',
+  keywords = 'AI cost optimization, OpenAI cost reduction, Claude API optimization, Gemini API savings, AI API cost tracker, quality-first optimization, smart caching, intelligent model selection',
   image = 'https://asynova.com/og-image.png',
   url = 'https://asynova.com',
   type = 'website',
@@ -89,7 +89,7 @@ const SEO: React.FC<SEOProps> = ({
       "Quality-first optimization approach", 
       "Multi-provider support (OpenAI, Claude, Gemini)",
       "Real-time savings tracking",
-      "Semantic caching and smart model selection",
+      "Advanced caching and intelligent model selection",
       "Open source core (MIT license)",
       "5-minute setup",
       "Pay only from savings"
@@ -109,7 +109,7 @@ const SEO: React.FC<SEOProps> = ({
         "name": "How does Asynova reduce AI costs by up to 70%?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Asynova uses semantic caching, smart model selection within providers, request batching, and prompt compression. Connect multiple providers (OpenAI, Claude, Gemini) for maximum savings through cross-provider optimization."
+          "text": "Asynova uses advanced caching, intelligent model selection within providers, request batching, and prompt compression. Connect multiple providers (OpenAI, Claude, Gemini) for maximum savings through cross-provider optimization."
         }
       },
       {

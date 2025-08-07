@@ -108,7 +108,7 @@ const DemoSection: React.FC = () => {
                         <GlassPanel className="p-3 md:p-4 text-center">
                           <GitBranchIcon className="w-6 h-6 md:w-8 md:h-8 text-quantum-blue mx-auto mb-2" />
                           <p className="text-sm font-medium text-white">Cache Check</p>
-                          <p className="text-xs text-white/60">95% similarity</p>
+                          <p className="text-xs text-white/60">Smart Matching</p>
                         </GlassPanel>
                       </motion.div>
 
